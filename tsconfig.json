@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "plugins": [{ "name": "ts-vue-plugin" }],
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
