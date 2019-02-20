@@ -3,10 +3,10 @@ import { RootState, TagState, Tag } from '../types'
 
 type TagGetter = GetterTree<TagState, RootState> 
 export enum TagType {
-	Goal,
-	Person,
-	Event,
-	Any	
+	Goal = "trophy",
+	Person = "user-alt",
+	Event = "calendar-alt",
+	Any = "asterisk"	
 }
 
 export const state: TagState = {

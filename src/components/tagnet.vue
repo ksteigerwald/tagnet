@@ -5,7 +5,8 @@
                 v-on:input="keymapper"
 				v-model="label"
                 :data="data"
-                icon="clipboard-list"
+                clear-on-select
+                icon="trophy"
 				@select="option => selected = option"
                 placeholder="e.g. Anne">
                 <template slot="empty">No results found</template>
@@ -32,6 +33,8 @@ export default class Tagnet extends Vue {
     data: any[] = []
 	label: string = ''
     selected: any = null
+    
+    icon:string = "trophy"
 
     @TagGetter tags!: Tag[]
     @MemoGetter memos!: Memo[]
@@ -41,15 +44,38 @@ export default class Tagnet extends Vue {
         id: short.generate(),
         label: '',
         tag: 'goal',
-        type: TagType.Goal
-    }
+        type: TagType.Goal }
 	
     @Watch('selected')
 	watchSelected(newVal: string, oldVal: string) {
-		console.log(newVal, oldVal)
+        if(!newVal) return
+        let obj = this.matchKind(newVal)
+        console.log(obj) 
 	}
-    
+   
+    private matchKind(val: string) {
+        let tagit: Tag[] = this.tags.filter(tag => tag.label === val)
+
+        let memoit = this.memos.filter(memo => memo.label === val)
+        let isMemo = memoit.length > 0
+        this.swapIcon(val, isMemo)
+
+        return isMemo ? memoit : tagit
+    }
+
+    private swapIcon(icon: string, isLine: boolean) {
+        let str: string = 'fa-' + this.icon 
+        let $el: any = document.getElementsByClassName(str)[0]
+        let newClass = isLine ? 'clipboard' : TagType[icon]
+        let css: string = $el.classList.value.replace(this.icon, newClass)
+        $el.className = css
+        this.icon = newClass
+        console.log(str, $el, TagType[icon], TagType.Goal)
+    }
+
     keymapper(label: string){
+        if(label === null) return true
+
         if(label.charAt(0) === '/') {
             this.data = this.tags.map(tag => tag.label)
         }
@@ -57,8 +83,6 @@ export default class Tagnet extends Vue {
         if(label.charAt(0) === '@') {
             this.data = this.memos.map(memo => memo.label)
         }
-
-		console.log(this.selected)
 
         return this.data.filter((option) => {
             return option
