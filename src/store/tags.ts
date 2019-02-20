@@ -2,11 +2,19 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, TagState, Tag } from '../types'
 
 type TagGetter = GetterTree<TagState, RootState> 
+export enum TagType {
+	Goal,
+	Person,
+	Event,
+	Any	
+}
 
 export const state: TagState = {
     tags: [
-        { type: 'Goal' },
-        { type: 'Person' }
+        { code: 'GOL', label: 'Goal' },
+        { code: 'PER', label: 'Person' },
+        { code: 'EVT', label: 'Event' },
+        { code: 'ANY', label: 'Any' }
     ]
 }
 

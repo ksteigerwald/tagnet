@@ -10,8 +10,13 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/vue-fontawesome": "^0.1.5",
     "buefy": "^0.7.2",
     "fakerator": "^0.3.0",
+    "i": "^0.3.6",
+    "npm": "^6.8.0",
     "short-uuid": "^3.1.0",
     "ts-vue-plugin": "^0.2.0",
     "uuid": "^3.3.2",

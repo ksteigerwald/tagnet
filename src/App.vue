@@ -27,3 +27,6 @@
   }
 }
 </style>
+<style>
+@import "https://use.fontawesome.com/releases/v5.2.0/css/all.css";
+</style>

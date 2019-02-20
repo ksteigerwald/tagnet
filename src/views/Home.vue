@@ -14,6 +14,5 @@ import Tagnet from '@/components/Tagnet.vue'
       Tagnet,
   }
 })
-export default class Home extends Vue {
-}
+export default class Home extends Vue {}
 </script>

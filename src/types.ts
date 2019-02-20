@@ -1,5 +1,5 @@
 import { MutationPayload } from 'vuex'
-
+import { TagType } from './store/tags'
 // Store
 export interface RootState {
     count: number
@@ -19,17 +19,19 @@ export interface LineState {
 }
 
 export interface Tag {
-    type: string
+    code: string
+    label: string
 }
 
 export interface Memo {
+    type: TagType
     id: String
-    text: String
+    label: String
     tag: String //should this be [] allow for say goal,work || goal,personal
 }
 
 export interface Line {
     memoId: String
-    text: String
+    label: String
     logged: String
 }

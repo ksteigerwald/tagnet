@@ -1,14 +1,15 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
+import { TagType } from './tags'
 
 type MemoGetter = GetterTree<MemoState, RootState> 
 
 export const state: MemoState = {
     memos: [
-        { id: 'chFRfjc7B9pqfoJBJu8Lg', text: 'Practice guitar every day for a month', tag: 'goal' },
-        { id: 'bRnGK3kkh5ZEW2fe5VRssf', text: 'Improve learning on AWS environment', tag: 'goal' },
-        { id: '7u2ARq72CAUkEZGcaqZWDz', text: 'Read a book a week', tag: 'goal' },
-        { id: 'deCKZwZtJmGLtWQg6eoxY1', text: '@jdoe', tag: 'follow' },
+        { id: 'chFRfjc7B9pqfoJBJu8Lg', label: 'Practice guitar every day for a month', tag: 'goal', type: TagType.Goal },
+        { id: 'bRnGK3kkh5ZEW2fe5VRssf', label: 'Improve learning on AWS environment', tag: 'goal', type: TagType.Goal },
+        { id: '7u2ARq72CAUkEZGcaqZWDz', label: 'Read a book a week', tag: 'goal', type: TagType.Goal },
+        { id: 'deCKZwZtJmGLtWQg6eoxY1', label: '@jdoe', tag: 'follow', type: TagType.Person  },
     ]
 }
 
