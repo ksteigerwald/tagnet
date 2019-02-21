@@ -6,7 +6,8 @@
 				v-model="label"
                 :data="data"
                 clear-on-select
-                icon="trophy"
+                icon="search"
+                @keyup.native.enter="keyEvent(label)"
 				@select="option => selected = option"
                 placeholder="e.g. Anne">
                 <template slot="empty">No results found</template>
@@ -33,24 +34,20 @@ export default class Tagnet extends Vue {
     data: any[] = []
 	label: string = ''
     selected: any = null
-    
-    icon:string = "trophy"
+    actionType: any = null
+
+    icon:string = "search"
 
     @TagGetter tags!: Tag[]
     @MemoGetter memos!: Memo[]
     @MemoMutation addMemo: any
     
-    newMemo:Memo = {
-        id: short.generate(),
-        label: '',
-        tag: 'goal',
-        type: TagType.Goal }
 	
     @Watch('selected')
 	watchSelected(newVal: string, oldVal: string) {
         if(!newVal) return
         let obj = this.matchKind(newVal)
-        console.log(obj) 
+        this.actionType = obj[0]
 	}
    
     private matchKind(val: string) {
@@ -70,9 +67,23 @@ export default class Tagnet extends Vue {
         let css: string = $el.classList.value.replace(this.icon, newClass)
         $el.className = css
         this.icon = newClass
-        console.log(str, $el, TagType[icon], TagType.Goal)
     }
-
+   
+    private newMemo(label: String): Memo {
+        return {
+            id: short.generate(),
+            label: label,
+            tag: 'goal',
+            type: this.actionType
+        } 
+    }
+    keyEvent(val: String) {
+        if(!val) return
+        this.label = ''
+        let memo: Memo = this.newMemo(val)
+        this.addMemo(memo) 
+    }
+    
     keymapper(label: string){
         if(label === null) return true
 
