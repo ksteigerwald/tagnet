@@ -33,5 +33,5 @@ export interface Memo {
 export interface Line {
     memoId: String
     label: String
-    logged: String
+    logged: any
 }
