@@ -24,7 +24,8 @@ export const mutations: MutationTree<MemoState> = {
 export const actions: ActionTree<MemoState, RootState> = {}
 
 export const getters: GetterTree<MemoState, RootState> = {
-    memos: (state, getters, rootState) => state.memos
+    memos: (state, getters, rootState) => state.memos,
+    find: (state, getters, rootState, id) => state.memos.filter(memo => memo.id === id)
 }
 
 export const memos:Module<MemoState, RootState> ={

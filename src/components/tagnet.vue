@@ -1,6 +1,6 @@
 <template>
     <div class="autocomplete">
-        <b-field label="Rounded">
+        <b-field :label="output">
             <b-autocomplete rounded
                 v-on:input="keymapper"
 				v-model="label"
@@ -30,7 +30,7 @@ export default class Tagnet extends Vue {
 	label: string = ''
     selected: any = null
     actionType: any = null
-
+    output: string = 'Start Typing'
     icon:string = "search"
 
     @Getter('tags/tags') tags!: Tag[]
@@ -45,6 +45,7 @@ export default class Tagnet extends Vue {
         if(!newVal) return
         let obj = this.matchKind(newVal)
         this.actionType = obj[0]
+        this.output = this.actionType.label
 	}
    
     private matchKind(val: string) {
@@ -85,7 +86,7 @@ export default class Tagnet extends Vue {
 
     keyEvent(val: String) {
         if(!val) return
-        this.label = ''
+        this.label = '';
         if(Object.keys(this.actionType).indexOf('code') != -1) {
             let memo: Memo = this.newMemo(val)
             this.addMemo(memo) 
@@ -98,7 +99,6 @@ export default class Tagnet extends Vue {
     
     keymapper(label: string){
         if(label === null) return true
-
 
         if(label.length === 1 && label.charAt(0) === '/') {
             this.data = this.tags.map(tag => tag.label)

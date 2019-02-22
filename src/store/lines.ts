@@ -14,7 +14,6 @@ export const state: LineState = {
 
 export const mutations: MutationTree<LineState> = {
     addLine(state: LineState, newLine: Line): void {
-        console.log(state, newLine)
         const lineCopy = Object.assign({}, newLine) 
         state.lines.push(lineCopy)
     }
@@ -29,7 +28,9 @@ export const getters: GetterTree<LineState, RootState> = {
             return new Date(b.logged) - new Date(a.logged) 
         })
         .reduce((acc: any, cur: any) => {
-            let key = cur.logged.split('T')[0]
+            let m = rootState.memos.memos.filter( m => m.id === cur.memoId)[0]
+            let key = m.label
+
             if(!acc[key]) {
                 acc[key] = [] 
             }

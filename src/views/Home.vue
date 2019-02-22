@@ -1,7 +1,9 @@
 <template>
-  <div class="home">
-    <Tagnet /> 
-    <Wall /> 
+  <div class="home columns is-mobile is-centered">
+    <div class="column is-half">
+        <Tagnet /> 
+        <Wall /> 
+    </div>
   </div>
 </template>
 
