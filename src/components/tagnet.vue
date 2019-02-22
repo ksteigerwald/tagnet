@@ -23,15 +23,6 @@ import { State, Mutation, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 
-const TagGetter = namespace('tags', Getter)
-
-const MemoGetter = namespace('memos', Getter)
-const MemoMutation = namespace('memos', Mutation)
-const MemoAction = namespace('memos', Action)
-
-const LineGetter = namespace('lines', Getter)
-const LineMutation = namespace('lines', Mutation)
-const LineAction = namespace('lines', Action)
 
 @Component
 export default class Tagnet extends Vue {
@@ -42,12 +33,12 @@ export default class Tagnet extends Vue {
 
     icon:string = "search"
 
-    @TagGetter tags!: Tag[]
-    @MemoGetter memos!: Memo[]
-    @MemoMutation addMemo: any
+    @Getter('tags/tags') tags!: Tag[]
+    @Getter('memos/memos') memos!: Memo[]
+    @Mutation('memos/addMemo') addMemo: any
     
-    @LineGetter lines!: Memo[]
-    @LineMutation addLine: any
+    @Getter('lines/lines') lines!: Line[]
+    @Mutation('lines/addLine') addLine: any
 	
     @Watch('selected')
 	watchSelected(newVal: string, oldVal: string) {
