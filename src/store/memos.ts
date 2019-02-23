@@ -1,16 +1,14 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
+import { memosQry, memosInsert } from '@/constants/memos.ql'
+import { apolloClient } from '@/constants/graphql'
+const uuidv1 = require('uuid/v1');
 
 type MemoGetter = GetterTree<MemoState, RootState> 
 
 export const state: MemoState = {
-    memos: [
-        { id: 'chFRfjc7B9pqfoJBJu8Lg', label: 'Practice guitar every day for a month', tag: 'goal', type: TagType.Goal },
-        { id: 'bRnGK3kkh5ZEW2fe5VRssf', label: 'Improve learning on AWS environment', tag: 'goal', type: TagType.Goal },
-        { id: '7u2ARq72CAUkEZGcaqZWDz', label: 'Read a book a week', tag: 'goal', type: TagType.Goal },
-        { id: 'deCKZwZtJmGLtWQg6eoxY1', label: '@jdoe', tag: 'follow', type: TagType.Person  },
-    ]
+    memos: [ ]
 }
 
 export const mutations: MutationTree<MemoState> = {
@@ -21,7 +19,31 @@ export const mutations: MutationTree<MemoState> = {
     }
 }
 
-export const actions: ActionTree<MemoState, RootState> = {}
+export const actions: ActionTree<MemoState, RootState> = {
+    async createMemo({ commit, dispatch, rootState }, payload:Memo) {
+        
+        const response: any = await apolloClient.mutate({
+			mutation: memosInsert,
+			variables: { objects: [{
+				uuid: uuidv1(),
+				label: payload.label,
+				tag_id: payload.tag_id
+			}]
+			}
+		})
+		console.log("RESP",response);
+		let memo: Memo = response.data.insert_memos.returning.pop()
+		commit('addMemo', memo)
+    },
+
+    async loadMemos( { commit, dispatch, rootState} ) {
+        
+        const response: any = await apolloClient.query({
+            query: memosQry
+        })
+        response.data.memos.forEach((memo: Memo) => commit('addMemo', memo))
+    }
+}
 
 export const getters: GetterTree<MemoState, RootState> = {
     memos: (state, getters, rootState) => state.memos,

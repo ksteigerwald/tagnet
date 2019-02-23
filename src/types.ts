@@ -19,19 +19,21 @@ export interface LineState {
 }
 
 export interface Tag {
-    code: string
-    label: string
+	id: Number
+    code: String
+    label: String
 }
 
 export interface Memo {
-    type: TagType
+	uuid: String
     id: String
     label: String
-    tag: String //should this be [] allow for say goal,work || goal,personal
+    tag_id: Number
 }
 
 export interface Line {
-    memoId: String
+	uuid: String
+    memo_id: Number
     label: String
-    logged: any
+    logged: String
 }

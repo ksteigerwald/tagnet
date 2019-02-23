@@ -23,6 +23,7 @@ import { State, Mutation, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 
+const uuidv1 = require('uuid/v1');
 
 @Component
 export default class Tagnet extends Vue {
@@ -41,10 +42,14 @@ export default class Tagnet extends Vue {
     @Mutation('lines/addLine') addLine: any
 
     @Action('tags/loadTags') loadTags: any
+    @Action('memos/loadMemos') loadMemos: any
+    @Action('memos/createMemo') createMemo: any
+
     created() {
-        console.log(this.$store)
         this.loadTags() 
-    }	
+        this.loadMemos() 
+    }
+
     @Watch('selected')
 	watchSelected(newVal: string, oldVal: string) {
         if(!newVal) return
@@ -74,16 +79,17 @@ export default class Tagnet extends Vue {
    
     private newMemo(label: String): Memo {
         return {
+			uuid: uuidv1(),
             id: short.generate(),
             label: label,
-            tag: 'goal',
-            type: this.actionType
+            tag_id: this.actionType.id
         } 
     }
 
     private newLine(label: String): Line {
         return {
-            memoId: this.actionType.id,
+			uuid: uuidv1(),
+            memo_id: this.actionType.id,
             label: label,
             logged: new Date().toISOString()
         } 
@@ -94,7 +100,7 @@ export default class Tagnet extends Vue {
         this.label = '';
         if(Object.keys(this.actionType).indexOf('code') != -1) {
             let memo: Memo = this.newMemo(val)
-            this.addMemo(memo) 
+            this.createMemo(memo) 
             return
         }
 
