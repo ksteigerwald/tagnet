@@ -39,7 +39,12 @@ export default class Tagnet extends Vue {
     
     @Getter('lines/lines') lines!: Line[]
     @Mutation('lines/addLine') addLine: any
-	
+
+    @Action('tags/loadTags') loadTags: any
+    created() {
+        console.log(this.$store)
+        this.loadTags() 
+    }	
     @Watch('selected')
 	watchSelected(newVal: string, oldVal: string) {
         if(!newVal) return
