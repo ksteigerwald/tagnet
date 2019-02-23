@@ -1,5 +1,8 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line } from '../types'
+import { apolloClient } from '@/constants/graphql'
+import { linesQry, linesInsert } from '@/constants/lines.ql'
+const uuidv1 = require('uuid/v1');
 
 type LineGetter = GetterTree<LineState, RootState> 
 
@@ -19,7 +22,35 @@ export const mutations: MutationTree<LineState> = {
     }
 }
 
-export const actions: ActionTree<LineState, RootState> = {}
+export const actions: ActionTree<LineState, RootState> = {
+
+    async createLine({ commit, dispatch, rootState }, payload:Line) {
+        
+        const response: any = await apolloClient.mutate({
+			mutation: linesInsert,
+			variables: { 
+			  objects: [{
+				uuid: uuidv1(),
+				label: payload.label,
+				memo_id: payload.memo_id,
+				logged: payload.logged
+			  }]
+			}
+		})
+
+		let line: Line = response.data.insert_lines.returning.pop()
+		commit('addLine', line)
+    },
+
+    async loadLines( { commit, dispatch, rootState} ) {
+        const response: any = await apolloClient.query({
+            query: linesQry
+        })
+
+        response.data.lines.forEach((line: Line) => commit('addLine', line))
+    }
+
+}
 
 export const getters: GetterTree<LineState, RootState> = {
     lines: (state, getters, rootState) => state.lines,
@@ -28,7 +59,7 @@ export const getters: GetterTree<LineState, RootState> = {
             return new Date(b.logged) - new Date(a.logged) 
         })
         .reduce((acc: any, cur: any) => {
-            let m = rootState.memos.memos.filter( m => m.id === cur.memoId)[0]
+            let m = rootState.memos.memos.filter( m => m.id === cur.memo_id)[0]
             let key = m.label
 
             if(!acc[key]) {

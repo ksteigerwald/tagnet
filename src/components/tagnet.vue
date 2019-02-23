@@ -44,6 +44,7 @@ export default class Tagnet extends Vue {
     @Action('tags/loadTags') loadTags: any
     @Action('memos/loadMemos') loadMemos: any
     @Action('memos/createMemo') createMemo: any
+    @Action('lines/createLine') createLine: any
 
     created() {
         this.loadTags() 
@@ -105,7 +106,7 @@ export default class Tagnet extends Vue {
         }
 
         let line: Line = this.newLine(val)
-        this.addLine(line)
+        this.createLine(line)
     }
     
     keymapper(label: string){

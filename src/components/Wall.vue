@@ -27,5 +27,10 @@ export default class Wall extends Vue {
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/sortedLines') sortedLines!: Line[]
+
+    @Action('lines/loadLines') loadLines: any
+	created() {
+        this.loadLines() 
+	}
 }
 </script>

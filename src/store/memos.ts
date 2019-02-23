@@ -13,7 +13,6 @@ export const state: MemoState = {
 
 export const mutations: MutationTree<MemoState> = {
     addMemo(state: MemoState, newMemo: Memo): void {
-        console.log(state, newMemo)
         const memoCopy = Object.assign({}, newMemo) 
         state.memos.push(memoCopy)
     }
@@ -24,14 +23,15 @@ export const actions: ActionTree<MemoState, RootState> = {
         
         const response: any = await apolloClient.mutate({
 			mutation: memosInsert,
-			variables: { objects: [{
+			variables: { 
+			  objects: [{
 				uuid: uuidv1(),
 				label: payload.label,
 				tag_id: payload.tag_id
-			}]
+			  }]
 			}
 		})
-		console.log("RESP",response);
+
 		let memo: Memo = response.data.insert_memos.returning.pop()
 		commit('addMemo', memo)
     },
@@ -41,6 +41,7 @@ export const actions: ActionTree<MemoState, RootState> = {
         const response: any = await apolloClient.query({
             query: memosQry
         })
+
         response.data.memos.forEach((memo: Memo) => commit('addMemo', memo))
     }
 }
