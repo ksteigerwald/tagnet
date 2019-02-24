@@ -43,6 +43,7 @@ export default class Tagnet extends Vue {
 
     @Action('memos/createMemo') createMemo: any
     @Action('lines/createLine') createLine: any
+    @Action('lines/searchLines') searchLines: any
 
 
     @Watch('selected')
@@ -91,7 +92,12 @@ export default class Tagnet extends Vue {
     }
 
     keyEvent(val: String) {
-        if(!val) return
+        if(!this.actionType) {
+			//perform search
+			this.searchLines(val)
+			return
+		}
+		if(val.trim() === '') return
         this.label = '';
         if(Object.keys(this.actionType).indexOf('code') != -1) {
             let memo: Memo = this.newMemo(val)
@@ -104,7 +110,7 @@ export default class Tagnet extends Vue {
     }
     
     keymapper(label: string){
-        if(label === null) return true
+        if(label === null) return 
 
         if(label.length === 1 && label.charAt(0) === '/') {
             this.data = this.tags.map(tag => tag.label)
@@ -113,9 +119,16 @@ export default class Tagnet extends Vue {
         if(label.length === 1 && label.charAt(0) === '@') {
             this.data = this.memos.map(memo => memo.label)
         }
+
+        if(!this.actionType) {
+			//perform search
+			this.searchLines(label)
+			return
+		}
     }
 
     get filterData() {
+		console.log('filterData')
         let len = this.label.length
         let token: String = this.label.substring(1,len).toLowerCase();
         return this.data.filter((option) => {

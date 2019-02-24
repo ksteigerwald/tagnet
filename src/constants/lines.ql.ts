@@ -24,3 +24,17 @@ query {
     }
 }
 `
+
+export const searchQry = gql`
+query search_lines($input: String) {
+	lines(
+		where: {label: {_like: $input }}
+	) {
+      id,
+      uuid,
+      memo_id,
+      label,
+      logged
+	}
+}
+`

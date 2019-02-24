@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line } from '../types'
 import { apolloClient } from '@/constants/graphql'
-import { linesQry, linesInsert } from '@/constants/lines.ql'
+import { linesQry, searchQry, linesInsert } from '@/constants/lines.ql'
 const uuidv1 = require('uuid/v1');
 
 type LineGetter = GetterTree<LineState, RootState> 
@@ -43,6 +43,16 @@ export const actions: ActionTree<LineState, RootState> = {
         })
 
         state.lines = response.data.lines
+    },
+
+    async searchLines( { commit, dispatch, rootState}, term: string ) {
+		let vars: string = `%${term}%`
+        const response: any = await apolloClient.query({
+            query: searchQry,
+			variables: { input: vars }	
+        })
+
+        state.lines = response.data.lines
     }
 
 }
@@ -59,9 +69,9 @@ export const getters: GetterTree<LineState, RootState> = {
             let key: string = m.label
 
             if(!acc[key]) {
-
                 acc[key] = [] 
             }
+
 			let obj = Object.assign({}, cur, { type: t.label })
             acc[key].push(obj) 
             return acc
