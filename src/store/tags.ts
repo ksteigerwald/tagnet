@@ -8,6 +8,8 @@ export enum TagType {
 	Goal = "trophy",
 	Person = "user-alt",
 	Event = "calendar-alt",
+	Topic = "newspaper",
+	Idea = "lightbulb",
 	Any = "asterisk"	
 }
 
@@ -33,7 +35,7 @@ export const actions: ActionTree<TagState, RootState> = {
             query: tagsQry
         })
         
-        response.data.tags.forEach((tag: Tag) => commit('addTag', tag))
+        state.tags = response.data.tags
     }
 }
 

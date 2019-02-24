@@ -2,7 +2,7 @@
   <div class="wall">
       <ul>
           <li v-for="(value, key, index) in sortedLines">
-              <h2><strong>{{key}}</strong></h2>
+              <h2><strong>{{value[0].type}} - {{key}}</strong></h2>
               <ol>
                   <li v-for="line in value">
                       {{line.label}}
@@ -29,6 +29,7 @@ export default class Wall extends Vue {
     @Getter('lines/sortedLines') sortedLines!: Line[]
 
     @Action('lines/loadLines') loadLines: any
+
 	created() {
         this.loadLines() 
 	}

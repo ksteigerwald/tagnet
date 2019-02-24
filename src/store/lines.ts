@@ -7,12 +7,7 @@ const uuidv1 = require('uuid/v1');
 type LineGetter = GetterTree<LineState, RootState> 
 
 export const state: LineState = {
-    lines: [
-/*        { memoId: 'chFRfjc7B9pqfoJBJu8Lg', label: '1 hour of practice', logged: '2019-02-18T03:38:39.760Z' },
-        { memoId: 'bRnGK3kkh5ZEW2fe5VRssf', label: 'Section 2 of Linux Academy', logged: '2019-02-18T03:43:12.337Z' },
-        { memoId: 'bRnGK3kkh5ZEW2fe5VRssf', label: 'Section 3 of Linux Academy', logged: '2019-02-18T03:44:23.063Z' },
-        { memoId: 'bRnGK3kkh5ZEW2fe5VRssf', label: 'Section 4 of Linux Academy', logged: '2019-02-20T03:44:23.063Z' }, */
-    ]
+    lines: []
 }
 
 export const mutations: MutationTree<LineState> = {
@@ -47,7 +42,7 @@ export const actions: ActionTree<LineState, RootState> = {
             query: linesQry
         })
 
-        response.data.lines.forEach((line: Line) => commit('addLine', line))
+        state.lines = response.data.lines
     }
 
 }
@@ -55,17 +50,20 @@ export const actions: ActionTree<LineState, RootState> = {
 export const getters: GetterTree<LineState, RootState> = {
     lines: (state, getters, rootState) => state.lines,
     sortedLines: (state, getters, rootState) => state.lines
-        .sort((a, b) => {
-            return new Date(b.logged) - new Date(a.logged) 
+        .sort((a:any, b:any) => {
+            return (<any>b.logged) - (<any>a.logged)
         })
         .reduce((acc: any, cur: any) => {
             let m = rootState.memos.memos.filter( m => m.id === cur.memo_id)[0]
-            let key = m.label
+            let t = rootState.tags.tags.filter( t => t.id === m.tag_id)[0]
+            let key: string = m.label
 
             if(!acc[key]) {
+
                 acc[key] = [] 
             }
-            acc[key].push(cur) 
+			let obj = Object.assign({}, cur, { type: t.label })
+            acc[key].push(obj) 
             return acc
         }, {}),
 

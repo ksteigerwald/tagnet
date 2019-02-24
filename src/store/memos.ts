@@ -41,8 +41,7 @@ export const actions: ActionTree<MemoState, RootState> = {
         const response: any = await apolloClient.query({
             query: memosQry
         })
-
-        response.data.memos.forEach((memo: Memo) => commit('addMemo', memo))
+        state.memos = response.data.memos
     }
 }
 

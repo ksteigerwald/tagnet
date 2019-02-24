@@ -41,15 +41,9 @@ export default class Tagnet extends Vue {
     @Getter('lines/lines') lines!: Line[]
     @Mutation('lines/addLine') addLine: any
 
-    @Action('tags/loadTags') loadTags: any
-    @Action('memos/loadMemos') loadMemos: any
     @Action('memos/createMemo') createMemo: any
     @Action('lines/createLine') createLine: any
 
-    created() {
-        this.loadTags() 
-        this.loadMemos() 
-    }
 
     @Watch('selected')
 	watchSelected(newVal: string, oldVal: string) {

@@ -19,5 +19,15 @@ import Wall from '@/components/Wall.vue'
       Wall
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+	
+    @Action('tags/loadTags') loadTags: any
+    @Action('memos/loadMemos') loadMemos: any
+
+    created() {
+        this.loadTags() 
+        this.loadMemos() 
+    }
+
+}
 </script>
