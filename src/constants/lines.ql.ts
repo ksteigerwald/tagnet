@@ -1,14 +1,14 @@
 import gql from 'graphql-tag'
 
 export const linesInsert = gql`
-mutation insert_memo($objects: [lines_insert_input!]!) {
+mutation insertLine($objects: [lines_insert_input!]!) {
   insert_lines(objects: $objects) {
     returning {
       id
-      uuid
       memo_id
       label
-      logged
+      uuid
+      user_id
     }
   }
 }`
@@ -20,7 +20,7 @@ query {
       uuid,
       memo_id,
       label,
-      logged
+      created
     }
 }
 `
@@ -33,8 +33,7 @@ query search_lines($input: String) {
       id,
       uuid,
       memo_id,
-      label,
-      logged
+      label
 	}
 }
 `

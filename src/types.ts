@@ -7,6 +7,7 @@ export interface RootState {
     tags: TagState
 	memos: MemoState
 	lines: LineState
+	user: UserState
 }
 
 export interface TagState {
@@ -19,6 +20,12 @@ export interface MemoState {
 
 export interface LineState {
     lines: Line[]
+    wall: Line[]
+}
+
+export interface UserState {
+	status: any
+	user: any
 }
 
 export interface Tag {
@@ -39,4 +46,12 @@ export interface Line {
     memo_id: number
     label: string
     logged: any
+}
+
+export interface User {
+	token: string
+    firstName: string
+    lastName: string
+    id: number
+    username: string
 }

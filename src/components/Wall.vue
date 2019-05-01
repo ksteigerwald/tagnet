@@ -1,18 +1,16 @@
 <template>
   <div class="wall">
-      <ul>
-          <li v-for="(value, key, index) in sortedLines">
-              <h2>
-			  <b-icon :icon="icon(value[0].type)" size="is-small"/>
-
-			  <strong> {{key}}</strong></h2>
-              <ol>
+          <div class="card" v-for="(value, key, index) in sortedLines">
+              <h2><strong> 
+			         <b-icon :icon="icon(value[0].type)" size="is-small"/>
+                      {{key}}
+                  </strong></h2>
+              <ul>
                   <li v-for="line in value">
                       {{line.label}}
                   </li>
-              </ol>
-          </li>
-      </ul>
+              </ul>
+          </div>
   </div>
 </template>
 
@@ -22,10 +20,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 
-@Component({
-  components: {
-  }
-})
+@Component
 export default class Wall extends Vue {
 
     @Getter('tags/tags') !tags: Tag[]
@@ -43,3 +38,19 @@ export default class Wall extends Vue {
 	}
 }
 </script>
+
+<style scoped lang="scss">
+    .card {
+        margin-bottom: 1rem;
+        padding:1rem;
+        h2 {
+            text-align:left;
+        }
+        ul {
+            li {
+                text-align:left;
+            }
+        }
+    }
+</style>
+

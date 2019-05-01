@@ -4,8 +4,9 @@ export const tagsQry = gql`
 query {
     tags {
         id,
-        code,
         label
+        code
+        created
     }
 }
 `

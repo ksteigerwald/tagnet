@@ -13,36 +13,35 @@ export const state: MemoState = {
 
 export const mutations: MutationTree<MemoState> = {
     addMemo(state: MemoState, newMemo: Memo): void {
-        const memoCopy = Object.assign({}, newMemo) 
+        const memoCopy = Object.assign({}, newMemo)
         state.memos.push(memoCopy)
     }
 }
 
 export const actions: ActionTree<MemoState, RootState> = {
-    async createMemo({ commit, dispatch, rootState }, payload:Memo) {
-        
-        const response: any = await apolloClient.mutate({
-			mutation: memosInsert,
-			variables: { 
-			  objects: [{
-				uuid: uuidv1(),
-				label: payload.label,
-				tag_id: payload.tag_id
-			  }]
-			}
-		})
+  async createMemo({ commit, dispatch, rootState }, payload:Memo) {
+    const response: any = await apolloClient.mutate({
+      mutation: memosInsert,
+      variables: {
+        objects: [{
+          label: payload.label,
+          tag_id: payload.tag_id
+        }]
+      }
+    })
 
-		let memo: Memo = response.data.insert_memos.returning.pop()
-		commit('addMemo', memo)
-    },
+    let memo: Memo = response.data.insert_memos.returning.pop()
+    commit('addMemo', memo)
 
-    async loadMemos( { commit, dispatch, rootState} ) {
-        
-        const response: any = await apolloClient.query({
-            query: memosQry
-        })
-        state.memos = response.data.memos
-    }
+  },
+
+  async loadMemos( { commit, dispatch, rootState} ) {
+
+    const response: any = await apolloClient.query({
+      query: memosQry
+    })
+    state.memos = response.data.memos
+  }
 }
 
 export const getters: GetterTree<MemoState, RootState> = {

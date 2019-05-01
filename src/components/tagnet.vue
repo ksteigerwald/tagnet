@@ -28,7 +28,7 @@ const uuidv1 = require('uuid/v1');
 @Component
 export default class Tagnet extends Vue {
     data: any[] = []
-	label: string = ''
+    label: string = ''
     selected: any = null
     actionType: any = null
     output: string = 'Start Typing'
@@ -37,7 +37,6 @@ export default class Tagnet extends Vue {
     @Getter('tags/tags') tags!: Tag[]
     @Getter('memos/memos') memos!: Memo[]
     @Mutation('memos/addMemo') addMemo: any
-    
     @Getter('lines/lines') lines!: Line[]
     @Mutation('lines/addLine') addLine: any
 
@@ -67,39 +66,41 @@ export default class Tagnet extends Vue {
     private swapIcon(icon: string, isLine: boolean) {
         let str: string = 'fa-' + this.icon 
         let $el: any = document.getElementsByClassName(str)[0]
-        let newClass = isLine ? 'clipboard' : TagType[icon]
+        let newClass = isLine ? 'clipboard' : (<any>TagType)[icon]
         let css: string = $el.classList.value.replace(this.icon, newClass)
         $el.className = css
         this.icon = newClass
     }
    
-    private newMemo(label: String): Memo {
+    private newMemo(label: string): Memo {
         return {
-			uuid: uuidv1(),
-            id: short.generate(),
             label: label,
             tag_id: this.actionType.id
         } 
     }
 
-    private newLine(label: String): Line {
+    private newLine(label: string): Line {
         return {
-			uuid: uuidv1(),
             memo_id: this.actionType.id,
             label: label,
-            logged: new Date().toISOString()
         } 
     }
 
-    keyEvent(val: String) {
+    keyEvent(val: string) {
         if(!this.actionType) {
+            console.log(val, 'search')
 			//perform search
 			this.searchLines(val)
 			return
 		}
+
 		if(val.trim() === '') return
+
+
         this.label = '';
         if(Object.keys(this.actionType).indexOf('code') != -1) {
+            console.log(val, 'search')
+            if(val.charAt(0) === '/') return
             let memo: Memo = this.newMemo(val)
             this.createMemo(memo) 
             return
@@ -128,7 +129,6 @@ export default class Tagnet extends Vue {
     }
 
     get filterData() {
-		console.log('filterData')
         let len = this.label.length
         let token: String = this.label.substring(1,len).toLowerCase();
         return this.data.filter((option) => {

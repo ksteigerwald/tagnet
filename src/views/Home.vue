@@ -1,8 +1,8 @@
 <template>
   <div class="home columns is-mobile is-centered">
     <div class="column is-half">
-        <Tagnet /> 
-        <Wall /> 
+        <Tagnet />
+        <Wall />
     </div>
   </div>
 </template>

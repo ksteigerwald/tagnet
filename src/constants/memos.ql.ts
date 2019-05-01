@@ -18,7 +18,7 @@ query {
         id,
         label,
         uuid,
-		tag_id
+        tag_id
     }
 }
 `

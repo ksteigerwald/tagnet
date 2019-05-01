@@ -7,7 +7,8 @@ const uuidv1 = require('uuid/v1');
 type LineGetter = GetterTree<LineState, RootState> 
 
 export const state: LineState = {
-    lines: []
+    lines: [],
+    wall: []
 }
 
 export const mutations: MutationTree<LineState> = {
@@ -19,19 +20,17 @@ export const mutations: MutationTree<LineState> = {
 
 export const actions: ActionTree<LineState, RootState> = {
 
-    async createLine({ commit, dispatch, rootState }, payload:Line) {
-        
-        const response: any = await apolloClient.mutate({
-			mutation: linesInsert,
-			variables: { 
-			  objects: [{
-				uuid: uuidv1(),
-				label: payload.label,
-				memo_id: payload.memo_id,
-				logged: payload.logged
-			  }]
-			}
-		})
+  async createLine({ commit, dispatch, rootState }, payload:Line) {
+      console.log("LINE", payload)
+    const response: any = await apolloClient.mutate({
+      mutation: linesInsert,
+      variables: {
+        objects: [{
+          label: payload.label,
+          memo_id: payload.memo_id
+        }]
+      }
+    })
 
 		let line: Line = response.data.insert_lines.returning.pop()
 		commit('addLine', line)
@@ -43,6 +42,7 @@ export const actions: ActionTree<LineState, RootState> = {
         })
 
         state.lines = response.data.lines
+        state.wall = response.data.lines
     },
 
     async searchLines( { commit, dispatch, rootState}, term: string ) {
@@ -51,6 +51,8 @@ export const actions: ActionTree<LineState, RootState> = {
             query: searchQry,
 			variables: { input: vars }	
         })
+
+        dispatch('sortedLines') 
 
         state.lines = response.data.lines
     }
@@ -61,7 +63,7 @@ export const getters: GetterTree<LineState, RootState> = {
     lines: (state, getters, rootState) => state.lines,
     sortedLines: (state, getters, rootState) => state.lines
         .sort((a:any, b:any) => {
-            return (<any>b.logged) - (<any>a.logged)
+            return (<any>a.logged) - (<any>b.logged)
         })
         .reduce((acc: any, cur: any) => {
             let m = rootState.memos.memos.filter( m => m.id === cur.memo_id)[0]
@@ -69,11 +71,11 @@ export const getters: GetterTree<LineState, RootState> = {
             let key: string = m.label
 
             if(!acc[key]) {
-                acc[key] = [] 
+                acc[key] = []
             }
 
-			let obj = Object.assign({}, cur, { type: t.label })
-            acc[key].push(obj) 
+            let obj = Object.assign({}, cur, { type: t.label })
+            acc[key].push(obj)
             return acc
         }, {}),
 
