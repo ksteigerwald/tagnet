@@ -140,3 +140,4 @@ export default class Tagnet extends Vue {
     }
 }
 </script>
+

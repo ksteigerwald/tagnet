@@ -22,15 +22,17 @@
     "i": "^0.3.6",
     "node-fetch": "^2.3.0",
     "npm": "^6.8.0",
+    "rxjs": "^6.5.1",
     "short-uuid": "^3.1.0",
     "ts-node": "^8.0.2",
     "ts-vue-plugin": "^0.2.0",
     "unfetch": "^4.0.1",
     "uuid": "^3.3.2",
-    "vue": "^2.5.22",
+    "vue": "^2.6.10",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
+    "vue-rx": "^6.1.0",
     "vuex": "^3.0.1",
     "vuex-class": "^0.3.1"
   },
@@ -45,6 +47,6 @@
     "sass-loader": "^7.1.0",
     "ts-jest": "^23.0.0",
     "typescript": "^3.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.6.10"
   }
 }
