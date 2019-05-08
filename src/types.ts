@@ -39,13 +39,16 @@ export interface Memo {
     id: string
     label: string
     tag_id: number
+    created: string
+    user_id: string
 }
 
 export interface Line {
 	uuid: string
     memo_id: number
     label: string
-    logged: any
+    created: string
+    user_id: string
 }
 
 export interface User {

@@ -74,6 +74,10 @@ export default class Tagnet extends Vue {
    
     private newMemo(label: string): Memo {
         return {
+            uuid: '',
+            id: '',
+            created: '',
+            user_id: '',
             label: label,
             tag_id: this.actionType.id
         } 
@@ -81,6 +85,9 @@ export default class Tagnet extends Vue {
 
     private newLine(label: string): Line {
         return {
+            uuid: '',
+            created: '',
+            user_id: '',
             memo_id: this.actionType.id,
             label: label,
         } 
