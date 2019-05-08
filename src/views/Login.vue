@@ -45,7 +45,8 @@ export default class Login extends Vue {
     
     authLink() {
         let redirect:string = (process.env.NODE_ENV === 'production') ? 'tagnet.herokuapp.com' : 'localhost:8080';
-        return `https://tagnet.auth0.com/login?client=2rUl0BvJ91rrfBI7t0tXcFC6yxx0HF3K&protocol=oauth2&response_type=token id_token&redirect_uri=http://${redirect}/callback&scope=openid profile`
+        let proc:string = (process.env.NODE_ENV === 'production') ? 'https' : 'http';
+        return `https://tagnet.auth0.com/login?client=2rUl0BvJ91rrfBI7t0tXcFC6yxx0HF3K&protocol=oauth2&response_type=token id_token&redirect_uri=${proc}://${redirect}/callback&scope=openid profile`
     }
 	created() {
 		//console.log(this)
