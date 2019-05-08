@@ -23,17 +23,21 @@ export const state: UserState = localUser
     setUser(state: UserState, user: User) {
       localStorage.setItem(config.localKey('user'), JSON.stringify(user));
     },
+
     logout(state: UserState, user: User) {
       localStorage.removeItem(config.localKey('user'));
-    },
+    }
+    ,
     loginFailure(state: UserState, user: User) { 
       state.status = {}
       state.user = null;
     },
+
     loginSuccess(state: UserState, user: User) { 
       state.status = { loggedIn: true }
       state.user = user;
     },
+
     loginRequest(state: UserState, user: User) { 
       state.status = { loggingIn: true }
       state.user = user;

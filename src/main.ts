@@ -31,6 +31,7 @@ router.beforeEach((to:any, from:any, next:any) => {
     
     if(to.path === '/logout') {
         store.dispatch('user/logout') 
+        window.location.reload()
     }
 
     next();

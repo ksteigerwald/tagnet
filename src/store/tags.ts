@@ -29,20 +29,12 @@ export const mutations: MutationTree<TagState> = {
 }
 
 export const actions: ActionTree<TagState, RootState> = {
-  async loadTags( { commit, dispatch, rootState}, id: number) {
-    try {
-        const response: any = await apolloClient.query({
-            query: tagsQry
-        })
-        state.tags = response.data.tags
-    }
-    catch (err) {
-        if(err.networkError.response.status === 400) {
-            dispatch('user/logout', {}, {root: true})
-        }
-    }
-
-  }
+	async loadTags( { commit, dispatch, rootState}, id: number) {
+		const response: any = await apolloClient.query({
+			query: tagsQry
+		})
+		state.tags = response.data.tags
+	}
 }
 
 export const tags:Module<TagState, RootState> = {
