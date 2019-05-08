@@ -6,9 +6,10 @@
     "serve": "vue-cli-service serve",
     "start": "node server.js",
     "build": "vue-cli-service build",
+    "postinstall": "npm run build",
     "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+//    "test:e2e": "vue-cli-service test:e2e",
+//    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
