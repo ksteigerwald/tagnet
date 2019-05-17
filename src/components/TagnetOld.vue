@@ -44,7 +44,6 @@ export default class TagnetOld extends Vue {
     @Action('lines/createLine') createLine: any
     @Action('lines/searchLines') searchLines: any
 
-
     @Watch('selected')
 	watchSelected(newVal: string, oldVal: string) {
         if(!newVal) return

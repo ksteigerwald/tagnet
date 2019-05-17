@@ -26,8 +26,8 @@ export const state: UserState = localUser
 
     logout(state: UserState, user: User) {
       localStorage.removeItem(config.localKey('user'));
-    }
-    ,
+    },
+
     loginFailure(state: UserState, user: User) { 
       state.status = {}
       state.user = null;

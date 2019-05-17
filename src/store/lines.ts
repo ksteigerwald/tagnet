@@ -2,6 +2,9 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line } from '../types'
 import { apolloClient } from '@/constants/graphql'
 import { linesQry, searchQry, linesInsert } from '@/constants/lines.ql'
+import { Subject, fromEvent, of, pipe } from 'rxjs';
+import { pluck, map, debounceTime, tap,
+         distinctUntilChanged, switchMap } from 'rxjs/operators';
 const uuidv1 = require('uuid/v1');
 
 type LineGetter = GetterTree<LineState, RootState> 
@@ -41,6 +44,7 @@ export const actions: ActionTree<LineState, RootState> = {
             query: linesQry
         })
 
+		console.log(response.data.lines)
         state.lines = response.data.lines
         state.wall = response.data.lines
     },
@@ -52,9 +56,8 @@ export const actions: ActionTree<LineState, RootState> = {
 			variables: { input: vars }	
         })
 
-        dispatch('sortedLines') 
-
         state.lines = response.data.lines
+        dispatch('sortedLines') 
     }
 
 }
@@ -66,9 +69,13 @@ export const getters: GetterTree<LineState, RootState> = {
             return (<any>a.logged) - (<any>b.logged)
         })
         .reduce((acc: any, cur: any) => {
-            let m = rootState.memos.memos.filter( m => m.id === cur.memo_id)[0]
-            let t = rootState.tags.tags.filter( t => t.id === m.tag_id)[0]
-            let key: string = m.label
+            //TODO: use grqphql to sort this
+            let m = rootState.memos.memos.filter( (m) =>{ 
+                return m.id === cur.memo_id }) 
+
+            let memo = m[0]
+            let t = rootState.tags.tags.filter( t => t.id === memo.tag_id)[0]
+            let key: string = memo.label
 
             if(!acc[key]) {
                 acc[key] = []
@@ -78,7 +85,6 @@ export const getters: GetterTree<LineState, RootState> = {
             acc[key].push(obj)
             return acc
         }, {}),
-
 }
 
 export const lines:Module<LineState, RootState> ={

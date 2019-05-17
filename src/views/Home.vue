@@ -1,6 +1,7 @@
 <template>
   <div class="home columns is-mobile is-centered">
     <div class="column is-half">
+        <RxTagnet />
         <TagnetOld />
         <Wall />
     </div>
@@ -10,12 +11,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
-import TagnetOld from '@/components/TagnetOld.vue'
+import RxTagnet from '@/components/RxTagnet.vue'
 import Wall from '@/components/Wall.vue'
 
 @Component({
   components: {
-      TagnetOld,
+      RxTagnet,
       Wall
   }
 })

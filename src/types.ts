@@ -16,6 +16,7 @@ export interface TagState {
 
 export interface MemoState {
     memos: Memo[]
+    wall: Memo[]
 }
 
 export interface LineState {
@@ -41,6 +42,9 @@ export interface Memo {
     tag_id: number
     created: string
     user_id: string
+    type?: string
+    MemoLines?: Line[]
+    TagMemo?: Tag
 }
 
 export interface Line {

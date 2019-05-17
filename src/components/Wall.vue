@@ -1,12 +1,12 @@
 <template>
   <div class="wall">
-          <div class="card" v-for="(value, key, index) in sortedLines">
+          <div class="card" v-for="(memo, key, index) in memoLines">
               <h2><strong> 
-			         <b-icon :icon="icon(value[0].type)" size="is-small"/>
-                      {{key}}
+			         <b-icon :icon="icon(memo.TagMemo.label)" size="is-small"/>
+                      {{memo.label}}
                   </strong></h2>
               <ul>
-                  <li v-for="line in value">
+                  <li v-for="line in memo.MemoLines">
                       {{line.label}}
                   </li>
               </ul>
@@ -25,16 +25,16 @@ export default class Wall extends Vue {
 
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
+    @Getter('memos/memoLines') memoLines!: Memo[]
     @Getter('lines/sortedLines') sortedLines!: Line[]
-
-    @Action('lines/loadLines') loadLines: any
+    @Action('memos/loadWall') loadWall: any
 	
 	icon(val: any) {
 		return TagType[val]
 	}
 
 	created() {
-        this.loadLines() 
+        this.loadWall() 
 	}
 }
 </script>

@@ -14,9 +14,10 @@ Vue.use(Buefy, {
     defaultIconPack: 'fas'
 })
 
-//Vue.use(VueRx)
+Vue.use(VueRx)
 
 router.beforeEach((to:any, from:any, next:any) => {
+
     const publicPages: string[] = ['/login', '/about']
     const authRequired = !publicPages.includes(to.path);
 
