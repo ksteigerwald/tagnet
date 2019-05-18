@@ -1,5 +1,5 @@
 <template>
-<div class="wall">
+<div class="wall container">
     <Card :key="componentKey" :memoLines="memoLines"/>
 </div>
 </template>

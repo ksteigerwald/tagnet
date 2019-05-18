@@ -1,10 +1,16 @@
 <template>
-  <div class="home columns is-mobile is-centered">
-    <div class="column is-half">
-        <RxTagnet />
-        <Wall />
+    <div>
+        <div class="section">
+            <div class="container">
+                <div class="columns is-mobile is-centered">
+                    <RxTagnet />
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <Wall />
+        </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -14,13 +20,13 @@ import RxTagnet from '@/components/RxTagnet.vue'
 import Wall from '@/components/Wall.vue'
 
 @Component({
-  components: {
-      RxTagnet,
-      Wall
-  }
+    components: {
+        RxTagnet,
+        Wall
+    }
 })
 export default class Home extends Vue {
-	
+
     @Action('tags/loadTags') loadTags: any
     @Action('memos/loadMemos') loadMemos: any
 

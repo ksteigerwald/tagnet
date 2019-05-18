@@ -1,6 +1,6 @@
 <template>
-    <div class="cards">
-        <div class="card" v-for="(memo, key, index) in memoLines">
+    <div class="cards columns is-centered is-3 is-desktop is-multiline">
+        <div class="card column is-one-quarter" v-for="(memo, key, index) in memoLines">
             <h2>
                 <strong> 
                     <b-icon :icon="icon(memo.TagMemo.label)" size="is-small"/>
@@ -39,8 +39,9 @@ export default class Card extends Vue {
 
 <style scoped lang="scss">
 .card {
-    margin-bottom: 1rem;
+    border-radius: 5px;
     padding:1rem;
+    margin:0.75rem;
     h2 {
         text-align:left;
     }

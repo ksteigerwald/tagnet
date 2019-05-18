@@ -32,7 +32,7 @@ query {
         tag_id
         label
         created
-        MemoLines {
+        MemoLines(limit: 10, order_by: {created: desc}) {
             id
             created
             label
@@ -54,7 +54,7 @@ query search_memos($input:String){
     tag_id
     created
     uuid
-    MemoLines {
+    MemoLines(limit: 10, order_by: {created: desc}) {
       label
       id
       memo_id

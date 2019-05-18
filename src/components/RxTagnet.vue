@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="wrap column is-half">
         <b-field :label="output"> </b-field>
         <div class="rx-complete">
         <ActionToggle @clickActionToggle="onActionToggleClick"/>
@@ -194,8 +194,6 @@ export default class RxTagnet extends Vue {
     background:#F4F7FA;
     padding:0 5px;
     border:1px solid #D4E3F5;
-    margin-bottom:5rem; 
-
     input {
         background-color: transparent;
         outline: none;

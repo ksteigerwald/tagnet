@@ -10,11 +10,11 @@ import * as config from './helpers/config'
 
 Vue.config.productionTip = false;
 
+Vue.use(VueRx)
 Vue.use(Buefy, {
     defaultIconPack: 'fas'
 })
 
-Vue.use(VueRx)
 
 router.beforeEach((to:any, from:any, next:any) => {
 
