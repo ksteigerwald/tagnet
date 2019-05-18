@@ -1,17 +1,7 @@
 <template>
-  <div class="wall">
-          <div class="card" v-for="(memo, key, index) in memoLines">
-              <h2><strong> 
-			         <b-icon :icon="icon(memo.TagMemo.label)" size="is-small"/>
-                      {{memo.label}}
-                  </strong></h2>
-              <ul>
-                  <li v-for="line in memo.MemoLines">
-                      {{line.label}}
-                  </li>
-              </ul>
-          </div>
-  </div>
+<div class="wall">
+    <Card :key="componentKey" :memoLines="memoLines"/>
+</div>
 </template>
 
 <script lang="ts">
@@ -19,22 +9,34 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
+import Card from '@/components/Card.vue'
 
-@Component
+@Component({
+  components: {
+    Card
+  }
+})
 export default class Wall extends Vue {
 
+    componentKey:number = 0
+    
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('memos/memoLines') memoLines!: Memo[]
-    @Getter('lines/sortedLines') sortedLines!: Line[]
     @Action('memos/loadWall') loadWall: any
-	
-	icon(val: any) {
-		return TagType[val]
-	}
+    
+    rerenderCards() {
+        this.componentKey += 1
+        console.log("CMK>>", this.componentKey)
+    } 
 
 	created() {
         this.loadWall() 
+        this.$store.subscribe((action, state) => {
+            console.log(action.type)
+            console.log(action.payload)
+            setTimeout(() => { console.log(this, 't');this.componentKey++}, 500)
+        })
 	}
 }
 </script>

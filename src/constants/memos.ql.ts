@@ -47,7 +47,7 @@ query {
 
 export const memosSearch = gql`
 query search_memos($input:String){
-  memos(where: {label: {_like: $input}}) {
+  memos(where: {_or:[{label: {_like: $input }}, {MemoLines:{label:{_like:$input}}}]}) {
     id
     label
     user_id

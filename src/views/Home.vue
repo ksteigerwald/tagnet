@@ -2,7 +2,6 @@
   <div class="home columns is-mobile is-centered">
     <div class="column is-half">
         <RxTagnet />
-        <TagnetOld />
         <Wall />
     </div>
   </div>

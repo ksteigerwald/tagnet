@@ -59,16 +59,16 @@ export const actions: ActionTree<MemoState, RootState> = {
             query: memosSearch,
             variables: { input: vars }	
         })
-        console.log('>>> seaerch', response.data)
+
         state.wall = response.data.memos
     }
 }
 
 export const getters: GetterTree<MemoState, RootState> = {
     memos: (state, getters, rootState) => state.memos,
-        find: (state, getters, rootState, id) => 
-    state.memos.filter(memo => memo.id === id),
-        memoLines: (state, getters, rootState ) => state.wall
+    find: (state, getters, rootState, id) => 
+        state.memos.filter(memo => memo.id === id),
+    memoLines: (state, getters, rootState ) => state.wall
 }
 
 export const memos:Module<MemoState, RootState> ={
