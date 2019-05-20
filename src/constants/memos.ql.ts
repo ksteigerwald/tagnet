@@ -8,6 +8,9 @@ mutation insert_memo($objects: [memos_insert_input!]!) {
       label
       uuid
       tag_id
+      TagMemo {
+        label
+      }
     }
   }
 }`
@@ -25,7 +28,7 @@ query {
 
 export const memosQryMemoLines = gql`
 query {
-    memos(order_by: {created: asc}) {
+    memos(order_by: {created: desc}) {
         id
         uuid
         user_id

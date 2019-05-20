@@ -1,7 +1,8 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { memosQry,memosQryMemoLines,memosSearch, memosInsert } from '@/constants/memos.ql'
+import { memosQry,memosQryMemoLines,memosSearch, memosInsert, 
+         memosLineAggregate} from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 const uuidv1 = require('uuid/v1');
 
@@ -15,7 +16,9 @@ export const state: MemoState = {
 export const mutations: MutationTree<MemoState> = {
     addMemo(state: MemoState, newMemo: Memo): void {
         const memoCopy = Object.assign({}, newMemo)
+        console.log('memoCopy', memoCopy)
         state.memos.push(memoCopy)
+        state.wall.push(memoCopy)
     }
 }
 
@@ -45,15 +48,16 @@ export const actions: ActionTree<MemoState, RootState> = {
     },
 
 
-    async loadWall( { commit, dispatch, rootState} ) {
-
+    async loadWall({ commit, dispatch, rootState} ) {
         const response: any = await apolloClient.query({
             query: memosQryMemoLines
         })
+
         state.wall = response.data.memos
+        console.log('loadWall')
     },
 
-    async searchMemos( { commit, dispatch, rootState}, term: string ) {
+    async searchMemos({ commit, dispatch, rootState}, term: string ) {
         let vars: string = `%${term}%`
         const response: any = await apolloClient.query({
             query: memosSearch,
