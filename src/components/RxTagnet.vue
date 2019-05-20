@@ -189,7 +189,13 @@ export default class RxTagnet extends Vue {
 
 
 <style scoped lang="scss">
+.wrap {
+    position:relative;
+}
 .rx-complete {
+    position:absolute;
+    z-index:10;
+    width:100%;
     border-radius: 10px;
     background:#F4F7FA;
     padding:0 5px;
@@ -210,6 +216,7 @@ export default class RxTagnet extends Vue {
     }
 
     ul {
+        border-top:1px solid #7957d5;
         display:block;
         li {
             display:block;

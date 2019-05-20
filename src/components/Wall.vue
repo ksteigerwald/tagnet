@@ -32,11 +32,13 @@ export default class Wall extends Vue {
 
 	created() {
         this.loadWall() 
+        /*
         this.$store.subscribe((action, state) => {
             console.log(action.type)
             console.log(action.payload)
-            setTimeout(() => { console.log(this, 't');this.componentKey++}, 500)
+            setTimeout(() => { console.log(this, 'to');this.componentKey++}, 500)
         })
+        */
 	}
 }
 </script>
