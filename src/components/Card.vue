@@ -33,9 +33,9 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { TagType } from '@/store/tags'
 import { State, Getter, Action, namespace } from 'vuex-class';
-import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
+import { ITagType, Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
+import { TagType } from '@/store/tags'
 
 @Component
 export default class Card extends Vue {
@@ -49,12 +49,12 @@ export default class Card extends Vue {
         console.log("CMK", this)
     }
 
-    icon(val: any) {
-        return TagType[val]
+    icon(val: string) {
+        return (<any>TagType)[val]
     }
 
     cardCSS(key: string) {
-        let cardType = TagType[key]
+        let cardType = (<any>TagType)[key]
         return `card column is-one-quarter ${cardType}`
     }
 

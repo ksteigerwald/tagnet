@@ -1,5 +1,5 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
-import { RootState, TagState, Tag } from '../types'
+import { ITagType, RootState, TagState, Tag } from '../types'
 import { apolloClient } from '../constants/graphql'
 import { tagsQry } from '../constants/tags.ql'
 

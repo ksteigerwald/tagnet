@@ -1,8 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { memosQry,memosQryMemoLines,memosSearch, memosInsert, 
-         memosLineAggregate} from '@/constants/memos.ql'
+import { memosQry,memosQryMemoLines,memosSearch, memosInsert } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 const uuidv1 = require('uuid/v1');
 

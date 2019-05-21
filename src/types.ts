@@ -1,5 +1,8 @@
 import { MutationPayload } from 'vuex'
-import { TagType } from './store/tags'
+
+export interface ITagType {
+    [key: string]: any
+}
 
 // Store
 export interface RootState {
@@ -16,7 +19,6 @@ export interface TagState {
 
 export interface MemoState {
     memos: Memo[]
-    wall: Memo[]
 }
 
 export interface LineState {
