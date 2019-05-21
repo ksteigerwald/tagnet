@@ -18,10 +18,22 @@ mutation insert_memo($objects: [memos_insert_input!]!) {
 export const memosQry = gql`
 query {
     memos {
+        id
+        uuid
+        user_id
+        tag_id
+        label
+        created
+        MemoLines(limit: 10, order_by: {created: desc}) {
+            id
+        }
         id,
         label,
         uuid,
         tag_id
+        TagMemo {
+            label
+        }
     }
 }
 `
@@ -37,10 +49,6 @@ query {
         created
         MemoLines(limit: 10, order_by: {created: desc}) {
             id
-            created
-            label
-            memo_id
-            uuid
         }
         TagMemo {
             label
@@ -57,37 +65,12 @@ query search_memos($input:String){
     tag_id
     created
     uuid
-    MemoLines(limit: 10, order_by: {created: desc}) {
-      label
+    MemoLines(order_by: {created: desc}) {
       id
-      memo_id
-      user_id
-      created
     }
     TagMemo {
       label
     }
   }
 }
-`
-export const memosLineAggregate = gql`
-{
-  memos {
-    id
-    label
-    user_id
-    tag_id
-    created
-    uuid
-    TagMemo {
-      label
-    }
-    MemoLines_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-}
-
 `
