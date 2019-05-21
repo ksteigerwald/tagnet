@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
+import Memorandum from './views/Memorandum.vue';
 
 Vue.use(Router);
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/Logout',
       name: 'logout',
       component: Login,
+    },
+    {
+      path: '/memorandums/:memoId',
+      name: 'memorandums',
+      component: Memorandum,
     },
     {
       path: '/callback',

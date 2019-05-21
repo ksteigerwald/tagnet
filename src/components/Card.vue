@@ -1,32 +1,34 @@
 <template>
     <div class="cards columns is-centered is-3 is-desktop is-multiline">
         <div :class="cardCSS(memo.TagMemo.label)" v-for="(memo, key, index) in memos">
-            <div class="card-box">
-                <span class="row"> 
-                    <mark class="tag-type">
-                        <b-icon :icon="icon(memo.TagMemo.label)" size="is-small"/>
-                    </mark>
-                </span>
-                <span class="row">
-                    <h2>
-                        {{memo.TagMemo.label}}
-                    </h2>
-                </span>
-                <span class="row">
-                    <h3>
-                        {{memo.label}}
-                    </h3>
-                </span>
-                <span class="row">
-                    <ul>
-                        <li>
-                            <mark class="circle">
-                                {{memoLines(memo.id).length}}
-                            </mark>
-                        </li>
-                    </ul>
-                </span>
-            </div>
+            <router-link :to="{ name: 'memorandums', params: { memoId: memo.id }}">
+                <div class="card-box">
+                    <span class="row"> 
+                        <mark class="tag-type">
+                            <b-icon :icon="icon(memo.TagMemo.label)" size="is-small"/>
+                        </mark>
+                    </span>
+                    <span class="row">
+                        <h2>
+                            {{memo.TagMemo.label}}
+                        </h2>
+                    </span>
+                    <span class="row">
+                        <h3>
+                            {{memo.label}}
+                        </h3>
+                    </span>
+                    <span class="row">
+                        <ul>
+                            <li>
+                                <mark class="circle">
+                                    {{memoLines(memo.id).length}}
+                                </mark>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </router-link>
         </div>
     </div>
 </template>
@@ -62,6 +64,7 @@ export default class Card extends Vue {
 </script>
 
 <style scoped lang="scss">
+a { color:#000 }
 .card {
     border-radius: 20px;
     padding:1rem;
