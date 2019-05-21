@@ -70,3 +70,24 @@ query search_memos($input:String){
   }
 }
 `
+export const memosLineAggregate = gql`
+{
+  memos {
+    id
+    label
+    user_id
+    tag_id
+    created
+    uuid
+    TagMemo {
+      label
+    }
+    MemoLines_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}
+
+`

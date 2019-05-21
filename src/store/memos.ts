@@ -65,6 +65,15 @@ export const actions: ActionTree<MemoState, RootState> = {
         })
 
         state.wall = response.data.memos
+    },
+
+    async getMemosWithLineCount({ commit, dispatch, rootState}) {
+        const response: any = await apolloClient.query({
+            query: memosLineAggregate,
+        })
+
+        state.wall = response.data.memos
+        state.memos = response.data.memos
     }
 }
 
