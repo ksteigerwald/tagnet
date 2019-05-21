@@ -1,6 +1,6 @@
 <template>
 <div class="wall container">
-    <Card :key="componentKey" :memoLines="memoLines"/>
+    <Card :key="componentKey" :memos="memos" />
 </div>
 </template>
 
@@ -22,17 +22,18 @@ export default class Wall extends Vue {
     
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
-    @Getter('memos/memoLines') memoLines!: Memo[]
     @Action('memos/loadWall') loadWall: any
+    @Action('lines/loadLines') loadLines: any
     
     rerenderCards() {
         this.componentKey += 1
-        console.log("CMK>>", this.componentKey)
     } 
 
 	created() {
         this.loadWall() 
+        this.loadLines() 
         /*
+
         this.$store.subscribe((action, state) => {
             console.log(action.type)
             console.log(action.payload)

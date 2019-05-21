@@ -1,6 +1,6 @@
 <template>
     <div class="cards columns is-centered is-3 is-desktop is-multiline">
-        <div :class="cardCSS(memo.TagMemo.label)" v-for="(memo, key, index) in memoLines">
+        <div :class="cardCSS(memo.TagMemo.label)" v-for="(memo, key, index) in memos">
             <div class="card-box">
                 <span class="row"> 
                     <mark class="tag-type">
@@ -21,7 +21,7 @@
                     <ul>
                         <li>
                             <mark class="circle">
-                                {{memo.MemoLines.length}}
+                                {{memoLines(memo.id).length}}
                             </mark>
                         </li>
                     </ul>
@@ -34,14 +34,18 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { TagType } from '@/store/tags'
+import { State, Getter, Action, namespace } from 'vuex-class';
+import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 
 @Component
 export default class Card extends Vue {
 
-    @Prop() memoLines:Memo[]
+    @Prop() memos:Memo[]
+
+    @Getter('lines/memoLines') memoLines: Line[]
 
     mounted() {
-        console.log(this.memoLines)
+        console.log(this)
         console.log("CMK", this)
     }
 

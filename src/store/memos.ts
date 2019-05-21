@@ -10,7 +10,6 @@ type MemoGetter = GetterTree<MemoState, RootState>
 
 export const state: MemoState = {
     memos: [ ],
-    wall: []
 }
 
 export const mutations: MutationTree<MemoState> = {
@@ -18,7 +17,6 @@ export const mutations: MutationTree<MemoState> = {
         const memoCopy = Object.assign({}, newMemo)
         console.log('memoCopy', memoCopy)
         state.memos.push(memoCopy)
-        state.wall.push(memoCopy)
     }
 }
 
@@ -53,7 +51,7 @@ export const actions: ActionTree<MemoState, RootState> = {
             query: memosQryMemoLines
         })
 
-        state.wall = response.data.memos
+        state.memos = response.data.memos
         console.log('loadWall')
     },
 
@@ -64,24 +62,15 @@ export const actions: ActionTree<MemoState, RootState> = {
             variables: { input: vars }	
         })
 
-        state.wall = response.data.memos
+        state.memos = response.data.memos
     },
 
-    async getMemosWithLineCount({ commit, dispatch, rootState}) {
-        const response: any = await apolloClient.query({
-            query: memosLineAggregate,
-        })
-
-        state.wall = response.data.memos
-        state.memos = response.data.memos
-    }
 }
 
 export const getters: GetterTree<MemoState, RootState> = {
     memos: (state, getters, rootState) => state.memos,
     find: (state, getters, rootState, id) => 
         state.memos.filter(memo => memo.id === id),
-    memoLines: (state, getters, rootState ) => state.wall
 }
 
 export const memos:Module<MemoState, RootState> ={
