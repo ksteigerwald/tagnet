@@ -24,6 +24,7 @@ router.beforeEach((to:any, from:any, next:any) => {
     if(to.path === "/callback") {
         let token = to.hash.split('&').pop().split('=').pop()
         localStorage.setItem(config.localKey('user'), token)
+        router.push('/')
     }
 
     const loggedIn = localStorage.getItem(config.localKey('user'));
