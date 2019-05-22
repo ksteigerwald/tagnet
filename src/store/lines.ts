@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line } from '../types'
 import { apolloClient } from '@/constants/graphql'
-import { linesQry, searchQry, linesInsert } from '@/constants/lines.ql'
+import { linesQry, searchQry, linesInsert, linesByMemoId } from '@/constants/lines.ql'
 import { Subject, fromEvent, of, pipe } from 'rxjs';
 import { pluck, map, debounceTime, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 const uuidv1 = require('uuid/v1');
@@ -9,8 +9,7 @@ const uuidv1 = require('uuid/v1');
 type LineGetter = GetterTree<LineState, RootState> 
 
 export const state: LineState = {
-    lines: [],
-    wall: []
+    lines: []
 }
 
 export const mutations: MutationTree<LineState> = {
@@ -36,7 +35,6 @@ export const actions: ActionTree<LineState, RootState> = {
         let line: Line = response.data.insert_lines.returning.pop()
         commit('addLine', line)
 
-        dispatch('memos/loadWall', null, { root: true }) 
     },
 
     async loadLines( { commit, dispatch, rootState} ) {
@@ -45,14 +43,24 @@ export const actions: ActionTree<LineState, RootState> = {
         })
 
         state.lines = response.data.lines
-        state.wall = response.data.lines
+    },
+
+    async linesByMemo( { commit, dispatch, rootState }, memoId: number ) {
+        const response: any = await apolloClient.query({
+            query: linesByMemoId,
+            variables: { input: memoId }	
+        })
+
+        state.lines = response.data.lines
     },
 
     async searchLines( { commit, dispatch, rootState}, term: string ) {
+
         let vars: string = `%${term}%`
+
         const response: any = await apolloClient.query({
             query: searchQry,
-            variables: { input: vars }	
+            variables: { input: vars }
         })
 
         state.lines = response.data.lines
@@ -63,8 +71,9 @@ export const actions: ActionTree<LineState, RootState> = {
 
 export const getters: GetterTree<LineState, RootState> = {
     lines: (state, getters, rootState) => state.lines,
-    memoLines: (state, getters, rootState) => (memoId:number) => 
-        state.lines.filter(line => line.memo_id === memoId)
+    memoLines: (state, getters, rootState) => (memoId:number) =>  {
+        return state.lines.filter(line => line.memo_id === memoId) 
+    }
 }
 
 export const lines:Module<LineState, RootState> ={

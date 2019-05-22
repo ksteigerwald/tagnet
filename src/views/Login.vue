@@ -34,9 +34,11 @@ import { User, UserState } from '@/types'
 	}
 })
 export default class Login extends Vue {
+
 	username: string = ''
 	password: string = ''
 	submitted: boolean = false
+
     @Getter('user/status') logginInStatus: any
 	
 	get loggingIn() {

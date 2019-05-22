@@ -1,16 +1,19 @@
 <template>
     <div class="wrap column is-half">
-        <b-field :label="output"> </b-field>
         <div class="rx-complete">
-        <ActionToggle @clickActionToggle="onActionToggleClick"/>
-            <input 
+            <ActionToggle 
+			v-bind:index="actionToggleIndex"
+			@clickActionToggle="onActionToggleClick"/>
+            <textarea 
+             :placeholder="output"
              type="text" 
              v-model="tagnet" 
              id="stream"
              autocomplete="off"
              @keydown.down="onArrowDown"
              @keydown.up="onArrowUp"
-             @keydown.enter="onEnter">
+             @keydown.enter="onEnter"> </textarea>
+
             <ul class="ac-results">
                 <li 
                 v-for="(match, i) in matches"
@@ -65,14 +68,16 @@ import ActionToggle from '@/components/ActionToggle.vue'
                 var action = this.stack.pop() || { __typename: 'search' }
                 switch(action.__typename) {
                     case "tags":
-                        let memo: Memo = { uuid: '', id: '', 
+                        let memo: Memo = { uuid: '', id: 0, 
                             created: '', user_id: '', label: obj.label, 
-                            tag_id: action.id } 
+                            tag_id: action.id 
+                        } 
 
                         this.createMemo(memo)
                         break
                     case "memos":
-                        let line: Line = { uuid: '', created: '', user_id: '', 
+                        let line: Line = { 
+                            uuid: '', created: '', user_id: '', 
                             memo_id: action.id, label: obj.label } 
 
                         this.createLine(line)
@@ -96,12 +101,13 @@ import ActionToggle from '@/components/ActionToggle.vue'
 export default class RxTagnet extends Vue { 
 
     tagnet:any = '' 
+    output:string = 'What are you looking for?'
+	actionToggleIndex: number = 2
     arrowCounter: number = 0
     subject:Subject<any> = new Subject()
     stack:any[] = []
     matches:any[] = []
     results:any[] = []
-    output:string = '@ | /'
 
     subscription: any
     queue:any = {
@@ -120,18 +126,17 @@ export default class RxTagnet extends Vue {
     onActionToggleClick(value:any) {
         switch(value) {
             case 'create':
-                this.tagnet = '@'
+                this.tagnet = '/'
                 //this.matches = this.tags
                 break
             case 'find':
-                this.tagnet = '/'
+                this.tagnet = '@'
                 //this.matches = this.memos
                 break
             default:
                 this.matches = []
                 break
         }
-        console.log(value)
     }
 
     onArrowDown() {
@@ -163,7 +168,7 @@ export default class RxTagnet extends Vue {
 
     filterTags(keys: any) {
         return this.tags.filter( e => { 
-            let c = e.label.slice(0, keys.length-1).toLowerCase()
+            let c = e.label.slice(0, keys.length - 1).toLowerCase()
             let k = keys.slice(1, keys.length).toLowerCase()
             return c === k
         })
@@ -178,9 +183,9 @@ export default class RxTagnet extends Vue {
     }
 
     streamSwitch(keys: any) {
-        if(keys.charAt(0) === '@') 
-            return of(this.filterTags(keys))
         if(keys.charAt(0) === '/') 
+            return of(this.filterTags(keys))
+        if(keys.charAt(0) === '@') 
             return of(this.filterMemos(keys)) 
         return of([])
     }
@@ -196,16 +201,17 @@ export default class RxTagnet extends Vue {
     position:absolute;
     z-index:10;
     width:100%;
-    border-radius: 10px;
-    background:#F4F7FA;
     padding:0 5px;
-    border:1px solid #D4E3F5;
-    input {
+    span.cursor {
+        position:relative;
+        z-index:-1;
+    }
+    textarea {
         background-color: transparent;
         outline: none;
         border: none;
-        width:93%;
-        min-height:2.5rem;
+        width:90%;
+        height:25px;
         font-size:1.25rem;
         font-weight:300;
         margin:0 .5rem;
@@ -216,6 +222,7 @@ export default class RxTagnet extends Vue {
     }
 
     ul {
+        margin-top:1.5rem;
         border-top:1px solid #7957d5;
         display:block;
         li {

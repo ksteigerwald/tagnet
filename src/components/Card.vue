@@ -46,11 +46,6 @@ export default class Card extends Vue {
 
     @Getter('lines/memoLines') memoLines: Line[]
 
-    mounted() {
-        console.log(this)
-        console.log("CMK", this)
-    }
-
     icon(val: string) {
         return (<any>TagType)[val]
     }

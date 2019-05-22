@@ -37,3 +37,22 @@ query search_lines($input: String) {
 	}
 }
 `
+
+export const linesByMemoId = gql`
+query linesByMemoId($input:Int) {
+  lines(where: {memo_id: {_eq: $input }}) {
+    id
+    label
+    memo_id
+    user_id
+    uuid
+    created
+    LineMemo {
+      TagMemo {
+        id
+      }
+      label
+    }
+  }
+}
+`

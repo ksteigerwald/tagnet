@@ -74,3 +74,20 @@ query search_memos($input:String){
   }
 }
 `
+
+export const memosGet = gql`
+query get_memo($input: Int) {
+  memos(where: {id: {_eq: $input}}) {
+    id
+    label
+    user_id
+    tag_id
+    created
+    uuid
+    TagMemo {
+      label
+    }
+  }
+}
+`
+

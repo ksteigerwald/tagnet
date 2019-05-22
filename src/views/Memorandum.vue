@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="section">
-            <h1>hello</h1>
+            <MemoDetail />
         </div>
     </div>
 </template>
@@ -17,9 +17,11 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import RxTagnet from '@/components/RxTagnet.vue'
+import MemoDetail from '@/components/Memorandum/Detail.vue'
 @Component({
     components:{
-        RxTagnet
+        RxTagnet,
+        MemoDetail,
     }
 })
 export default class Memorandum extends Vue {
@@ -28,8 +30,6 @@ export default class Memorandum extends Vue {
     @Action('memos/loadMemos') loadMemos: any
 
     created() {
-        this.loadTags() 
-        this.loadMemos() 
     }
 
 

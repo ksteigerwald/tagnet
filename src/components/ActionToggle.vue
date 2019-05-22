@@ -23,9 +23,10 @@ export default class ActionToggle extends Vue {
         this.index++
         if(this.index >= this.actions.length) 
             this.index = 0
+
         this.iconClass = this.ticker[this.index]
-        console.log(this.index, this.iconClass)
-        this.$emit('clickActionToggle', this.actions[this.index])
+
+		this.$emit('clickActionToggle', this.actions[this.index])
     }
 }
 </script>

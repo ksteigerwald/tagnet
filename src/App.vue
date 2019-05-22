@@ -1,10 +1,21 @@
 <template>
  <main id="app">
-    <router-view/>
+     <transition name="fade" mode="out-in">
+        <router-view></router-view>
+     </transition>
   </main>
 </template>
 
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component
+export default class App extends Vue { }
+</script>
 <style lang="scss">
+body {
+    background:#FCFCFC;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { memosQry,memosQryMemoLines,memosSearch, memosInsert } from '@/constants/memos.ql'
+import { memosQry,memosQryMemoLines,memosSearch, memosInsert, memosGet } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 const uuidv1 = require('uuid/v1');
 
@@ -44,14 +44,12 @@ export const actions: ActionTree<MemoState, RootState> = {
         state.memos = response.data.memos
     },
 
-
     async loadWall({ commit, dispatch, rootState} ) {
         const response: any = await apolloClient.query({
             query: memosQryMemoLines
         })
 
         state.memos = response.data.memos
-        console.log('loadWall')
     },
 
     async searchMemos({ commit, dispatch, rootState}, term: string ) {
@@ -64,12 +62,23 @@ export const actions: ActionTree<MemoState, RootState> = {
         state.memos = response.data.memos
     },
 
+    async getMemo({ commit, dispatch, rootState}, id: number ) {
+        const response: any = await apolloClient.query({
+            query: memosGet,
+            variables: { input: id }	
+        })
+        state.memos = response.data.memos
+        console.log(id, state.memos)
+    },
 }
 
 export const getters: GetterTree<MemoState, RootState> = {
     memos: (state, getters, rootState) => state.memos,
-    find: (state, getters, rootState, id) => 
-        state.memos.filter(memo => memo.id === id),
+    findMemo: (state, getters, rootState, id) => (id: number) => {
+        return state.memos.filter(memo => {
+            console.log(id, memo, "filter")
+            return memo.id === id})
+    },
 }
 
 export const memos:Module<MemoState, RootState> ={

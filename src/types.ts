@@ -8,9 +8,9 @@ export interface ITagType {
 export interface RootState {
     count: number
     tags: TagState
-	memos: MemoState
-	lines: LineState
-	user: UserState
+    memos: MemoState
+    lines: LineState
+    user: UserState
 }
 
 export interface TagState {
@@ -23,23 +23,22 @@ export interface MemoState {
 
 export interface LineState {
     lines: Line[]
-    wall: Line[]
 }
 
 export interface UserState {
-	status: any
-	user: any
+    status: any
+    user: any
 }
 
 export interface Tag {
-	id: number
+    id: number
     code: string
     label: string
 }
 
 export interface Memo {
-	uuid: string
-    id: string
+    uuid: string
+    id: number
     label: string
     tag_id: number
     created: string
