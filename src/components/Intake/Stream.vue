@@ -26,15 +26,18 @@ import { Stream } from '@/types'
         return ({
             matches: this.$watchAsObservable('cursor').pipe(
                 pluck('newValue'),
-                debounceTime(200),
+                debounceTime(100),
                 distinctUntilChanged(),
                 map((val: any) => {
-                    let list = this.events.filter((v) => {
-                        return val.charCodeAt(0) === v.code
-                    })
+                    let o = { value: val }
+                    let list = this.events
+                        .filter(v => val.charCodeAt(0) === v.code)
+                    if(list.length ===0)
+                        list.push(this.events[1])
                     return list
+                            .map(v => Object.assign(v, o))
                 }),
-                map(e => this.fooo(e))
+                map(e => this.emitter(e))
                 //switchMap(() => interval(5000)),
       //          switchMap(this.streamSwitch),
             ),
@@ -60,18 +63,25 @@ export default class IntakeStream extends Vue {
         { code:1, event: 'up' },
         { code:0, event: 'down' },
         { code:10, event: 'enter' },
+        { code:32, event: 'search' },
     ]   
-
+    stack:Stream[] = []
     cursor:string = ''
     focused:boolean = false
     index:number = 0
 
     @Prop() actionEvent: Stream
+    
+    print(val: Any) {
+        console.log(val, 'print') 
+        return val
+    }
 
-    fooo(val: Any) {
-        if(val.length > 0)
+    emitter(val: Stream[]) {
+        if(val.length > 0) {
+            this.stack.push(val[0])
             this.$emit('interface', val[0]) 
-        //this.$emit('interface', this.events[1]) 
+        }
         return val
     }
     
@@ -81,7 +91,7 @@ export default class IntakeStream extends Vue {
     
     @Watch('actionEvent')
     onActionIndexChanged(value: Number, oldValue: Number) {
-        console.log('AES', value.event)
+        console.log('AES', value.event, value.value)
         //this.cursor = this.getText() + this.messages[value]
         //this.setText(this.cursor)
         //this.focused = false
@@ -95,8 +105,11 @@ export default class IntakeStream extends Vue {
         return this.$el.innerText = val
     }
 
-    onInput(value: Any) {
-        this.cursor = this.getText()
+    onInput() {
+        let text = this.getText().trimLeft()
+        if(!text.charCodeAt(0))  text = ' '
+        this.cursor = text
+        //console.log('cursor', this.cursor.charCodeAt(0))
         return
     }
 
@@ -147,8 +160,8 @@ export default class IntakeStream extends Vue {
         overflow: hidden;
         display:inline-block;
         vertical-align:top;
-        min-height:45px;
-        max-height:45px;
+        min-height:40px;
+        max-height:40px;
         max-width:90%;
         min-width:90%;
         padding:0; 

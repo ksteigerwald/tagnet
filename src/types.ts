@@ -7,6 +7,7 @@ export interface ITagType {
 export interface Stream {
     event: String
     code: Number
+    value?: any
 }
 // Store
 export interface RootState {

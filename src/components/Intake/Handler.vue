@@ -31,9 +31,9 @@ export default class Handler extends Vue {
         return this.tick
     }
 
-    onInterfaceChange(value:Stream) {
-        this.tick = value
-        console.log(value.event, 'onInterfaceChange')
+    onInterfaceChange(stream:Stream) {
+        this.tick = stream
+        console.log(stream.event, stream.value, 'onInterfaceChange')
     }
 }
 </script>
