@@ -20,8 +20,12 @@ import { pluck, map, debounceTime, tap,
 
 @Component
 export default class IntakeStream extends Vue {
-
-    cursor:string = "What are you looking for?"
+    messages:String[] = [
+        "What are you looking for?",
+        "Create a new Item",
+        "Add a to...",
+    ]
+    cursor:string = ''
     focused:boolean = false
     index:number = 0
 
@@ -29,11 +33,12 @@ export default class IntakeStream extends Vue {
 
     @Watch('actionIndex')
     onActionIndexChanged(value: Number, oldValue: Number) {
-        console.log('>>', value, oldValue) 
+        this.cursor = this.messages[value]
     }
 
     mounted() {
         this.index = this.actionIndex
+        this.cursor = this.messages[this.index]
         console.log(this.index, this.actionIndex)
     }
 
