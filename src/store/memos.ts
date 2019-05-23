@@ -58,7 +58,7 @@ export const actions: ActionTree<MemoState, RootState> = {
             query: memosSearch,
             variables: { input: vars }	
         })
-
+        console.log('searchMemos', response.data.memos)
         state.memos = response.data.memos
     },
 
@@ -77,7 +77,8 @@ export const getters: GetterTree<MemoState, RootState> = {
     findMemo: (state, getters, rootState, id) => (id: number) => {
         return state.memos.filter(memo => {
             console.log(id, memo, "filter")
-            return memo.id === id})
+            return memo.id === id
+        })
     },
 }
 

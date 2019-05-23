@@ -1,11 +1,11 @@
 <template>
     <div class="intake column is-half">
         <ActionToggle
-         v-bind:actionIndex="actionToggleIndex"
+         v-bind:actionEvent="actionToggleIndex"
          @interface="onInterfaceChange"/>
         <IntakeStream 
          @interface="onInterfaceChange"
-         v-bind:actionIndex="actionToggleIndex"
+         v-bind:actionEvent="actionToggleIndex"
         /> 
     </div>
 </template>
@@ -15,23 +15,25 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import ActionToggle from '@/components/ActionToggle.vue'
 import IntakeStream from '@/components/Intake/Stream.vue'
+import { Stream } from '@/types'
 
 @Component({
-  components: {
+ components: {
       IntakeStream,
       ActionToggle
   }
 })
 export default class Handler extends Vue {
 
-    index:Number = 0
-    get actionToggleIndex(): Number {
-        return this.index
+    tick:Stream = { code:160, event: 'search' }
+
+    get actionToggleIndex(): Stream {
+        return this.tick
     }
 
-    onInterfaceChange(value:any) {
-        this.index = value
-        console.log(value, 'onInterfaceChange')
+    onInterfaceChange(value:Stream) {
+        this.tick = value
+        console.log(value.event, 'onInterfaceChange')
     }
 }
 </script>

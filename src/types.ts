@@ -4,6 +4,10 @@ export interface ITagType {
     [key: string]: any
 }
 
+export interface Stream {
+    event: String
+    code: Number
+}
 // Store
 export interface RootState {
     count: number
