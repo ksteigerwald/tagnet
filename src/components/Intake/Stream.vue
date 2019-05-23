@@ -1,5 +1,5 @@
 <template>
-    <div id="tg-stream" 
+    <div class="single-line" 
         v-bind:class="[(isFocused) ? 'foo' : 'is-placeholder']"
         v-model="cursor"
         @input="onInput()"
@@ -98,21 +98,7 @@ export default class IntakeStream extends Vue {
     onInput(value: Any) {
         this.cursor = this.getText()
         return
-        let key:String = this.getText().charAt(0)
-        console.log(key)
-        if(key === '/') {
-            this.setText('/')
-            this.index = 1
-            this.$emit('interface', this.index) }
-        if(key === '@') {
-            this.setText('@')
-            this.index = 2
-            this.$emit('interface', this.index) }
-
-        this.focused = true
     }
-
-    
 
     get isFocused():boolean { 
         return this.focused
@@ -141,7 +127,10 @@ export default class IntakeStream extends Vue {
     }
 
     onArrowEnter(input: any) {
-        console.log('onEnter')
+        var input = this.getText()
+        this.clear()
+        console.log('onEnter',this.cursor, input)
+        return false
     }
 
 }
@@ -149,17 +138,34 @@ export default class IntakeStream extends Vue {
 
 <style scoped lang="scss">
     #tg-stream {
-        display:inline-block;
-        vertical-align:top;
-        min-height:15px;
-        max-width:92%;
-        min-width:92%;
-        padding:0 1rem 0rem 1rem;
-        outline:none;
-        font-size:1.5rem;
     }
     #tg-stream.is-placeholder {
+    }
+    [contenteditable="true"].single-line {
+        white-space: nowrap;
+        width:200px;
+        overflow: hidden;
+        display:inline-block;
+        vertical-align:top;
+        min-height:45px;
+        max-height:45px;
+        max-width:90%;
+        min-width:90%;
+        padding:0; 
+        outline:none;
+        font-size:1.5rem;
+        margin-left:0.75rem;
+    } 
+    [contenteditable="true"].single-line.is-placeholder { 
         color:#d1d1d1;
+    }
+    [contenteditable="true"].single-line br {
+        display:none;
+
+    }
+    [contenteditable="true"].single-line * {
+        display:inline;
+        white-space:nowrap;
     }
 </style>
 
