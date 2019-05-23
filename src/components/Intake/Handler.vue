@@ -2,8 +2,9 @@
     <div class="intake column is-half">
         <ActionToggle
          v-bind:actionIndex="actionToggleIndex"
-         @clickActionToggle="onActionToggleClick"/>
+         @interface="onInterfaceChange"/>
         <IntakeStream 
+         @interface="onInterfaceChange"
          v-bind:actionIndex="actionToggleIndex"
         /> 
     </div>
@@ -28,24 +29,9 @@ export default class Handler extends Vue {
         return this.index
     }
 
-    onActionToggleClick(value:any) {
-        console.log(value, 'onActionToggleClick')
-        switch(value) {
-            case 'create':
-                this.index = 1
-                this.tagnet = '/'
-                //this.matches = this.tags
-                break
-            case 'find':
-                this.index = 2
-                this.tagnet = '@'
-                //this.matches = this.memos
-                break
-            default:
-                this.index = 0
-                this.matches = []
-                break
-        }
+    onInterfaceChange(value:any) {
+        this.index = value
+        console.log(value, 'onInterfaceChange')
     }
 }
 </script>

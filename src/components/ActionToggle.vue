@@ -1,5 +1,7 @@
 <template>
-    <a class="action-toggle" @click="toggleAction()" @tab="toggleAction()">
+    <a class="action-toggle" 
+        @click="toggleAction()" 
+        @tab="toggleAction()">
         <b-icon 
             :icon="icon" size="is-medium"></b-icon>
     </a>
@@ -20,18 +22,24 @@ export default class ActionToggle extends Vue {
         return this.ticker[this.index]
     }
 
+    @Watch('actionIndex')
+    onActionIndexChanged(value: Number, oldValue: Number) {
+        console.log(value, 'actionIndex')
+        this.index = this.actionIndex
+        this.ticker[this.index]
+    }
+
     mounted() {
         this.index = this.actionIndex
     }
 
     toggleAction(e: any) {
         this.index++
-        if(this.index >= this.actions.length) 
+        if(this.index >= this.ticker.length) 
             this.index = 0
 
         this.iconClass = this.ticker[this.index]
-
-		this.$emit('clickActionToggle', this.actions[this.index])
+        this.$emit('interface', this.index)
     }
 }
 </script>
