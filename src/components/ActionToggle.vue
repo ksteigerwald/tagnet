@@ -1,7 +1,7 @@
 <template>
-    <a @click="toggleAction()" @tab="toggleAction()">
+    <a class="action-toggle" @click="toggleAction()" @tab="toggleAction()">
         <b-icon 
-            :icon="iconClass" size="is-small"></b-icon>
+            :icon="iconClass" size="is-medium"></b-icon>
     </a>
 </template>
 
@@ -30,3 +30,10 @@ export default class ActionToggle extends Vue {
     }
 }
 </script>
+
+<style scoped lang="scss">
+    a.action-toggle {
+        display:inline-block;
+        color:#D1D1D1;
+    }
+</style>

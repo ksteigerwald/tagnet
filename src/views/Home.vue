@@ -8,6 +8,13 @@
             </div>
         </div>
         <div class="section">
+            <div class="container">
+                <div class="columns is-mobile is-centered">
+                    <IntakeHandler />
+                </div>
+            </div>
+        </div>
+        <div class="section">
             <Wall />
         </div>
     </div>
@@ -18,10 +25,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import RxTagnet from '@/components/RxTagnet.vue'
 import Wall from '@/components/Wall.vue'
+import IntakeHandler from '@/components/Intake/Handler.vue'
 
 @Component({
     components: {
         RxTagnet,
+        IntakeHandler,
         Wall
     }
 })

@@ -40,9 +40,11 @@ import { pluck, map, debounceTime, tap,
 import ActionToggle from '@/components/ActionToggle.vue'
 
 @Component<RxTagnet>({
+
     components: {
         ActionToggle
     }, 
+
     subscriptions() {
         return ({
             matches: this.$watchAsObservable('tagnet').pipe(

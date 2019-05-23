@@ -17,7 +17,7 @@ mutation insert_memo($objects: [memos_insert_input!]!) {
 
 export const memosQry = gql`
 query {
-    memos {
+    memos(order_by: {created: desc}) {
         id
         uuid
         user_id
