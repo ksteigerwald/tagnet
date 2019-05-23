@@ -1,7 +1,7 @@
 <template>
     <a class="action-toggle" @click="toggleAction()" @tab="toggleAction()">
         <b-icon 
-            :icon="iconClass" size="is-medium"></b-icon>
+            :icon="icon" size="is-medium"></b-icon>
     </a>
 </template>
 
@@ -12,11 +12,16 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 export default class ActionToggle extends Vue { 
     ticker:string[] = ["search", "plus", "angle-right"]
     actions:string[] = ["search", "create", "find"]
-    iconClass:string =  'search'
-    index:number = 0
+    index:number = 2
     
+    @Prop() actionIndex: Number
+
+    get icon() {
+        return this.ticker[this.index]
+    }
+
     mounted() {
-        console.log('mount ActionToggle')
+        this.index = this.actionIndex
     }
 
     toggleAction(e: any) {

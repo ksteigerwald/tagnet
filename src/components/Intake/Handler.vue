@@ -1,7 +1,7 @@
 <template>
     <div class="intake column is-half">
-        <ActionToggle 
-         v-bind:index="actionToggleIndex"
+        <ActionToggle
+         v-bind:actionIndex="actionToggleIndex"
          @clickActionToggle="onActionToggleClick"/>
         <IntakeStream /> 
     </div>
@@ -21,7 +21,7 @@ import IntakeStream from '@/components/Intake/Stream.vue'
 })
 export default class Handler extends Vue {
 
-	actionToggleIndex: number = 2
+	actionToggleIndex: number = 0
 
     onActionToggleClick(value:any) {
         console.log(value, 'onActionToggleClick')
