@@ -1,9 +1,11 @@
 <template>
     <div class="wrap column is-half">
         <div class="rx-complete">
+            
             <ActionToggle 
-			v-bind:index="actionToggleIndex"
-			@clickActionToggle="onActionToggleClick"/>
+			    v-bind:index="actionToggleIndex"
+			    @clickActionToggle="onActionToggleClick"/>
+
             <textarea 
              :placeholder="output"
              type="text" 

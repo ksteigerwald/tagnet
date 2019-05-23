@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { Subject, fromEvent, of, pipe } from 'rxjs';
 import { pluck, map, debounceTime, tap,
@@ -23,6 +23,19 @@ export default class IntakeStream extends Vue {
 
     cursor:string = "What are you looking for?"
     focused:boolean = false
+    index:number = 0
+
+    @Prop() actionIndex: Number
+
+    @Watch('actionIndex')
+    onActionIndexChanged(value: Number, oldValue: Number) {
+        console.log('>>', value, oldValue) 
+    }
+
+    mounted() {
+        this.index = this.actionIndex
+        console.log(this.index, this.actionIndex)
+    }
 
     get isFocused():boolean { 
         return this.focused

@@ -3,7 +3,9 @@
         <ActionToggle
          v-bind:actionIndex="actionToggleIndex"
          @clickActionToggle="onActionToggleClick"/>
-        <IntakeStream /> 
+        <IntakeStream 
+         v-bind:actionIndex="actionToggleIndex"
+        /> 
     </div>
 </template>
 
@@ -21,20 +23,26 @@ import IntakeStream from '@/components/Intake/Stream.vue'
 })
 export default class Handler extends Vue {
 
-	actionToggleIndex: number = 0
+    index:Number = 0
+    get actionToggleIndex(): Number {
+        return this.index
+    }
 
     onActionToggleClick(value:any) {
         console.log(value, 'onActionToggleClick')
         switch(value) {
             case 'create':
+                this.index = 1
                 this.tagnet = '/'
                 //this.matches = this.tags
                 break
             case 'find':
+                this.index = 2
                 this.tagnet = '@'
                 //this.matches = this.memos
                 break
             default:
+                this.index = 0
                 this.matches = []
                 break
         }
