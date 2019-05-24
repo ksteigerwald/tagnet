@@ -34,27 +34,22 @@ import { Stream } from '@/types'
                         .filter(v => val.charCodeAt(0) === v.code)
                     if(list.length ===0)
                         list.push(this.events[1])
-                    return list
-                            .map(v => Object.assign(v, o))
+
+                    return list.map(v => Object.assign(v, o))
                 }),
                 map(e => this.emitter(e))
-                //switchMap(() => interval(5000)),
-      //          switchMap(this.streamSwitch),
             ),
         });
     },
 
-    mounted() {
-        this.cursor = this.messages[this.index]
-    }
 })
 
 export default class IntakeStream extends Vue {
 
-    messages:String[] = [
-        "What are you looking for?",
-        "Create a new Item",
-        "Add a to..." ]
+    messages:Any = {
+        "search": "What are you looking for?",
+        "create": "Create a new Item",
+        "append": "Add a to..." }
 
     events:Stream[] = [
         { code:47, event: 'create' },
@@ -72,17 +67,17 @@ export default class IntakeStream extends Vue {
 
     @Prop() actionEvent: Stream
     
-    print(val: Any) {
-        console.log(val, 'print') 
-        return val
+    print(obj: Any) {
+        console.log(obj, 'print') 
+        return obj
     }
 
-    emitter(val: Stream[]) {
-        if(val.length > 0) {
-            this.stack.push(val[0])
-            this.$emit('interface', val[0]) 
+    emitter(stream: Stream[]) {
+        if(stream.length > 0) {
+            this.stack.push(stream[0])
+            this.$emit('interface', stream[0]) 
         }
-        return val
+        return stream
     }
     
     get innerText():String {
@@ -91,18 +86,18 @@ export default class IntakeStream extends Vue {
     
     @Watch('actionEvent')
     onActionIndexChanged(value: Number, oldValue: Number) {
-        console.log('AES', value.event, value.value)
-        //this.cursor = this.getText() + this.messages[value]
-        //this.setText(this.cursor)
-        //this.focused = false
+        console.log('AES', value.event, value.code)
+        this.cursor = String.fromCharCode(value.code)
+        this.setText(this.cursor)
+        this.focused = false
     }
 
     getText(): String {
         return this.$el.innerText 
     }
 
-    setText(val: String): String {
-        return this.$el.innerText = val
+    setText(str: String): String {
+        return this.$el.innerText = str
     }
 
     onInput() {
@@ -118,8 +113,6 @@ export default class IntakeStream extends Vue {
     }
 
     focus() {
-        this.cursor = '' 
-        this.clear()
         this.focused = true
     }
 
