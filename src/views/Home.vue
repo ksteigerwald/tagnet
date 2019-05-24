@@ -76,8 +76,10 @@ export default class Home extends Vue {
             case 'stream-append':
                 this.myData = this.filterMemos(stream.value)            
                 break
-            case 'search':
+            case 'onEnter-search':
+                console.log('HASHURA - search query no longer working, look into it')
                 this.myData = []
+                //this.myData = this.searchMemos(stream.value)
                 break
             default:
                 this.myData = []

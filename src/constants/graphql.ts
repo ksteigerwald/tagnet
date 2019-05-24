@@ -7,7 +7,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from 'apollo-link-context'
 let jwt_decode = require('jwt-decode')
 
-let GRAPH_QL_API = process.env.GRAPH_QL_API || 'https://hasura-velaru.herokuapp.com/v1alpha1/graphql'
+let GRAPH_QL_API = process.env.GRAPH_QL_API || 'https://hasura-velaru.herokuapp.com/v1/graphql'
 
 var isAuthenticated = (expiresAt: any) => new Date().getTime() < expiresAt
 

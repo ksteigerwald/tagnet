@@ -23,6 +23,10 @@ export default class Flyout extends Vue {
     arrowCounter: number = 0
     onInterfaceChange(item:any) {
     }
+
+    onClick(i:number) {
+        console.log(this.list[i])
+    }
 }
 </script>
 
