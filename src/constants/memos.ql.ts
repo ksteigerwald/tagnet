@@ -65,7 +65,7 @@ query search_memos($input:String){
     tag_id
     created
     uuid
-    MemoLines(order_by: {created: desc}) {
+    MemoLines {
       id
     }
     TagMemo {

@@ -9,7 +9,9 @@ export const selectProtected: SelectProtected = {
     wrapperElement: document.createElement("div"),
     inputElement: document.createElement("input")
 };
-
+export interface UIFlyout {
+    onSignal(direction: string):void
+}
 export interface ITagType {
     [key: string]: any
 }

@@ -4,8 +4,6 @@
          @input="onInput()"
          @focus="focus()"
          @blur="blur()"
-         @keydown.down="onArrowDown"
-         @keydown.up="onArrowUp"
          @keydown.enter="onArrowEnter"
          contenteditable="true">{{cursor}}</div>
 </template>
@@ -122,14 +120,6 @@ export default class IntakeStream extends Vue {
         //this.focused = false
     }
 
-    onArrowDown() {
-        console.log('onArrowDown')
-    }
-
-    onArrowUp() {
-        console.log('onArrowUp')
-    }
-
     onArrowEnter() {
         var input:string = this.getText()
         this.clear()
@@ -141,10 +131,10 @@ export default class IntakeStream extends Vue {
 </script>
 
 <style scoped lang="scss">
-#tg-stream {
-}
-#tg-stream.is-placeholder {
-}
+
+#tg-stream {}
+#tg-stream.is-placeholder {}
+
 [contenteditable="true"].single-line {
     white-space: nowrap;
     width:200px;
@@ -165,7 +155,6 @@ export default class IntakeStream extends Vue {
 }
 [contenteditable="true"].single-line br {
     display:none;
-
 }
 [contenteditable="true"].single-line * {
     display:inline;
