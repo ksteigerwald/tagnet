@@ -83,7 +83,7 @@ export const getters: GetterTree<MemoState, RootState> = {
 
     filterMemos: (state, getters, rootState, str) => (str: string) => {
         return state.memos.filter(memo => {
-            return memo.label.match(new RegExp(str + ".*"))
+            return memo.label.match(new RegExp(str + ".*", "i"))
         })
     }
 }
