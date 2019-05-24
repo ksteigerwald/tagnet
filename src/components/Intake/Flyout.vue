@@ -1,8 +1,12 @@
 <template>
     <ul class="intake column is-half">
-        <li v-for="item in list"> i
-            - 1
-        </li> 
+          <li 
+                v-for="(match, i) in list"
+                :key="i"
+                :class="{ 'is-active': i === arrowCounter }"
+                @click="onClick(i)">
+                    <a href="#">{{match.label}}</a>
+                </li>
     </ul>
 </template>
 
@@ -11,13 +15,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 
 @Component({
- components: {
-  }
+ components: {}
 })
 export default class Flyout extends Vue {
 
     @Prop() list: any[]
-
+    arrowCounter: number = 0
     onInterfaceChange(item:any) {
     }
 }

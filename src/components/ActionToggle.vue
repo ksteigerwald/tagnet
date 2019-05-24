@@ -15,7 +15,7 @@ enum ToggleType {
 }
 
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { Stream } from '@/types'
+import { Stream, IToggleType} from '@/types'
 
 @Component({})
 export default class ActionToggle extends Vue { 
@@ -25,12 +25,12 @@ export default class ActionToggle extends Vue {
         { code:47, event: 'create' },
         { code:64, event: 'append' }
     ]   
-    tick:Stream = {}
-    index:Number = 0 
+    tick:Stream = {code:-1, event:''}
+    index:number = 0 
     @Prop() actionEvent: Stream
 
     get icon() {
-        return (<String>ToggleType)[this.tick.event]
+        return (<any>ToggleType)[this.tick.event]
     }
 
     mounted() {
@@ -39,7 +39,7 @@ export default class ActionToggle extends Vue {
     }
 
     @Watch('actionEvent')
-    onActionIndexChanged(value: Number, oldValue: Number) {
+    onActionIndexChanged(value: Stream, oldValue: Stream) {
         let set = this.actions.filter( t => t.event === value.event)
         this.tick = set[0] || this.actions[0]
     }

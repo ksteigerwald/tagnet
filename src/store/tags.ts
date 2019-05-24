@@ -18,7 +18,13 @@ export const state: TagState = {
 }
 
 export const getters: GetterTree<TagState, RootState> = {
-  tags: (stage, getters, rootState) => state.tags
+  tags: (stage, getters, rootState) => state.tags,
+  findTag: (state, getters, rootState, str) => (str: string) => {
+    return state.tags.filter(tag => {
+      console.log(tag.label === str, typeof str,str, ':', tag.label) 
+      return tag.label.match(str, ".*")
+    })
+  },
 }
 
 export const mutations: MutationTree<TagState> = {

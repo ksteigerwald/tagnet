@@ -13,10 +13,13 @@ export const selectProtected: SelectProtected = {
 export interface ITagType {
     [key: string]: any
 }
+export interface IToggleType {
+    [key: string]: any
+}
 
 export interface Stream {
-    event: String
-    code: Number
+    event: string
+    code: number
     value?: any
 }
 // Store

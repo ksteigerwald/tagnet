@@ -1,14 +1,13 @@
 <template>
     <div class="single-line" 
          v-bind:class="[(isFocused) ? 'foo' : 'is-placeholder']"
-         v-model="cursor"
          @input="onInput()"
          @focus="focus()"
          @blur="blur()"
          @keydown.down="onArrowDown"
          @keydown.up="onArrowUp"
          @keydown.enter="onArrowEnter"
-         contenteditable="true">{{innerText}}</div>
+         contenteditable="true">{{cursor}}</div>
 </template>
 
 <script lang="ts">
@@ -27,7 +26,8 @@ import { Stream } from '@/types'
                 debounceTime(100),
                 distinctUntilChanged(),
                 map((val: any) => {
-                    let o = { value: val }
+                    let nv = val.replace(/(@|\/)/gm,'').toLowerCase()
+                    let o = { value: nv }
                     let list = this.events
                         .filter(v => val.charCodeAt(0) === v.code)
                     if(list.length ===0)
@@ -48,7 +48,6 @@ import { Stream } from '@/types'
 
 export default class IntakeStream extends Vue {
 
-
     events:Stream[] = [
         { code:47, event: 'create' },
         { code:160, event: 'search' },
@@ -65,7 +64,9 @@ export default class IntakeStream extends Vue {
 
     @Prop() actionEvent: Stream
 
-    print(val: Any) {
+    $el:HTMLElement
+
+    print(val: any) {
         console.log(val, 'print') 
         return val
     }
@@ -78,13 +79,9 @@ export default class IntakeStream extends Vue {
         return val
     }
 
-    get innerText():String {
-        return this.cursor
-    }
-
     @Watch('actionEvent')
-    onActionIndexChanged(value: Number, oldValue: Number) {
-        console.log('AES', value.event, String.fromCharCode(value.code))
+    onActionIndexChanged(value: Stream, oldValue: Stream) {
+        //console.log('AES', value.event, String.fromCharCode(value.code))
         this.$el.focus()
 
     }
@@ -93,7 +90,7 @@ export default class IntakeStream extends Vue {
         return str.replace(/(\r\n|\n|\r)/gm, "");
     }
 
-    getText(): String {
+    getText(): string {
         return this.strip(this.$el.innerText)
     }
 
@@ -134,8 +131,8 @@ export default class IntakeStream extends Vue {
         console.log('onArrowUp')
     }
 
-    onArrowEnter(input: any) {
-        var input = this.getText()
+    onArrowEnter() {
+        var input:string = this.getText()
         this.clear()
         console.log('onEnter',this.cursor, input)
         return false
