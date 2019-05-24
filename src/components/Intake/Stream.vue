@@ -1,16 +1,14 @@
 <template>
     <div class="single-line" 
-        v-bind:class="[(isFocused) ? 'foo' : 'is-placeholder']"
-        v-model="cursor"
-        @input="onInput()"
-        @focus="focus()"
-        @blur="blur()"
-        @keydown.down="onArrowDown"
-        @keydown.up="onArrowUp"
-        @keydown.enter="onArrowEnter"
-        contenteditable="true">
-        {{innerText}}
-    </div>
+         v-bind:class="[(isFocused) ? 'foo' : 'is-placeholder']"
+         v-model="cursor"
+         @input="onInput()"
+         @focus="focus()"
+         @blur="blur()"
+         @keydown.down="onArrowDown"
+         @keydown.up="onArrowUp"
+         @keydown.enter="onArrowEnter"
+         contenteditable="true">{{innerText}}</div>
 </template>
 
 <script lang="ts">
@@ -35,26 +33,26 @@ import { Stream } from '@/types'
                     if(list.length ===0)
                         list.push(this.events[1])
                     return list
-                            .map(v => Object.assign(v, o))
+                        .map(v => Object.assign(v, o))
                 }),
                 map(e => this.emitter(e))
                 //switchMap(() => interval(5000)),
-      //          switchMap(this.streamSwitch),
+                //          switchMap(this.streamSwitch),
             ),
         });
     },
 
     mounted() {
-        this.cursor = this.messages[this.index]
+        this.cursor = this.messages["search"]
     }
 })
 
 export default class IntakeStream extends Vue {
 
-    messages:String[] = [
-        "What are you looking for?",
-        "Create a new Item",
-        "Add a to..." ]
+messages:String[] = {
+        "search": "What are you looking for?",
+        "create": "Create a new Item",
+        "append": "Add a to..." }
 
     events:Stream[] = [
         { code:47, event: 'create' },
@@ -71,7 +69,7 @@ export default class IntakeStream extends Vue {
     index:number = 0
 
     @Prop() actionEvent: Stream
-    
+
     print(val: Any) {
         console.log(val, 'print') 
         return val
@@ -84,32 +82,35 @@ export default class IntakeStream extends Vue {
         }
         return val
     }
-    
+
     get innerText():String {
         return this.cursor
     }
-    
+
     @Watch('actionEvent')
     onActionIndexChanged(value: Number, oldValue: Number) {
-        console.log('AES', value.event, value.value)
-        //this.cursor = this.getText() + this.messages[value]
-        //this.setText(this.cursor)
-        //this.focused = false
+        console.log('AES', value.event, String.fromCharCode(value.code))
+        this.$el.focus()
+        //this.setText(this.messages[value.event])
+
+    }
+
+    strip(str: String) {
+        return str.replace(/(\r\n|\n|\r)/gm, "");
     }
 
     getText(): String {
-        return this.$el.innerText 
+        return this.strip(this.$el.innerText)
     }
 
-    setText(val: String): String {
-        return this.$el.innerText = val
+    setText(str: String): String {
+        return this.$el.innerText = this.strip(str)
     }
 
     onInput() {
-        let text = this.getText().trimLeft()
+        let text = this.strip(this.getText())
         if(!text.charCodeAt(0))  text = ' '
         this.cursor = text
-        //console.log('cursor', this.cursor.charCodeAt(0))
         return
     }
 
@@ -118,9 +119,9 @@ export default class IntakeStream extends Vue {
     }
 
     focus() {
-        this.cursor = '' 
-        this.clear()
-        this.focused = true
+        //this.cursor = '' 
+        //this.clear()
+        //this.focused = true
     }
 
     clear() {
@@ -150,35 +151,35 @@ export default class IntakeStream extends Vue {
 </script>
 
 <style scoped lang="scss">
-    #tg-stream {
-    }
-    #tg-stream.is-placeholder {
-    }
-    [contenteditable="true"].single-line {
-        white-space: nowrap;
-        width:200px;
-        overflow: hidden;
-        display:inline-block;
-        vertical-align:top;
-        min-height:40px;
-        max-height:40px;
-        max-width:90%;
-        min-width:90%;
-        padding:0; 
-        outline:none;
-        font-size:1.5rem;
-        margin-left:0.75rem;
-    } 
-    [contenteditable="true"].single-line.is-placeholder { 
-        color:#d1d1d1;
-    }
-    [contenteditable="true"].single-line br {
-        display:none;
+#tg-stream {
+}
+#tg-stream.is-placeholder {
+}
+[contenteditable="true"].single-line {
+    white-space: nowrap;
+    width:200px;
+    overflow: hidden;
+    display:inline-block;
+    vertical-align:top;
+    min-height:40px;
+    max-height:40px;
+    max-width:90%;
+    min-width:90%;
+    padding:0; 
+    outline:none;
+    font-size:1.5rem;
+    margin-left:0.75rem;
+} 
+[contenteditable="true"].single-line.is-placeholder { 
+    color:#d1d1d1;
+}
+[contenteditable="true"].single-line br {
+    display:none;
 
-    }
-    [contenteditable="true"].single-line * {
-        display:inline;
-        white-space:nowrap;
-    }
+}
+[contenteditable="true"].single-line * {
+    display:inline;
+    white-space:nowrap;
+}
 </style>
 
