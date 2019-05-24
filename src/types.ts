@@ -18,6 +18,7 @@ export interface IToggleType {
 }
 
 export interface Stream {
+    context: string
     event: string
     code: number
     value?: any

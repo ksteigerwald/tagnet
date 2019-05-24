@@ -43,7 +43,8 @@ export default class Home extends Vue {
     @Action('tags/loadTags') loadTags: any
     @Action('memos/loadMemos') loadMemos: any
     @Getter('tags/tags') tags!: Tag[]
-    @Getter('tags/findTag') filterTags: (keys: any) => any[]
+    @Getter('tags/filterTags') filterTags: (keys: any) => any[]
+    @Getter('memos/filterMemos') filterMemos: (keys: any) => any[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('memos/newMemo') newMemo: Memo
     @Action('memos/createMemo') createMemo: any
@@ -61,18 +62,25 @@ export default class Home extends Vue {
         return this.myData
     }
 
+    keygen(stream: Stream): string {
+        return stream.event + '-' + stream.context
+    }
+
     onInterfaceChange(stream:Stream) {
-        console.log(stream.event, stream.value, 'HOME PAGE - onInterfaceChange')
-        switch (stream.event) {
-            case 'create':
+        console.log(this.keygen(stream), 'HOME PAGE - onInterfaceChange')
+
+        switch (this.keygen(stream)) {
+            case 'stream-create':
                 this.myData = this.filterTags(stream.value)            
-                console.log(this.filterTags(stream.value))
                 break
-            case 'append':
+            case 'stream-append':
+                this.myData = this.filterMemos(stream.value)            
                 break
             case 'search':
+                this.myData = []
                 break
             default:
+                this.myData = []
                 break
         }
 

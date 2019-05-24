@@ -28,7 +28,7 @@ import { Stream } from '@/types'
 })
 export default class Handler extends Vue {
 
-    tick:Stream = { code:160, event: 'search' }
+    tick:Stream = { context: 'none', code:160, event: 'search' }
     @Prop() propList: any[]
 
     get actionToggleIndex(): Stream {
@@ -37,7 +37,7 @@ export default class Handler extends Vue {
     
     onInterfaceChange(stream:Stream) {
         this.tick = stream
-        console.log(stream.event, stream.value, 'handler - onInterfaceChange')
+        console.log(stream.code, stream.event, stream.value, 'handler - onInterfaceChange')
         this.$emit('interface', stream) 
     }
 }

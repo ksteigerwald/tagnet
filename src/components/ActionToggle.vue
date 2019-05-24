@@ -21,11 +21,11 @@ import { Stream, IToggleType} from '@/types'
 export default class ActionToggle extends Vue { 
     
     actions:Stream[] = [
-        { code:160, event: 'search' },
-        { code:47, event: 'create' },
-        { code:64, event: 'append' }
+        { context: 'toggle', code:160, event: 'search' },
+        { context: 'toggle', code:47, event: 'create' },
+        { context: 'toggle', code:64, event: 'append' }
     ]   
-    tick:Stream = {code:-1, event:''}
+    tick:Stream = { context: 'toggle', code:-1, event:''}
     index:number = 0 
     @Prop() actionEvent: Stream
 

@@ -4,13 +4,14 @@ import { apolloClient } from '../constants/graphql'
 import { tagsQry } from '../constants/tags.ql'
 
 type TagGetter = GetterTree<TagState, RootState> 
+
 export enum TagType {
-  Goal = "trophy",
-  Person = "user-alt",
-  Event = "calendar-alt",
-  Topic = "newspaper",
-  Idea = "lightbulb",
-  Any = "asterisk"
+  goal = "trophy",
+  person = "user-alt",
+  event = "calendar-alt",
+  topic = "newspaper",
+  idea = "lightbulb",
+  any = "asterisk"
 }
 
 export const state: TagState = {
@@ -19,10 +20,9 @@ export const state: TagState = {
 
 export const getters: GetterTree<TagState, RootState> = {
   tags: (stage, getters, rootState) => state.tags,
-  findTag: (state, getters, rootState, str) => (str: string) => {
+  filterTags: (state, getters, rootState, str) => (str: string) => {
     return state.tags.filter(tag => {
-      console.log(tag.label === str, typeof str,str, ':', tag.label) 
-      return tag.label.match(str, ".*")
+      return tag.label.match(new RegExp(str+".*"))
     })
   },
 }

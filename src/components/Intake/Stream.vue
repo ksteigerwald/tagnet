@@ -29,9 +29,9 @@ import { Stream } from '@/types'
                     let nv = val.replace(/(@|\/)/gm,'').toLowerCase()
                     let o = { value: nv }
                     let list = this.events
-                        .filter(v => val.charCodeAt(0) === v.code)
-                    if(list.length ===0)
-                        list.push(this.events[1])
+                        .filter(v => val.charCodeAt(0) === v.code) ||
+                        this.events
+                            .filter(v => val.charCodeAt(0) === 160)
                     return list
                         .map(v => Object.assign(v, o))
                 }),
@@ -49,13 +49,13 @@ import { Stream } from '@/types'
 export default class IntakeStream extends Vue {
 
     events:Stream[] = [
-        { code:47, event: 'create' },
-        { code:160, event: 'search' },
-        { code:64, event: 'append' },
-        { code:1, event: 'up' },
-        { code:0, event: 'down' },
-        { code:10, event: 'enter' },
-        { code:32, event: 'search' },
+        {context: 'create', code:47, event: 'stream' },
+        {context: 'search', code:160, event: 'stream' },
+        {context: 'append', code:64, event: 'stream' },
+        {context: 'flyout', code:1, event: 'up' },
+        {context: 'flyout', code:0, event: 'down' },
+        {context: 'search', code:10, event: 'onEnter' },
+        {context: 'search', code:32, event: 'onEnter' },
     ]   
     stack:Stream[] = []
     cursor:string = ''
@@ -73,7 +73,6 @@ export default class IntakeStream extends Vue {
 
     emitter(val: Stream[]) {
         if(val.length > 0) {
-            this.stack.push(val[0])
             this.$emit('interface', val[0]) 
         }
         return val

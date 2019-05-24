@@ -74,12 +74,18 @@ export const actions: ActionTree<MemoState, RootState> = {
 
 export const getters: GetterTree<MemoState, RootState> = {
     memos: (state, getters, rootState) => state.memos,
+
     findMemo: (state, getters, rootState, id) => (id: number) => {
         return state.memos.filter(memo => {
-            console.log(id, memo, "filter")
             return memo.id === id
         })
     },
+
+    filterMemos: (state, getters, rootState, str) => (str: string) => {
+        return state.memos.filter(memo => {
+            return memo.label.match(new RegExp(str + ".*"))
+        })
+    }
 }
 
 export const memos:Module<MemoState, RootState> ={
