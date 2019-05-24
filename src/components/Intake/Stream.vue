@@ -43,16 +43,11 @@ import { Stream } from '@/types'
     },
 
     mounted() {
-        this.cursor = this.messages["search"]
     }
 })
 
 export default class IntakeStream extends Vue {
 
-messages:String[] = {
-        "search": "What are you looking for?",
-        "create": "Create a new Item",
-        "append": "Add a to..." }
 
     events:Stream[] = [
         { code:47, event: 'create' },
@@ -91,7 +86,6 @@ messages:String[] = {
     onActionIndexChanged(value: Number, oldValue: Number) {
         console.log('AES', value.event, String.fromCharCode(value.code))
         this.$el.focus()
-        //this.setText(this.messages[value.event])
 
     }
 

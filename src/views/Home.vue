@@ -10,7 +10,7 @@
         <div class="section">
             <div class="container">
                 <div class="columns is-mobile is-centered">
-                    <IntakeHandler />
+                    <IntakeHandler v-bind:propList="myData" />
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@ export default class Home extends Vue {
 
     @Action('tags/loadTags') loadTags: any
     @Action('memos/loadMemos') loadMemos: any
-
+    myData: String[] = ['a','b']
     created() {
         this.loadTags() 
         this.loadMemos() 

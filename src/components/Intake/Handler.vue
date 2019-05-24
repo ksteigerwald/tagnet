@@ -5,8 +5,9 @@
          @interface="onInterfaceChange"/>
         <IntakeStream 
          @interface="onInterfaceChange"
-         v-bind:actionEvent="actionToggleIndex"
-        /> 
+         v-bind:actionEvent="actionToggleIndex" /> 
+        <Flyout
+            v-bind:list="propList" />
     </div>
 </template>
 
@@ -15,25 +16,28 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import ActionToggle from '@/components/ActionToggle.vue'
 import IntakeStream from '@/components/Intake/Stream.vue'
+import Flyout from '@/components/Intake/Flyout.vue'
 import { Stream } from '@/types'
 
 @Component({
  components: {
       IntakeStream,
-      ActionToggle
+      ActionToggle,
+      Flyout
   }
 })
 export default class Handler extends Vue {
 
     tick:Stream = { code:160, event: 'search' }
+    @Prop() propList: any[]
 
     get actionToggleIndex(): Stream {
         return this.tick
     }
-
+    
     onInterfaceChange(stream:Stream) {
         this.tick = stream
-        console.log(stream.event, stream.value, 'onInterfaceChange')
+        console.log(stream.event, stream.value, 'handler - onInterfaceChange')
     }
 }
 </script>

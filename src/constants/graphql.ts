@@ -17,7 +17,7 @@ const authLink = setContext((_, {headers} ) => {
     let token: any = localStorage.getItem(config.localKey('user')) || ''
     let decode = jwt_decode(token)
     if(!isAuthenticated) 
-        window.location = '/logout'
+        window.location.href = '/logout'
     //console.log(decode)
     return {
         headers: {
