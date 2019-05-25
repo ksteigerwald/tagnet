@@ -6,11 +6,11 @@ type MemoGetter = GetterTree<StreamState, RootState>
 
 export const state: StreamState = {
     streams: [
-        {context: Context.open, code:47, event: Event.create },
+        {context: Context.toggle, code:47, event: Event.create },
         {context: Context.create, code:47, event: Event.create },
-        {context: Context.open, code:64, event: Event.append},
+        {context: Context.toggle, code:64, event: Event.append},
         {context: Context.append, code:64, event: Event.append},
-        {context: Context.open, code:160, event: Event.search},
+        {context: Context.toggle, code:160, event: Event.search},
         {context: Context.open, code:1, event: Event.up },
         {context: Context.open, code:0, event: Event.down},
         {context: Context.open, code:10, event: Event.enter},

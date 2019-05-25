@@ -17,6 +17,7 @@ enum ToggleType {
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { Context, IToggleType, Stream, Event, StreamState } from '@/types'
+import { ContextSetter } from 'apollo-link-context';
 
 @Component({})
 export default class ActionToggle extends Vue { 
@@ -24,33 +25,34 @@ export default class ActionToggle extends Vue {
     @Getter('streams/findByContext') findByContext: (context: Context) => Stream[]
     
     actions: Stream [] 
-    tick:Stream = {context: Context.toggle, code:64, event: Event.append}
-    index:number = 0 
+    index:number = 0
+    iconKey:string = 'search'
     @Prop() actionEvent: Stream
+    @Prop() pointer: Context
 
     get icon() {
-        return (<any>ToggleType)[this.tick.event]
+        return (<any>ToggleType)[this.iconKey]
     }
 
     mounted() {
         this.actions = this.findByContext(Context.toggle)
-        this.tick = this.actions[0]
     }
 
     @Watch('actionEvent')
     onActionIndexChanged(value: Stream, oldValue: Stream) {
-        let set = this.actions.filter( t => t.event === value.event)
-        this.tick = set[0] || this.actions[0]
+        if(value.context !== Context.toggle) return
+        console.log(value.context, value.event)
+        this.iconKey = value.event
     }
-
 
     toggleAction(e: any) {
         this.index++
         if(this.index >= this.actions.length) 
             this.index = 0
-        this.tick = this.actions[this.index]
-        this.$emit('interface', this.tick)
+        //this.pointer = this.actions[this.index].context
+        this.$emit('interface', this.actions[this.index])
     }
+
 }
 </script>
 

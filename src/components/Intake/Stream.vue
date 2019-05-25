@@ -5,7 +5,9 @@
          @focus="focus()"
          @blur="blur()"
          @keydown.enter="onArrowEnter"
-         contenteditable="true">{{cursor}}</div>
+         contenteditable="true">
+         {{cursor}}
+         </div>
 </template>
 
 <script lang="ts">
@@ -27,13 +29,14 @@ import { Context, Stream, Event, StreamState } from '@/types'
                 distinctUntilChanged(),
                 map((val: any) => {
                     let nv = val.replace(/(@|\/)/gm,'').toLowerCase()
-                    let o = { value: nv }
+                    let o = { value: nv || this.cursor }
+                    console.log('o', o)
                     let list = this.events
                         .filter(v => val.charCodeAt(0) === v.code) ||
                         this.events
                             .filter(v => val.charCodeAt(0) === 160)
-                    return list
-                        .map(v => Object.assign(v, o))
+
+                    return list.map(v => Object.assign(v, o))
                 }),
                 map(e => this.emitter(e))
                 //switchMap(() => interval(5000)),
@@ -43,13 +46,13 @@ import { Context, Stream, Event, StreamState } from '@/types'
     },
 
     mounted() {
+        this.focus()
     }
 })
 
 export default class IntakeStream extends Vue {
 
     @Prop() actionEvent: Stream
-    @Prop() context: Context
 
     stack:Stream[] = []
     cursor:string = ''
@@ -66,6 +69,7 @@ export default class IntakeStream extends Vue {
     @Getter('streams/streams') events: Stream[]
 
     emitter(val: Stream[]) {
+        console.log('emmiter', val)
         if(val.length > 0) {
             this.$emit('interface', val[0]) 
         }
@@ -84,7 +88,7 @@ export default class IntakeStream extends Vue {
     }
 
     getText(): string {
-        return this.strip(this.$el.innerText)
+        return this.strip(this.$el.textContent || this.$el.innerText)
     }
 
     setText(str: String): String {
@@ -117,9 +121,7 @@ export default class IntakeStream extends Vue {
     }
 
     onArrowEnter() {
-        var input:string = this.getText()
         this.clear()
-        console.log('onEnter',this.cursor, input)
         return false
     }
 

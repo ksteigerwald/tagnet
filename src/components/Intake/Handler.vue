@@ -4,10 +4,12 @@
                 @keydown.up="onArrowUp"
                 @keydown.enter="onEnter">
         <ActionToggle
-            v-bind:actionEvent="actionToggleIndex"
+            :pointer="context"
+            :actionEvent="actionToggleIndex"
             @interface="onInterfaceChange"/>
         <IntakeStream 
             @interface="onInterfaceChange"
+            :context="context"
             v-bind:actionEvent="actionToggleIndex" /> 
         <Flyout
             ref="flyout"
@@ -22,7 +24,8 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import ActionToggle from '@/components/ActionToggle.vue'
 import IntakeStream from '@/components/Intake/Stream.vue'
 import Flyout from '@/components/Intake/Flyout.vue'
-import { Stream, UIFlyout } from '@/types'
+import { Context, Stream, Event, UIFlyout } from '@/types'
+
 
 @Component({
  components: {
@@ -33,21 +36,27 @@ import { Stream, UIFlyout } from '@/types'
 })
 export default class Handler extends Vue {
 
-    tick:Stream 
+    tick:Stream = {context: Context.toggle, code:64, event: Event.search}
+    pointer:Context = Context.search
     @Prop() propList: any[]
     @Prop() arrowHandler: Stream
+    @Prop() context: Context
 
     $refs!: {
         flyout: any 
     }
 
     get actionToggleIndex(): Stream {
+        if(this.tick.context === Context.toggle) {
+            //console.log('foooooo', this.tick.context, this.tick.event)
+            this.pointer = this.tick.context
+        }
         return this.tick
     }
     
     onInterfaceChange(stream:Stream) {
         this.tick = stream
-        console.log(stream.code, stream.event,  'HANDLER COMP - onInterfaceChange')
+        //console.log(stream.code, stream.event,  'HANDLER COMP - onInterfaceChange')
         this.$emit('interface', stream) 
     }
 

@@ -27,11 +27,6 @@ export default class Flyout extends Vue {
 
     arrowCounter: number = 0
 
-    mounted() {
-        console.log('..', this.list)
-    }
-
-   
     down() {
         if(!this.list) return
         if (this.index < this.list.length - 1) {
@@ -53,8 +48,6 @@ export default class Flyout extends Vue {
 
         if(sig === 'enter')
             this.onClick(this.index)
-
-        console.log(sig) 
     }
 
     onClick(i:number) {

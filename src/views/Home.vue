@@ -5,7 +5,8 @@
                 <div class="columns is-mobile is-centered">
                     <IntakeHandler 
                     @interface="onInterfaceChange"
-                    v-bind:propList="syncData" />
+                    :context="current"
+                    :propList="syncData" />
                 </div>
             </div>
         </div>
@@ -46,8 +47,9 @@ export default class Home extends Vue {
     @Action('memos/searchMemos') searchMemos: any
     
     myData: String[] = []
+    stack: any[] = []
 
-    @Prop() context:Context 
+    current: Context = Context.search
 
     created() {
         this.loadTags() 
@@ -69,20 +71,35 @@ export default class Home extends Vue {
         switch (this.keygen(stream)) {
             case 'create-open':
                 this.myData = this.filterTags(stream.value)            
+                this.current = stream.context
+                break
+            case 'create-toggle':
+                this.myData = this.filterTags(stream.value)            
                 break
             case 'append-open':
                 this.myData = this.filterMemos(stream.value)            
                 break
-            case 'onEnter-search':
-                console.log('HASHURA - search query no longer working, look into it')
+            case 'append-toggle':
+                this.myData = this.filterMemos(stream.value)            
+                break
+            case 'enter-open':
+                //console.log('HASHURA - search query no longer working, look into it')
                 this.myData = []
-                //this.myData = this.searchMemos(stream.value)
+                if(this.stack.length < 0)
+                    console.log(this.stack, this.stack.pop())    
+
+                if(stream.value && stream.value !== " ")
+                    this.stack.push(stream.value)
+                    console.log('pushing', stream.value, stream, this.stack)    
+                console.log(stream.value !== " ") 
+                //this.searchMemos(stream.value)
                 break
             case 'click-flyout':
                 this.myData = []
                 //this.myData = this.searchMemos(stream.value)
                 break
             default:
+                this.current = Context.open
                 this.myData = []
                 break
         }
