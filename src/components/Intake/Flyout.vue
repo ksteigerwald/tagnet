@@ -16,7 +16,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Stream, Context, Event } from '@/types'
 
 @Component({
- components: {}
+    components: {}
 })
 export default class Flyout extends Vue {
 
@@ -53,7 +53,6 @@ export default class Flyout extends Vue {
     onClick(i:number) {
         let stream: Stream = {
             context: Context.flyout, 
-            code: 0, 
             event: Event.click,  
             value: this.list[i]
         }

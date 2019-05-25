@@ -1,24 +1,26 @@
 <template>
-    <div class="single-line" 
+    <input class="single-line" 
          v-bind:class="[(isFocused) ? 'foo' : 'is-placeholder']"
+         :value="cursor"
          @input="onInput()"
          @focus="focus()"
          @blur="blur()"
          @keydown.enter="onArrowEnter"
-         contenteditable="true">
-         {{cursor}}
-         </div>
+         contenteditable="true"/>
+         
+         
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
-import { Subject, fromEvent, of, pipe, interval } from 'rxjs';
+import { Subject, Observable, fromEvent, of, pipe, interval, ConnectableObservable } from 'rxjs';
 import { pluck, map, mapTo, debounceTime, tap, bufferTime,
-    distinctUntilChanged, switchMap, filter, mergeMap } from 'rxjs/operators';
-
+    distinctUntilChanged, switchMap, filter, mergeMap, switchAll } from 'rxjs/operators';
 
 import { Context, Stream, Event, StreamState } from '@/types'
+import { log } from 'util';
+import { EventEmitter } from 'events';
 
 @Component<IntakeStream>({
     subscriptions() {
@@ -27,18 +29,10 @@ import { Context, Stream, Event, StreamState } from '@/types'
                 pluck('newValue'),
                 debounceTime(100),
                 distinctUntilChanged(),
-                map((val: any) => {
-                    let nv = val.replace(/(@|\/)/gm,'').toLowerCase()
-                    let o = { value: nv || this.cursor }
-                    console.log('o', o)
-                    let list = this.events
-                        .filter(v => val.charCodeAt(0) === v.code) ||
-                        this.events
-                            .filter(v => val.charCodeAt(0) === 160)
-
-                    return list.map(v => Object.assign(v, o))
-                }),
-                map(e => this.emitter(e))
+                map(this.getContext),
+                map(this.getEvent),
+                map(this.emitter)
+                //map(this.parser),
                 //switchMap(() => interval(5000)),
                 //          switchMap(this.streamSwitch),
             ),
@@ -59,7 +53,7 @@ export default class IntakeStream extends Vue {
     focused:boolean = false
     index:number = 0
 
-    $el:HTMLElement
+    $el:HTMLInputElement
 
     print(val: any) {
         console.log(val, 'print') 
@@ -68,48 +62,78 @@ export default class IntakeStream extends Vue {
 
     @Getter('streams/streams') events: Stream[]
 
-    emitter(val: Stream[]) {
-        console.log('emmiter', val)
-        if(val.length > 0) {
-            this.$emit('interface', val[0]) 
+    getContext(str: string):Stream {
+        var context = Context.open
+        if(str.charAt(0) === '/')
+            context = Context.memo
+        if(str.charAt(0) === '@')
+            context = Context.line
+            
+        return {context: context,  value: str, event: Event.search }
+    }
+
+    getEvent(pack: Stream):Stream  {
+        var event = this.isSubmit(pack.value) ? Event.enter : Event.search   
+        let index
+        if(this.isCRUD(pack.context)) {
+            event = this.isSubmit(pack.value) ? Event.create : Event.add   
         }
+        let ev =  Object.assign(pack, { 
+            event: event, 
+            value: pack.value.replace(/(@|\/)/gm,'')
+        })
+
+        console.log('>', ev)
+        return ev
+    }
+
+    isCRUD(context: Context): Boolean {
+        let cruds = [Context.memo, Context.line]
+        return cruds.indexOf(context) != -1
+    }
+
+    isSubmit(val: String): Boolean {
+        var up = val.length
+        return val.charAt(up -1) === '~' 
+    }
+
+    emitter(val: Stream) {
+        console.log(val)
+        this.$emit('interface', val) 
         return val
     }
 
     @Watch('actionEvent')
-    onActionIndexChanged(value: Stream, oldValue: Stream) {
+    onActionIndexChanged(stream: Stream, oldStream: Stream) {
+        if(!stream.value) return
+        if(stream.value.code) {
+            console.log('STREAM:', stream.value)
+            this.$el.value = this.cursor.charAt(0) + stream.value.code + ' '
+        }
         //console.log('AES', value.event, String.fromCharCode(value.code))
         this.$el.focus()
 
     }
 
-    strip(str: String) {
-        return str.replace(/(\r\n|\n|\r)/gm, "");
-    }
-
-    getText(): string {
-        return this.strip(this.$el.textContent || this.$el.innerText)
-    }
-
-    setText(str: String): String {
-        return this.$el.innerText = this.strip(str)
-    }
-
     onInput() {
-        let text = this.strip(this.getText())
-        if(!text.charCodeAt(0))  text = ' '
-        this.cursor = text
-        return
+        //This makes the observerable tick
+        this.cursor = this.$el.value
     }
-
+    
     get isFocused():boolean { 
         return this.focused
     }
+
+    //legacy methods
 
     focus() {
         //this.cursor = '' 
         //this.clear()
         //this.focused = true
+    }
+
+    setText(str: String): String {
+        return this.$el.innerText = this.strip(str)
     }
 
     clear() {
@@ -119,12 +143,29 @@ export default class IntakeStream extends Vue {
     blur() {
         //this.focused = false
     }
-
+    
     onArrowEnter() {
+        let pre = this.cursor.charAt(0).match(new RegExp(/(@|\/)/gm,'')) 
+        let boundary = this.cursor.split(' ').length
+        let append = (boundary >=2 || pre === null) ? '~' : ' '
+        console.log('PRE', pre, append)
+        
+        //This is very important as it requeues for completion
+        //space is stripped in stream
+        
+        this.cursor = this.cursor + append
+
         this.clear()
         return false
     }
 
+    strip(str: String) {
+        return str.replace(/(\r\n|\n|\r)/gm, "");
+    }
+
+    getText(): string {
+        return this.strip(this.$el.textContent || this.$el.innerText)
+    }
 }
 </script>
 

@@ -41,7 +41,6 @@ export default class ActionToggle extends Vue {
     @Watch('actionEvent')
     onActionIndexChanged(value: Stream, oldValue: Stream) {
         if(value.context !== Context.toggle) return
-        console.log(value.context, value.event)
         this.iconKey = value.event
     }
 

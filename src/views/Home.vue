@@ -61,38 +61,33 @@ export default class Home extends Vue {
     }
 
     keygen(stream: Stream): string {
-        return stream.event + '-' + stream.context
+        return stream.context + '-' + stream.event
     }
 
 
     onInterfaceChange(stream:Stream) {
         console.log(this.keygen(stream), 'HOME PAGE - onInterfaceChange')
+        console.log('VALUE:', stream.value, stream)
 
         switch (this.keygen(stream)) {
             case 'create-open':
                 this.myData = this.filterTags(stream.value)            
                 this.current = stream.context
                 break
-            case 'create-toggle':
+            case 'memo-add':
                 this.myData = this.filterTags(stream.value)            
                 break
-            case 'append-open':
+            case 'memo-create':
+                break
+            case 'line-add':
                 this.myData = this.filterMemos(stream.value)            
                 break
-            case 'append-toggle':
-                this.myData = this.filterMemos(stream.value)            
+            case 'line-create':
                 break
-            case 'enter-open':
-                //console.log('HASHURA - search query no longer working, look into it')
-                this.myData = []
-                if(this.stack.length < 0)
-                    console.log(this.stack, this.stack.pop())    
+            case 'open-enter':
+                console.log('HASHURA - search query no longer working, look into it')
+                this.searchMemos(stream.value)
 
-                if(stream.value && stream.value !== " ")
-                    this.stack.push(stream.value)
-                    console.log('pushing', stream.value, stream, this.stack)    
-                console.log(stream.value !== " ") 
-                //this.searchMemos(stream.value)
                 break
             case 'click-flyout':
                 this.myData = []

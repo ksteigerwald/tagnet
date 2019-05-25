@@ -9,7 +9,6 @@
             @interface="onInterfaceChange"/>
         <IntakeStream 
             @interface="onInterfaceChange"
-            :context="context"
             v-bind:actionEvent="actionToggleIndex" /> 
         <Flyout
             ref="flyout"
@@ -36,7 +35,7 @@ import { Context, Stream, Event, UIFlyout } from '@/types'
 })
 export default class Handler extends Vue {
 
-    tick:Stream = {context: Context.toggle, code:64, event: Event.search}
+    tick:Stream = {context: Context.toggle, event: Event.search}
     pointer:Context = Context.search
     @Prop() propList: any[]
     @Prop() arrowHandler: Stream
@@ -48,7 +47,7 @@ export default class Handler extends Vue {
 
     get actionToggleIndex(): Stream {
         if(this.tick.context === Context.toggle) {
-            //console.log('foooooo', this.tick.context, this.tick.event)
+            //console.log(this.tick.context, this.tick.event)
             this.pointer = this.tick.context
         }
         return this.tick

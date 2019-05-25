@@ -20,6 +20,8 @@ export interface IToggleType {
 }
 
 export enum Context {
+    memo = 'memo',
+    line = 'line',
     create = 'create',
     search = 'search',
     append = 'append',
@@ -29,6 +31,7 @@ export enum Context {
 }
 export enum Event {
     create = 'create',
+    add = 'add',
     append = 'append',
     search = 'search',
     up = 'up',
@@ -39,7 +42,6 @@ export enum Event {
 export interface Stream {
     context: Context
     event: Event
-    code: number
     value?: any
 }
 // Store
