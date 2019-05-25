@@ -14,7 +14,9 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Subject, fromEvent, of, pipe, interval } from 'rxjs';
 import { pluck, map, mapTo, debounceTime, tap, bufferTime,
     distinctUntilChanged, switchMap, filter, mergeMap } from 'rxjs/operators';
-import { Stream } from '@/types'
+
+
+import { Context, Stream, Event, StreamState } from '@/types'
 
 @Component<IntakeStream>({
     subscriptions() {
@@ -46,21 +48,13 @@ import { Stream } from '@/types'
 
 export default class IntakeStream extends Vue {
 
-    events:Stream[] = [
-        {context: 'create', code:47, event: 'stream' },
-        {context: 'search', code:160, event: 'stream' },
-        {context: 'append', code:64, event: 'stream' },
-        {context: 'flyout', code:1, event: 'up' },
-        {context: 'flyout', code:0, event: 'down' },
-        {context: 'search', code:10, event: 'onEnter' },
-        {context: 'search', code:32, event: 'onEnter' },
-    ]   
+    @Prop() actionEvent: Stream
+    @Prop() context: Context
+
     stack:Stream[] = []
     cursor:string = ''
     focused:boolean = false
     index:number = 0
-
-    @Prop() actionEvent: Stream
 
     $el:HTMLElement
 
@@ -68,6 +62,8 @@ export default class IntakeStream extends Vue {
         console.log(val, 'print') 
         return val
     }
+
+    @Getter('streams/streams') events: Stream[]
 
     emitter(val: Stream[]) {
         if(val.length > 0) {

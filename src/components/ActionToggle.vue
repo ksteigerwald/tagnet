@@ -15,17 +15,16 @@ enum ToggleType {
 }
 
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { Stream, IToggleType} from '@/types'
+import { State, Getter, Action, namespace } from 'vuex-class';
+import { Context, IToggleType, Stream, Event, StreamState } from '@/types'
 
 @Component({})
 export default class ActionToggle extends Vue { 
     
-    actions:Stream[] = [
-        { context: 'toggle', code:160, event: 'search' },
-        { context: 'toggle', code:47, event: 'create' },
-        { context: 'toggle', code:64, event: 'append' }
-    ]   
-    tick:Stream = { context: 'toggle', code:-1, event:''}
+    @Getter('streams/findByContext') findByContext: (context: Context) => Stream[]
+    
+    actions: Stream [] 
+    tick:Stream = {context: Context.toggle, code:64, event: Event.append}
     index:number = 0 
     @Prop() actionEvent: Stream
 
@@ -34,8 +33,8 @@ export default class ActionToggle extends Vue {
     }
 
     mounted() {
+        this.actions = this.findByContext(Context.toggle)
         this.tick = this.actions[0]
-        console.log('mount', this.tick.event)
     }
 
     @Watch('actionEvent')

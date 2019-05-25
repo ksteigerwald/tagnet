@@ -19,9 +19,26 @@ export interface IToggleType {
     [key: string]: any
 }
 
+export enum Context {
+    create = 'create',
+    search = 'search',
+    append = 'append',
+    flyout = 'flyout',
+    open = 'open',
+    toggle = 'toggle'
+}
+export enum Event {
+    create = 'create',
+    append = 'append',
+    search = 'search',
+    up = 'up',
+    down = 'down',
+    enter = 'enter',
+    click = 'click'
+}
 export interface Stream {
-    context: string
-    event: string
+    context: Context
+    event: Event
     code: number
     value?: any
 }
@@ -32,6 +49,9 @@ export interface RootState {
     memos: MemoState
     lines: LineState
     user: UserState
+}
+export interface StreamState {
+    streams: Stream[]
 }
 
 export interface TagState {

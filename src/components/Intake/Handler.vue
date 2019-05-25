@@ -33,7 +33,7 @@ import { Stream, UIFlyout } from '@/types'
 })
 export default class Handler extends Vue {
 
-    tick:Stream = { context: 'none', code:160, event: 'search' }
+    tick:Stream 
     @Prop() propList: any[]
     @Prop() arrowHandler: Stream
 

@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
-import { Stream } from '@/types'
+import { Stream, Context, Event } from '@/types'
 
 @Component({
  components: {}
@@ -53,14 +53,15 @@ export default class Flyout extends Vue {
 
         if(sig === 'enter')
             this.onClick(this.index)
+
         console.log(sig) 
     }
 
     onClick(i:number) {
         let stream: Stream = {
-            context: 'flyout', 
-            code:0, 
-            event: 'click',  
+            context: Context.flyout, 
+            code: 0, 
+            event: Event.click,  
             value: this.list[i]
         }
         this.index = 0

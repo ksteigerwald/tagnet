@@ -3,13 +3,6 @@
         <div class="section">
             <div class="container">
                 <div class="columns is-mobile is-centered">
-                    <RxTagnet />
-                </div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="container">
-                <div class="columns is-mobile is-centered">
                     <IntakeHandler 
                     @interface="onInterfaceChange"
                     v-bind:propList="syncData" />
@@ -28,8 +21,9 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import RxTagnet from '@/components/RxTagnet.vue'
 import Wall from '@/components/Wall.vue'
 import IntakeHandler from '@/components/Intake/Handler.vue'
-import { Stream,  Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
+import { Context, Event, Stream,  Tag, TagState, Memo, 
+        MemoState, Line, LineState } from '@/types'
 
 @Component({
     components: {
@@ -53,6 +47,8 @@ export default class Home extends Vue {
     
     myData: String[] = []
 
+    @Prop() context:Context 
+
     created() {
         this.loadTags() 
         this.loadMemos() 
@@ -66,14 +62,15 @@ export default class Home extends Vue {
         return stream.event + '-' + stream.context
     }
 
+
     onInterfaceChange(stream:Stream) {
         console.log(this.keygen(stream), 'HOME PAGE - onInterfaceChange')
 
         switch (this.keygen(stream)) {
-            case 'stream-create':
+            case 'create-open':
                 this.myData = this.filterTags(stream.value)            
                 break
-            case 'stream-append':
+            case 'append-open':
                 this.myData = this.filterMemos(stream.value)            
                 break
             case 'onEnter-search':
@@ -83,7 +80,6 @@ export default class Home extends Vue {
                 break
             case 'click-flyout':
                 this.myData = []
-                console.log(stream.value.label)
                 //this.myData = this.searchMemos(stream.value)
                 break
             default:
