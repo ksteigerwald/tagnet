@@ -64,7 +64,6 @@ export default class Home extends Vue {
         return stream.context + '-' + stream.event
     }
 
-
     onInterfaceChange(stream:Stream) {
         console.log(this.keygen(stream), 'HOME PAGE - onInterfaceChange')
         console.log('VALUE:', stream.value, stream)
@@ -87,7 +86,6 @@ export default class Home extends Vue {
             case 'open-enter':
                 console.log('HASHURA - search query no longer working, look into it')
                 this.searchMemos(stream.value)
-
                 break
             case 'click-flyout':
                 this.myData = []

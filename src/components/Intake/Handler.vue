@@ -55,7 +55,6 @@ export default class Handler extends Vue {
     
     onInterfaceChange(stream:Stream) {
         this.tick = stream
-        //console.log(stream.code, stream.event,  'HANDLER COMP - onInterfaceChange')
         this.$emit('interface', stream) 
     }
 

@@ -47,7 +47,8 @@ import { EventEmitter } from 'events';
 export default class IntakeStream extends Vue {
 
     @Prop() actionEvent: Stream
-
+    
+    tail:string = '\u2800'
     stack:Stream[] = []
     cursor:string = ''
     focused:boolean = false
@@ -62,6 +63,8 @@ export default class IntakeStream extends Vue {
 
     @Getter('streams/streams') events: Stream[]
 
+
+
     getContext(str: string):Stream {
         var context = Context.open
         if(str.charAt(0) === '/')
@@ -74,17 +77,22 @@ export default class IntakeStream extends Vue {
 
     getEvent(pack: Stream):Stream  {
         var event = this.isSubmit(pack.value) ? Event.enter : Event.search   
-        let index
         if(this.isCRUD(pack.context)) {
             event = this.isSubmit(pack.value) ? Event.create : Event.add   
         }
-        let ev =  Object.assign(pack, { 
-            event: event, 
-            value: pack.value.replace(/(@|\/)/gm,'')
-        })
 
-        console.log('>', ev)
-        return ev
+        return Object.assign(pack, { 
+            event: event, 
+            value: this.sanitize(pack.value)
+        })
+    }
+
+    sanitize(str: String): string {
+        let newStr = str.replace(/(@|\/)/gm,'')
+        if(newStr.charAt(newStr.length -1) === this.tail) {
+            return newStr.substring(0, newStr.length -1)
+        }
+        return newStr
     }
 
     isCRUD(context: Context): Boolean {
@@ -94,7 +102,7 @@ export default class IntakeStream extends Vue {
 
     isSubmit(val: String): Boolean {
         var up = val.length
-        return val.charAt(up -1) === '~' 
+        return val.charAt(up -1) === this.tail 
     }
 
     emitter(val: Stream) {
@@ -137,7 +145,7 @@ export default class IntakeStream extends Vue {
     }
 
     clear() {
-        this.setText('')
+        this.$el.value = ''
     }
 
     blur() {
@@ -147,15 +155,20 @@ export default class IntakeStream extends Vue {
     onArrowEnter() {
         let pre = this.cursor.charAt(0).match(new RegExp(/(@|\/)/gm,'')) 
         let boundary = this.cursor.split(' ').length
-        let append = (boundary >=2 || pre === null) ? '~' : ' '
+        let append = (boundary >=2 || pre === null) ? this.tail : ' '
         console.log('PRE', pre, append)
         
         //This is very important as it requeues for completion
         //space is stripped in stream
         
         this.cursor = this.cursor + append
-
-        this.clear()
+        var self = this;
+        if(boundary >=2) {
+            setTimeout(function () {
+                console.log('ST', self)
+                self.cursor = ''
+            }, 100)
+        }
         return false
     }
 
