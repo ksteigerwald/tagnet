@@ -132,8 +132,8 @@ a { color:#000 }
 }
 .card.newspaper {
     mark {
-        color:#FFC5AE;
+        color:#55C1FF;
     }
-    background:#FFC5AE;
+    background:#55C1FF;
 }
 </style>
