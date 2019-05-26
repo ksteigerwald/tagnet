@@ -99,6 +99,12 @@ export const getters: GetterTree<MemoState, RootState> = {
         })
     },
 
+    findByCode: (state, getters, rootState, str) => (code: string) => {
+        return state.memos.filter(tag => {
+            return tag.code === code
+        })
+    },
+
     filterMemos: (state, getters, rootState, str) => (str: string) => {
         return state.memos.filter(memo => {
             return memo.label.match(new RegExp(str + ".*", "i"))

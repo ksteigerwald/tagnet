@@ -38,7 +38,8 @@ export default class Home extends Vue {
     @Action('tags/loadTags') loadTags: any
     @Action('memos/loadMemos') loadMemos: any
     @Getter('tags/tags') tags!: Tag[]
-    @Getter('tags/findByCode') findByCode: any
+    @Getter('tags/findByCode') findTagByCode: any
+    @Getter('memos/findByCode') findMemoByCode: any
     @Getter('tags/filterTags') filterTags: (keys: any) => any[]
     @Getter('memos/filterMemos') filterMemos: (keys: any) => any[]
     @Getter('memos/memos') memos!: Memo[]
@@ -65,6 +66,12 @@ export default class Home extends Vue {
         return stream.context + '-' + stream.event
     }
 
+    splitter(str: string): any {
+        let data = str.split(' ') 
+        let code = data.shift()
+
+        return { code: code, value: data.join(' ')}
+    }
     onInterfaceChange(stream:Stream) {
         console.log(this.keygen(stream), 'HOME PAGE - onInterfaceChange')
 
@@ -77,18 +84,24 @@ export default class Home extends Vue {
                 this.myData = this.filterTags(stream.value)            
                 break
             case 'memo-create':
-                var data = stream.value.split(' ') 
-                let tag = this.findByCode(data.shift()).pop()
-                let memo = this.createMemo({
-                    label: data.join(' '),
+                var obj = this.splitter(stream.value)
+                var tag = this.findTagByCode(obj.code).pop()
+                this.createMemo({
+                    label: obj.value,
                     tag_id: tag.id
                 })
-                console.log(data, tag)
+                console.log(obj, tag)
                 break
             case 'line-add':
                 this.myData = this.filterMemos(stream.value)            
                 break
             case 'line-create':
+                var obj:any = this.splitter(stream.value)
+                var memo:Memo = this.findMemoByCode(obj.code).pop()
+                this.createLine({
+                    label: obj.value,
+                    memo_id: memo.id
+                })
                 break
             case 'open-enter':
                 console.log('HASHURA - search query no longer working, look into it')
