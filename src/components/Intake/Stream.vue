@@ -160,8 +160,10 @@ export default class IntakeStream extends Vue {
         
         //This is very important as it requeues for completion
         //space is stripped in stream
-        
         this.cursor = this.cursor + append
+
+        return //this breaks things
+        /*
         var self = this;
         if(boundary >=2) {
             setTimeout(function () {
@@ -170,6 +172,7 @@ export default class IntakeStream extends Vue {
             }, 100)
         }
         return false
+        */
     }
 
     strip(str: String) {

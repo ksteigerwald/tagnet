@@ -31,6 +31,7 @@ query search_lines($input: String) {
 		where: {label: {_like: $input }}
 	) {
       id,
+      code,
       uuid,
       memo_id,
       label
@@ -42,6 +43,7 @@ export const linesByMemoId = gql`
 query linesByMemoId($input:Int) {
   lines(where: {memo_id: {_eq: $input }}) {
     id
+    code
     label
     memo_id
     user_id

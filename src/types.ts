@@ -99,6 +99,7 @@ export interface Line {
     label: string
     created: string
     user_id: string
+    code:string
 }
 
 export interface User {

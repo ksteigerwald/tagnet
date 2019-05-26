@@ -24,6 +24,7 @@ query {
         tag_id
         label
         created
+        code
         MemoLines(limit: 10, order_by: {created: desc}) {
             id
         }
@@ -42,6 +43,7 @@ export const memosQryMemoLines = gql`
 query {
     memos(order_by: {created: desc}) {
         id
+        code        
         uuid
         user_id
         tag_id
@@ -60,6 +62,7 @@ export const memosSearch = gql`
 query search_memos($input:String){
   memos(where: {_or:[{label: {_like: $input }}, {MemoLines:{label:{_like:$input}}}]}) {
     id
+    code
     label
     user_id
     tag_id
@@ -79,6 +82,7 @@ export const memosGet = gql`
 query get_memo($input: Int) {
   memos(where: {id: {_eq: $input}}) {
     id
+    code
     label
     user_id
     tag_id

@@ -72,7 +72,7 @@ import ActionToggle from '@/components/ActionToggle.vue'
                 var action = this.stack.pop() || { __typename: 'search' }
                 switch(action.__typename) {
                     case "tags":
-                        let memo: Memo = { uuid: '', id: 0, 
+                        let memo: Memo = { uuid: '', id: 0, code: '',
                             created: '', user_id: '', label: obj.label, 
                             tag_id: action.id 
                         } 
@@ -80,7 +80,7 @@ import ActionToggle from '@/components/ActionToggle.vue'
                         this.createMemo(memo)
                         break
                     case "memos":
-                        let line: Line = { 
+                        let line: Line = { id: 0, code: '',
                             uuid: '', created: '', user_id: '', 
                             memo_id: action.id, label: obj.label } 
 
