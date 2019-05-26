@@ -7,8 +7,6 @@
          @blur="blur()"
          @keyup.enter="submitHandler"
          contenteditable="true"/>
-         
-         
 </template>
 
 <script lang="ts">
@@ -23,9 +21,7 @@ import { Context, Stream, Event, StreamState } from '@/types'
 import { log } from 'util';
 import { EventEmitter } from 'events';
 
-
 @Component<IntakeStream>({
-
 
     subscriptions() {
         return ({
@@ -36,9 +32,6 @@ import { EventEmitter } from 'events';
                 map(this.getContext),
                 map(this.getEvent),
                 map(this.emitter)
-                //map(this.parser),
-                //switchMap(() => interval(5000)),
-                //          switchMap(this.streamSwitch),
             ),
             formData: this.$createObservableMethod('submitHandler').pipe(
                 pluck('newValue'),

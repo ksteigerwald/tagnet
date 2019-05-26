@@ -104,7 +104,6 @@ export default class Home extends Vue {
                 })
                 break
             case 'open-enter':
-                console.log('HASHURA - search query no longer working, look into it')
                 this.searchMemos(stream.value)
                 break
             case 'click-flyout':
