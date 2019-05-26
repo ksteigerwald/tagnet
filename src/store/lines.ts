@@ -1,10 +1,13 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line } from '../types'
 import { apolloClient } from '@/constants/graphql'
-import { linesQry, searchQry, linesInsert, linesByMemoId } from '@/constants/lines.ql'
+import { linesQry, searchQry, linesInsert, linesByMemoId, updateLineCode } from '@/constants/lines.ql'
 import { Subject, fromEvent, of, pipe } from 'rxjs';
 import { pluck, map, debounceTime, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
-const uuidv1 = require('uuid/v1');
+import Hashids from 'hashids'
+
+
+let hashid = new Hashids('LINE')
 
 type LineGetter = GetterTree<LineState, RootState> 
 
@@ -29,6 +32,23 @@ export const actions: ActionTree<LineState, RootState> = {
                     label: payload.label,
                     memo_id: payload.memo_id
                 }]
+            }
+        })
+
+        let line: Line = response.data.insert_lines.returning.pop()
+        commit('addLine', line)
+
+    },
+
+    async updateToken({ commit, dispatch, rootState }, id:number) {
+
+        let code = hashid.encode(id)
+        console.log(code, '<<hashid')
+        const response: any = await apolloClient.mutate({
+            mutation: updateLineCode,
+            variables: {
+                    id: id,
+                    code: code
             }
         })
 

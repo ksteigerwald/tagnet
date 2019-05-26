@@ -91,3 +91,17 @@ query get_memo($input: Int) {
 }
 `
 
+export const updateMemoCode = gql`
+mutation update_token($id: Int, $code: String) {
+  update_memos(
+    where: {id: {_eq: $id}},
+    _set: {
+      code: $code
+    }
+  ) {
+    affected_rows
+    returning {
+      id
+    }
+  }
+}`

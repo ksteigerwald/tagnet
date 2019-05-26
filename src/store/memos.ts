@@ -1,9 +1,10 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { memosQry,memosQryMemoLines,memosSearch, memosInsert, memosGet } from '@/constants/memos.ql'
+import { memosQry,memosQryMemoLines,memosSearch, memosInsert, memosGet, updateMemoCode } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
-const uuidv1 = require('uuid/v1');
+import Hashids from 'hashids'
+let hashid = new Hashids('MEMO')
 
 type MemoGetter = GetterTree<MemoState, RootState> 
 
@@ -32,6 +33,23 @@ export const actions: ActionTree<MemoState, RootState> = {
         })
 
         let memo: Memo = response.data.insert_memos.returning.pop()
+        dispatch('updateMemoCode', memo)
+
+    },
+    
+    async updateMemoCode({ commit, dispatch, rootState }, memo:Memo) {
+
+        let code = hashid.encode(memo.id)
+        memo.code = code
+        console.log(code, '<<hashid')
+        const response: any = await apolloClient.mutate({
+            mutation: updateMemoCode,
+            variables: {
+                    id: memo.id,
+                    code: code
+            }
+        })
+
         commit('addMemo', memo)
 
     },

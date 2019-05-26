@@ -56,3 +56,17 @@ query linesByMemoId($input:Int) {
   }
 }
 `
+export const updateLineCode = gql`
+mutation update_token($id: Int, $code: String) {
+  update_lines(
+    where: {id: {_eq: $id}},
+    _set: {
+      code: $code
+    }
+  ) {
+    affected_rows
+    returning {
+      id
+    }
+  }
+}`

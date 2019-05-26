@@ -86,12 +86,14 @@ export interface Memo {
     tag_id: number
     created: string
     user_id: string
+    code: string
     type?: string
     MemoLines?: Line[]
     TagMemo?: Tag
 }
 
 export interface Line {
+    id: number
 	uuid: string
     memo_id: number
     label: string
