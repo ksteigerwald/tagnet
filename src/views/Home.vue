@@ -38,6 +38,7 @@ export default class Home extends Vue {
     @Action('tags/loadTags') loadTags: any
     @Action('memos/loadMemos') loadMemos: any
     @Getter('tags/tags') tags!: Tag[]
+    @Getter('tags/findByCode') findByCode: any
     @Getter('tags/filterTags') filterTags: (keys: any) => any[]
     @Getter('memos/filterMemos') filterMemos: (keys: any) => any[]
     @Getter('memos/memos') memos!: Memo[]
@@ -76,6 +77,13 @@ export default class Home extends Vue {
                 this.myData = this.filterTags(stream.value)            
                 break
             case 'memo-create':
+                var data = stream.value.split(' ') 
+                let tag = this.findByCode(data.shift()).pop()
+                let memo = this.createMemo({
+                    label: data.join(' '),
+                    tag_id: tag.id
+                })
+                console.log(data, tag)
                 break
             case 'line-add':
                 this.myData = this.filterMemos(stream.value)            

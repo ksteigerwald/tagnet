@@ -25,6 +25,11 @@ export const getters: GetterTree<TagState, RootState> = {
       return tag.label.match(new RegExp(str + ".*", "i"))
     })
   },
+  findByCode: (state, getters, rootState, str) => (code: string) => {
+    return state.tags.filter(tag => {
+      return tag.code === code
+    })
+  },
 }
 
 export const mutations: MutationTree<TagState> = {
