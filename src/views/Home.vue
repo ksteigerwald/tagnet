@@ -66,7 +66,6 @@ export default class Home extends Vue {
 
     onInterfaceChange(stream:Stream) {
         console.log(this.keygen(stream), 'HOME PAGE - onInterfaceChange')
-        console.log('VALUE:', stream.value, stream)
 
         switch (this.keygen(stream)) {
             case 'create-open':

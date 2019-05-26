@@ -36,11 +36,14 @@ import { EventEmitter } from 'events';
                 map(this.getContext),
                 map(this.getEvent),
                 map(this.emitter)
+                //map(this.parser),
+                //switchMap(() => interval(5000)),
+                //          switchMap(this.streamSwitch),
             ),
             formData: this.$createObservableMethod('submitHandler').pipe(
                 pluck('newValue'),
                 map(this.onEntered),
-                debounceTime(100),
+                debounceTime(200),
                 map(this.onSubmit),
             )
         })
@@ -115,7 +118,6 @@ export default class IntakeStream extends Vue {
     }
 
     emitter(val: Stream) {
-        console.log(val)
         this.$emit('interface', val) 
         return val
     }
@@ -124,10 +126,8 @@ export default class IntakeStream extends Vue {
     onActionIndexChanged(stream: Stream, oldStream: Stream) {
         if(!stream.value) return
         if(stream.value.code) {
-            console.log('STREAM:', stream.value.code)
             this.cursor = this.cursor.charAt(0) + stream.value.code
         }
-        //console.log('AES', value.event, String.fromCharCode(value.code))
         this.$el.focus()
 
     }
@@ -162,11 +162,11 @@ export default class IntakeStream extends Vue {
     }
     
     onEntered(): boolean {
-        console.log('onEntered')
+        //console.log('onEntered')
         let pre = this.cursor.charAt(0).match(new RegExp(/(@|\/)/gm,'')) 
         let boundary = this.cursor.split(' ').length
         let append = (boundary >=2 || pre === null) ? this.tail : ' '
-        console.log('PRE', pre, append)
+        //console.log('PRE', pre, append)
         
         //This is very important as it requeues for completion
         //space is stripped in stream
@@ -176,22 +176,8 @@ export default class IntakeStream extends Vue {
 
     onSubmit(isSubmit: boolean) {
         if(!isSubmit) return
-        console.log('onSubmit', isSubmit)
+        //console.log('onSubmit', isSubmit)
         this.cursor = ''
-    }
-
-    onArrowEnter() {
-
-        return //this breaks things
-        /*
-        var self = this;
-        if(boundary >=2) {
-            setTimeout(function () {
-                console.log('ST', self)
-            }, 100)
-        }
-        return false
-        */
     }
 
     strip(str: String) {

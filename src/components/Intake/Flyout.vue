@@ -51,7 +51,6 @@ export default class Flyout extends Vue {
     }
 
     onClick(i:number) {
-        console.log(this.list[i], 'FLYOUT LCICK')
         let stream: Stream = {
             context: Context.flyout, 
             event: Event.click,  

@@ -17,6 +17,7 @@ export const linesQry = gql`
 query {
     lines {
       id,
+      code,
       uuid,
       memo_id,
       label,
