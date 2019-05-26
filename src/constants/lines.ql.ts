@@ -41,8 +41,8 @@ query search_lines($input: String) {
 `
 
 export const linesByMemoId = gql`
-query linesByMemoId($input:Int) {
-  lines(where: {memo_id: {_eq: $input }}) {
+query linesByMemoId($input: Int) {
+  lines(where: {memo_id: {_eq: $input}}, order_by: {created: desc}) {
     id
     code
     label
@@ -59,6 +59,7 @@ query linesByMemoId($input:Int) {
   }
 }
 `
+
 export const updateLineCode = gql`
 mutation update_token($id: Int, $code: String) {
   update_lines(
