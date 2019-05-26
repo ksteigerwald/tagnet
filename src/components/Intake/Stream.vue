@@ -5,7 +5,7 @@
          @input="onInput()"
          @focus="focus()"
          @blur="blur()"
-         @keydown.enter="onArrowEnter"
+         @keyup.enter="submitHandler"
          contenteditable="true"/>
          
          
@@ -15,6 +15,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { Subject, Observable, fromEvent, of, pipe, interval, ConnectableObservable } from 'rxjs';
+
 import { pluck, map, mapTo, debounceTime, tap, bufferTime,
     distinctUntilChanged, switchMap, filter, mergeMap, switchAll } from 'rxjs/operators';
 
@@ -22,7 +23,10 @@ import { Context, Stream, Event, StreamState } from '@/types'
 import { log } from 'util';
 import { EventEmitter } from 'events';
 
+
 @Component<IntakeStream>({
+
+
     subscriptions() {
         return ({
             matches: this.$watchAsObservable('cursor').pipe(
@@ -32,22 +36,28 @@ import { EventEmitter } from 'events';
                 map(this.getContext),
                 map(this.getEvent),
                 map(this.emitter)
-                //map(this.parser),
-                //switchMap(() => interval(5000)),
-                //          switchMap(this.streamSwitch),
             ),
-        });
+            formData: this.$createObservableMethod('submitHandler').pipe(
+                pluck('newValue'),
+                map(this.onEntered),
+                debounceTime(100),
+                map(this.onSubmit),
+            )
+        })
     },
 
     mounted() {
         this.focus()
+        console.log(this)
     }
 })
 
 export default class IntakeStream extends Vue {
 
     @Prop() actionEvent: Stream
-    
+
+    domStreams: ['plus$']
+
     tail:string = '\u2800'
     stack:Stream[] = []
     cursor:string = ''
@@ -63,8 +73,7 @@ export default class IntakeStream extends Vue {
 
     @Getter('streams/streams') events: Stream[]
 
-
-
+    
     getContext(str: string):Stream {
         var context = Context.open
         if(str.charAt(0) === '/')
@@ -115,8 +124,8 @@ export default class IntakeStream extends Vue {
     onActionIndexChanged(stream: Stream, oldStream: Stream) {
         if(!stream.value) return
         if(stream.value.code) {
-            console.log('STREAM:', stream.value)
-            this.$el.value = this.cursor.charAt(0) + stream.value.code + ' '
+            console.log('STREAM:', stream.value.code)
+            this.cursor = this.cursor.charAt(0) + stream.value.code
         }
         //console.log('AES', value.event, String.fromCharCode(value.code))
         this.$el.focus()
@@ -152,7 +161,8 @@ export default class IntakeStream extends Vue {
         //this.focused = false
     }
     
-    onArrowEnter() {
+    onEntered(): boolean {
+        console.log('onEntered')
         let pre = this.cursor.charAt(0).match(new RegExp(/(@|\/)/gm,'')) 
         let boundary = this.cursor.split(' ').length
         let append = (boundary >=2 || pre === null) ? this.tail : ' '
@@ -161,6 +171,16 @@ export default class IntakeStream extends Vue {
         //This is very important as it requeues for completion
         //space is stripped in stream
         this.cursor = this.cursor + append
+        return boundary >= 2
+    }
+
+    onSubmit(isSubmit: boolean) {
+        if(!isSubmit) return
+        console.log('onSubmit', isSubmit)
+        this.cursor = ''
+    }
+
+    onArrowEnter() {
 
         return //this breaks things
         /*
@@ -168,7 +188,6 @@ export default class IntakeStream extends Vue {
         if(boundary >=2) {
             setTimeout(function () {
                 console.log('ST', self)
-                self.cursor = ''
             }, 100)
         }
         return false
