@@ -6,7 +6,7 @@
          @focus="focus()"
          @blur="blur()"
          @keyup.enter="submitHandler"
-         contenteditable="true"/>
+         />
 </template>
 
 <script lang="ts">
@@ -188,20 +188,22 @@ export default class IntakeStream extends Vue {
 #tg-stream {}
 #tg-stream.is-placeholder {}
 
-[contenteditable="true"].single-line {
+//[contenteditable="true"]
+input.single-line {
     white-space: nowrap;
     width:200px;
     overflow: hidden;
     display:inline-block;
     vertical-align:top;
-    min-height:40px;
-    max-height:40px;
+    min-height:30px;
+    max-height:30px;
     max-width:90%;
     min-width:90%;
     padding:0; 
     outline:none;
     font-size:1.5rem;
     margin-left:0.75rem;
+    border:none
 } 
 [contenteditable="true"].single-line.is-placeholder { 
     color:#d1d1d1;

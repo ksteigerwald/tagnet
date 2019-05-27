@@ -2,7 +2,7 @@
     <div>
         <div class="section">
             <div class="container">
-                <div class="columns is-mobile is-centered">
+                <div class="columns is-mobile is-centered handler-wrap">
                     <IntakeHandler 
                     @interface="onInterfaceChange"
                     :context="current"
@@ -120,3 +120,9 @@ export default class Home extends Vue {
 
 }
 </script>
+<style scoped lang="scss">
+    .handler-wrap {
+        z-index:1;
+        position: relative;
+    }
+</style>

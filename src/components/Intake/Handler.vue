@@ -1,5 +1,5 @@
 <template>
-    <div class="handler column is-half"
+    <div class="tagnet column is-half"
                 @keydown.down="onArrowDown"
                 @keydown.up="onArrowUp"
                 @keydown.enter="onEnter">
@@ -74,7 +74,10 @@ export default class Handler extends Vue {
 </script>
 
 <style scoped lang="scss">
-    .handler {
-        border-bottom: 1px solid #EDEDED; 
+    .tagnet {
+        border-radius:30px;
+        background:#fff;
+        z-index: 5;
+        position: absolute;
     }
 </style>

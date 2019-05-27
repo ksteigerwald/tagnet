@@ -1,9 +1,11 @@
 <template>
-    <ul class="intake">
+    <ul :class="isOpen()">
           <li 
                 v-for="(match, i) in list"
                 :key="i"
-                :class="{ 'is-active': i === index }"
+                :class="{ 'is-active': i === index && hover === false}"
+                @mouseover="hover = true"
+                @mouseleave="hover = false"
                 @click="onClick(i)">
                     <a href="#">{{match.label}}</a>
                 </li>
@@ -11,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { Stream, Context, Event } from '@/types'
 
@@ -25,7 +27,14 @@ export default class Flyout extends Vue {
     @Prop() signal: Stream
     @Prop() list: any[]
 
+    hover: boolean = false
     arrowCounter: number = 0
+
+    @Watch('list')
+    isOpen():string {
+         if(this.list.length > 0) return 'intake open'
+         return 'intake'
+    }
 
     down() {
         if(!this.list) return
@@ -64,6 +73,9 @@ export default class Flyout extends Vue {
 </script>
 
 <style scoped lang="scss">
+    ul.intake.open {
+        border-top: 1px solid #cfcfcf;
+   } 
     ul.intake {
         display:flex;  
         flex-direction:column;;
@@ -77,12 +89,12 @@ export default class Flyout extends Vue {
     	}
         li:hover,
         li.is-active {
-            background: #cfcfcf;;
+            background:url('~@/assets/carrot.svg');
+            background-repeat: no-repeat;
         }
         li > a {
             padding-left:2.25rem;
         }
     }
-    
     
 </style>
