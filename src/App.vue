@@ -13,8 +13,14 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class App extends Vue { }
 </script>
 <style lang="scss">
+html {
+  height: 100%
+}
 body {
     background:#F4F4F4;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

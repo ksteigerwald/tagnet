@@ -1,5 +1,5 @@
 <template>
-    <div class="tagnet column is-half"
+    <div :class="cssClasses"
                 @keydown.down="onArrowDown"
                 @keydown.up="onArrowUp"
                 @keydown.enter="onEnter">
@@ -18,12 +18,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import ActionToggle from '@/components/ActionToggle.vue'
 import IntakeStream from '@/components/Intake/Stream.vue'
 import Flyout from '@/components/Intake/Flyout.vue'
 import { Context, Stream, Event, UIFlyout } from '@/types'
+import { debug } from 'util';
 
 
 @Component({
@@ -45,6 +46,13 @@ export default class Handler extends Vue {
         flyout: any 
     }
 
+    get cssClasses(): string {
+        let context = [Context.memo, Context.line].indexOf(this.tick.context)
+        let event = [Event.add, Event.add].indexOf(this.tick.event)
+        let css = 'tagnet column is-half'
+        return (context !== -1 && event !== -1) ? css : css + ' set-height'
+    }
+
     get actionToggleIndex(): Stream {
         if(this.tick.context === Context.toggle) {
             //console.log(this.tick.context, this.tick.event)
@@ -54,7 +62,7 @@ export default class Handler extends Vue {
     }
     
     onInterfaceChange(stream:Stream) {
-        this.tick = stream
+        this.tick = stream || null
         this.$emit('interface', stream) 
     }
 
@@ -80,4 +88,8 @@ export default class Handler extends Vue {
         z-index: 5;
         position: absolute;
     }
+   .set-height {
+        height:55px;
+        min-height:55px;
+   }
 </style>

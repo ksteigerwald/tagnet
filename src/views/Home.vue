@@ -2,10 +2,9 @@
     <div>
         <div class="section">
             <div class="container">
-                <div class="columns is-mobile is-centered handler-wrap">
+                <div class="columns is-mobile is-centered handler-wrap set-height">
                     <IntakeHandler 
                     @interface="onInterfaceChange"
-                    :context="current"
                     :propList="syncData" />
                 </div>
             </div>
@@ -51,8 +50,6 @@ export default class Home extends Vue {
     myData: String[] = []
     stack: any[] = []
 
-    current: Context = Context.search
-
     created() {
         this.loadTags() 
         this.loadMemos() 
@@ -78,7 +75,6 @@ export default class Home extends Vue {
         switch (this.keygen(stream)) {
             case 'create-open':
                 this.myData = this.filterTags(stream.value)            
-                this.current = stream.context
                 break
             case 'memo-add':
                 this.myData = this.filterTags(stream.value)            
@@ -111,7 +107,6 @@ export default class Home extends Vue {
                 //this.myData = this.searchMemos(stream.value)
                 break
             default:
-                this.current = Context.open
                 this.myData = []
                 break
         }

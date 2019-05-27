@@ -215,5 +215,6 @@ input.single-line {
     display:inline;
     white-space:nowrap;
 }
+
 </style>
 

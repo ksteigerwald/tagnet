@@ -74,6 +74,7 @@ export default class Flyout extends Vue {
 
 <style scoped lang="scss">
     ul.intake.open {
+        padding-top:1rem;
         border-top: 1px solid #cfcfcf;
    } 
     ul.intake {

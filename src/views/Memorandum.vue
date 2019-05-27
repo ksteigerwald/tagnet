@@ -3,7 +3,6 @@
         <div class="section">
             <div class="container">
                 <div class="columns is-mobile is-centered">
-                    <RxTagnet />
                 </div>
             </div>
         </div>
