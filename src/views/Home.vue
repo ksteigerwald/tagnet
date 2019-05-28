@@ -47,7 +47,6 @@ export default class Home extends Vue {
     @Action('lines/createLine') createLine: any
     @Action('memos/searchMemos') searchMemos: any
     
-    myData: String[] = []
     stack: any[] = []
 
     created() {
@@ -55,8 +54,9 @@ export default class Home extends Vue {
         this.loadMemos() 
     }
 
+    intakeData: String[] = []
     get syncData():any[] {
-        return this.myData
+        return this.intakeData
     }
 
     keygen(stream: Stream): string {
@@ -74,10 +74,10 @@ export default class Home extends Vue {
 
         switch (this.keygen(stream)) {
             case 'create-open':
-                this.myData = this.filterTags(stream.value)            
+                this.intakeData = this.filterTags(stream.value)            
                 break
             case 'memo-add':
-                this.myData = this.filterTags(stream.value)            
+                this.intakeData = this.filterTags(stream.value)            
                 break
             case 'memo-create':
                 var obj = this.splitter(stream.value)
@@ -89,7 +89,7 @@ export default class Home extends Vue {
                 console.log(obj, tag)
                 break
             case 'line-add':
-                this.myData = this.filterMemos(stream.value)            
+                this.intakeData = this.filterMemos(stream.value)            
                 break
             case 'line-create':
                 var obj:any = this.splitter(stream.value)
@@ -103,11 +103,11 @@ export default class Home extends Vue {
                 this.searchMemos(stream.value)
                 break
             case 'click-flyout':
-                this.myData = []
-                //this.myData = this.searchMemos(stream.value)
+                this.intakeData = []
+                //this.intakeData = this.searchMemos(stream.value)
                 break
             default:
-                this.myData = []
+                this.intakeData = []
                 break
         }
 

@@ -36,23 +36,22 @@ export const actions: ActionTree<LineState, RootState> = {
         })
 
         let line: Line = response.data.insert_lines.returning.pop()
-        commit('addLine', line)
+        dispatch('updateToken', line)
 
     },
 
-    async updateToken({ commit, dispatch, rootState }, id:number) {
+    async updateToken({ commit, dispatch, rootState }, line:Line) {
 
         let code = hashid.encode(id)
         console.log(code, '<<hashid')
         const response: any = await apolloClient.mutate({
             mutation: updateLineCode,
             variables: {
-                    id: id,
+                    id: line.id,
                     code: code
             }
         })
 
-        let line: Line = response.data.insert_lines.returning.pop()
         commit('addLine', line)
 
     },
