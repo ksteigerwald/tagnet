@@ -42,7 +42,7 @@ export const actions: ActionTree<LineState, RootState> = {
 
     async updateToken({ commit, dispatch, rootState }, line:Line) {
 
-        let code = hashid.encode(id)
+        let code = hashid.encode(line.id)
         console.log(code, '<<hashid')
         const response: any = await apolloClient.mutate({
             mutation: updateLineCode,
