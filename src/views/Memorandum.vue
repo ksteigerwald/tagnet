@@ -17,33 +17,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { State, Getter, Action, namespace } from 'vuex-class';
-import IntakeHandler from '@/components/Intake/Handler.vue'
+import { mixins } from 'vue-class-component';
 import MemoDetail from '@/components/Memorandum/Detail.vue'
-import { Context, Event, Stream,  Tag, TagState, Memo, 
-        MemoState, Line, LineState } from '@/types'
+import IntakeHandler from '@/components/Intake/Handler.vue'
+import CRUDMixIn from '@/helpers/crudMixin'
+
 @Component({
     components:{
         IntakeHandler,
         MemoDetail,
     }
 })
-export default class Memorandum extends Vue {
-
-    @Action('tags/loadTags') loadTags: any
-    @Action('memos/loadMemos') loadMemos: any
-
-    created() {
-    }
-
-    intakeData: String[] = []
-    get syncData():any[] {
-        return this.intakeData
-    }
-
-    onInterfaceChange(stream:Stream) { 
-
-    }
+export default class Memorandum extends mixins(CRUDMixIn) {
 
 }
 </script>
