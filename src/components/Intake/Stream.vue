@@ -92,8 +92,10 @@ export default class IntakeStream extends Vue {
         })
     }
 
-    sanitize(str: String): string {
-        let newStr = str.replace(/(@|\/)/gm,'')
+    sanitize(str: string): string {
+        let subs = str.substring(1, str.length - 1)  //.replace(/(@|\/)/gm,'')
+        let newStr = str.length === 1 ? str.replace(/(@|\/)/gm,'') : str.substring(1, str.length - 1) 
+        console.log('newStr', newStr, subs)
         if(newStr.charAt(newStr.length -1) === this.tail) {
             return newStr.substring(0, newStr.length -1)
         }

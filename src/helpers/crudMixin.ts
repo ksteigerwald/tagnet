@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { State, Getter, Action, namespace,  } from 'vuex-class';
+import anchorme from "anchorme";
 
-import { Context, Event, Stream,  Tag, TagState, Memo, 
+import { Context, Event, Stream, Tag, TagState, Memo, 
         MemoState, Line, LineState } from '../types'
 
 // You can declare a mixin as the same style as components.
@@ -11,12 +12,15 @@ export default class CRUDMixIn extends Vue {
 
     @Action('tags/loadTags') loadTags: any
     @Action('memos/loadMemos') loadMemos: any
+    @Action('lines/loadLines') loadLines: any
+    @Action('lines/updateLineCode') updateLineCode: any
     @Getter('tags/tags') tags!: Tag[]
     @Getter('tags/findByCode') findTagByCode: any
     @Getter('memos/findByCode') findMemoByCode: any
     @Getter('tags/filterTags') filterTags: (keys: any) => any[]
     @Getter('memos/filterMemos') filterMemos: (keys: any) => any[]
     @Getter('memos/memos') memos!: Memo[]
+    @Getter('lines/lines') lines!: Line[]
     @Getter('memos/newMemo') newMemo: Memo
     @Action('memos/createMemo') createMemo: any
     @Action('lines/createLine') createLine: any
@@ -32,11 +36,14 @@ export default class CRUDMixIn extends Vue {
         return stream.context + '-' + stream.event
     }
 
-    splitter(str: string): any {
+    process(str: string): any {
         let data = str.split(' ') 
         let code = data.shift()
-
-        return { code: code, value: data.join(' ')}
+        console.log('CODE>>>', code)
+        console.log('data>>>', data.join(' '))
+        let processed = anchorme(data.join(' '))
+        console.log('processedd>>>', processed) 
+        return { code: code, value: processed }
     }
 
     onInterfaceChange(stream:Stream) {
@@ -50,19 +57,19 @@ export default class CRUDMixIn extends Vue {
                 this.intakeData = this.filterTags(stream.value)            
                 break
             case 'memo-create':
-                var obj = this.splitter(stream.value)
+                var obj = this.process(stream.value)
                 var tag = this.findTagByCode(obj.code).pop()
                 this.createMemo({
                     label: obj.value,
                     tag_id: tag.id
                 })
-                console.log(obj, tag)
                 break
             case 'line-add':
                 this.intakeData = this.filterMemos(stream.value)            
                 break
             case 'line-create':
-                var obj:any = this.splitter(stream.value)
+                console.log(stream)
+                var obj:any = this.process(stream.value)
                 var memo:Memo = this.findMemoByCode(obj.code).pop()
                 this.createLine({
                     label: obj.value,

@@ -16,6 +16,7 @@
     "@types/graphql": "^14.0.7",
     "@types/hashids": "^1.0.30",
     "@types/node-fetch": "^2.1.6",
+    "anchorme": "^1.1.2",
     "apollo-boost": "^0.1.28",
     "apollo-link-context": "^1.0.17",
     "buefy": "^0.7.2",

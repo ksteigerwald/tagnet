@@ -36,11 +36,11 @@ export const actions: ActionTree<LineState, RootState> = {
         })
 
         let line: Line = response.data.insert_lines.returning.pop()
-        dispatch('updateToken', line)
+        dispatch('updateLineCode', line)
 
     },
 
-    async updateToken({ commit, dispatch, rootState }, line:Line) {
+    async updateLineCode({ commit, dispatch, rootState }, line:Line) {
 
         let code = hashid.encode(line.id)
         console.log(code, '<<hashid')
@@ -53,7 +53,6 @@ export const actions: ActionTree<LineState, RootState> = {
         })
 
         commit('addLine', line)
-
     },
 
     async loadLines( { commit, dispatch, rootState} ) {
@@ -87,9 +86,12 @@ export const actions: ActionTree<LineState, RootState> = {
     }
 
 }
-
+function _d(date: string): number {
+    return new Date(date).getTime()
+}
 export const getters: GetterTree<LineState, RootState> = {
     lines: (state, getters, rootState) => state.lines,
+    sortedLines: (state, getters, rootState) => state.lines.sort((a,b) => _d(b.created)  - _d(a.created)),
     memoLines: (state, getters, rootState) => (memoId:number) =>  {
         return state.lines.filter(line => line.memo_id === memoId) 
     }

@@ -2,7 +2,7 @@
 <div class="memo-detail container">
     <ul>
         <li v-for="memo in memos">
-            <h1>{{memo.label}}</h1>
+            <h1>{{memo.id}} - {{memo.label}}</h1>
         </li>
     </ul>
     <div class="cloumns is-multiline is-centered">
@@ -10,7 +10,7 @@
 
         <ul>
             <li v-for="line in lines">
-                {{line.label}}
+               <p v-html="line.label">  </p>
             </li>
         </ul>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
