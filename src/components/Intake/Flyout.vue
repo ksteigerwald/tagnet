@@ -87,11 +87,13 @@ export default class Flyout extends Vue {
 		    position: relative;
 		    transition: all linear 0.1s;	
             text-transform: capitalize;
+            background-position: 10px 3px;
     	}
         li:hover,
         li.is-active {
             background:url('~@/assets/carrot.svg');
             background-repeat: no-repeat;
+            background-position: 10px 3px;
         }
         li > a {
             padding-left:2.25rem;

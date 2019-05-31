@@ -84,6 +84,10 @@ a { color:#000 }
         }
         h2 {
             font-weight:700;
+            text-transform: capitalize;
+        }
+        h3 {
+            text-transform: capitalize;
         }
         span.row:nth-child(3) { 
             display:block;

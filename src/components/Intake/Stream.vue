@@ -44,7 +44,6 @@ import { EventEmitter } from 'events';
 
     mounted() {
         this.focus()
-        console.log(this)
     }
 })
 
@@ -63,7 +62,6 @@ export default class IntakeStream extends Vue {
     $el:HTMLInputElement
 
     print(val: any) {
-        console.log(val, 'print') 
         return val
     }
 
@@ -82,6 +80,7 @@ export default class IntakeStream extends Vue {
 
     getEvent(pack: Stream):Stream  {
         var event = this.isSubmit(pack.value) ? Event.enter : Event.search   
+
         if(this.isCRUD(pack.context)) {
             event = this.isSubmit(pack.value) ? Event.create : Event.add   
         }

@@ -38,6 +38,7 @@ export default class Handler extends Vue {
 
     tick:Stream = {context: Context.toggle, event: Event.search}
     pointer:Context = Context.search
+
     @Prop() propList: any[]
     @Prop() arrowHandler: Stream
     @Prop() context: Context

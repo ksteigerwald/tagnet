@@ -9,13 +9,13 @@ let jwt_decode = require('jwt-decode')
 
 let GRAPH_QL_API = process.env.GRAPH_QL_API || 'https://hasura-velaru.herokuapp.com/v1/graphql'
 
-var isAuthenticated = (expiresAt: any):boolean => ((new Date().getTime()) /1000) < expiresAt
-
+var isAuthenticated = (expiresAt: any):boolean => Math.round(new Date().getTime() / 1000) < expiresAt
 //const headers = { 'x-hasura-admin-secret' : 'Winter10' }
 //const headers = { 'Authorization' : 'Bearer ' + jsonKey }
 const authLink = setContext((_, {headers} ) => {
     let token: any = localStorage.getItem(config.localKey('user')) || ''
     let decode = jwt_decode(token)
+    //console.log(isAuthenticated(decode.exp), decode.exp, Math.round(new Date().getTime() / 1000) )
     if(isAuthenticated(decode.exp) === false) 
         window.location.href = '/logout'
 
