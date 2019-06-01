@@ -5,12 +5,16 @@
             <h1>{{memo.id}} - {{memo.label}}</h1>
         </li>
     </ul>
-    <div class="cloumns is-multiline is-centered">
-    <div class="column is-half is-center">
-
+    <div class="columns is-multiline is-centered">
+    <div class="column is-half ">
         <ul>
-            <li v-for="line in lines">
-               <p v-html="line.label">  </p>
+            <li class="slot" v-for="date in dates">
+                {{date}}
+            <ul>
+                <li v-for="line in getGroupData(date)">
+                    <p v-html="line.label">  </p>
+                </li>
+            </ul>
             </li>
         </ul>
     </div>
@@ -24,6 +28,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 import Card from '@/components/Card.vue'
+import { groupBy } from 'rxjs/operators';
 
 @Component({
   components: {}
@@ -32,10 +37,13 @@ export default class Wall extends Vue {
 
     componentKey:number = 0
     memoId:number = 0 
+    dates:string[] = []
+    groupByObj: any = {}    
 
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/lines') lines: Line[]
+    @Getter('lines/linesGroupBy') linesGroupBy: any
     @Action('lines/linesByMemo') linesByMemo: any
     @Getter('memos/findMemo') findMemo: any
     @Action('memos/getMemo') getMemo: any
@@ -48,14 +56,36 @@ export default class Wall extends Vue {
         this.memoId = Number(this.$route.params.memoId)
         this.getMemo(this.memoId)
         this.linesByMemo(this.memoId) 
-	}
+    }
+    
+    mounted() {
+        this.$store.subscribe((mutation, state) => {
+            console.log(mutation.type, mutation, state)
+            this.outputGroup()
+        })
+    }
+
+    @Watch('lines')
+    outputGroup() {
+        this.groupByObj = this.linesGroupBy
+        this.dates = Object.keys(this.linesGroupBy)
+        console.log('LINES', this.linesGroupBy)
+    }
+
+    getGroupData(key: string): Line[] {
+        return this.groupByObj[key]
+    }
 }
 </script>
 
 <style scoped lang="scss">
     ul {
-        li {
-           margin-bottom:1.5rem; 
+
+        li.slot {
+            margin-bottom:2rem;
+            background:#fff;
+            margin-bottom:1.5rem; 
+            padding:1rem;
         }
     }
 </style>

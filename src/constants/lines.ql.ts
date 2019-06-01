@@ -9,6 +9,7 @@ mutation insertLine($objects: [lines_insert_input!]!) {
       label
       uuid
       user_id
+      created
     }
   }
 }`

@@ -25,6 +25,7 @@ export const mutations: MutationTree<LineState> = {
 export const actions: ActionTree<LineState, RootState> = {
 
     async createLine({ commit, dispatch, rootState }, payload:Line) {
+
         const response: any = await apolloClient.mutate({
             mutation: linesInsert,
             variables: {
@@ -43,12 +44,12 @@ export const actions: ActionTree<LineState, RootState> = {
     async updateLineCode({ commit, dispatch, rootState }, line:Line) {
 
         let code = hashid.encode(line.id)
-        console.log(code, '<<hashid')
+
         const response: any = await apolloClient.mutate({
             mutation: updateLineCode,
             variables: {
-                    id: line.id,
-                    code: code
+                id: line.id,
+                code: code
             }
         })
 
@@ -84,16 +85,28 @@ export const actions: ActionTree<LineState, RootState> = {
         state.lines = response.data.lines
         dispatch('sortedLines') 
     }
-
 }
+
 function _d(date: string): number {
     return new Date(date).getTime()
 }
+
 export const getters: GetterTree<LineState, RootState> = {
     lines: (state, getters, rootState) => state.lines,
     sortedLines: (state, getters, rootState) => state.lines.sort((a,b) => _d(b.created)  - _d(a.created)),
+
     memoLines: (state, getters, rootState) => (memoId:number) =>  {
         return state.lines.filter(line => line.memo_id === memoId) 
+    },
+
+    linesGroupBy: (state, getters, rootState) => {
+        console.log(this, getters)
+        return getters.sortedLines.reduce( (a, c) => {
+           let d = c.created.substr(0,10)
+           if(!a[d]) { a[d] = [] }
+           a[d].push(c)
+           return a
+        }, {});
     }
 }
 
