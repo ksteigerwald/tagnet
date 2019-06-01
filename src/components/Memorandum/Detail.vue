@@ -28,7 +28,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 import Card from '@/components/Card.vue'
-import { groupBy } from 'rxjs/operators';
+import { groupBy, switchAll } from 'rxjs/operators';
 
 @Component({
   components: {}
