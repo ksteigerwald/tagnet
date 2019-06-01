@@ -14,10 +14,10 @@ export default class App extends Vue { }
 </script>
 <style lang="scss">
 html {
-  height: 100%
+  height: 100%;
+  background-color:#F4F4F4 !important;
 }
 body {
-    background:#F4F4F4;
     height: 100%;
     margin: 0;
     padding: 0;
