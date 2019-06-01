@@ -60,8 +60,13 @@ export default class Wall extends Vue {
     
     mounted() {
         this.$store.subscribe((mutation, state) => {
-            console.log(mutation.type, mutation, state)
-            this.outputGroup()
+            switch(mutation.type) {
+                case 'lines/addLine':
+                    this.outputGroup()
+                    break
+                default:
+                    break
+            }
         })
     }
 
@@ -69,7 +74,6 @@ export default class Wall extends Vue {
     outputGroup() {
         this.groupByObj = this.linesGroupBy
         this.dates = Object.keys(this.linesGroupBy)
-        console.log('LINES', this.linesGroupBy)
     }
 
     getGroupData(key: string): Line[] {
@@ -86,6 +90,9 @@ export default class Wall extends Vue {
             background:#fff;
             margin-bottom:1.5rem; 
             padding:1rem;
+            ul > li {
+                margin-bottom: 1rem;
+            }
         }
     }
 </style>
