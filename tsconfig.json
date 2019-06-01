@@ -5,7 +5,7 @@
     "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "implicitProjectConfig.experimentalDecorator": true,
+//    "implicitProjectConfig.experimentalDecorator": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",

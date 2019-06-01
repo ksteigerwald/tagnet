@@ -19,7 +19,7 @@
     "anchorme": "^1.1.2",
     "apollo-boost": "^0.1.28",
     "apollo-link-context": "^1.0.17",
-    "buefy": "^0.7.2",
+    "buefy": "^0.7.7",
     "express": "^4.16.4",
     "fakerator": "^0.3.0",
     "graphql": "^14.1.1",

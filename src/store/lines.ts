@@ -6,6 +6,9 @@ import { Subject, fromEvent, of, pipe } from 'rxjs';
 import { pluck, map, debounceTime, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import Hashids from 'hashids'
 
+interface IGroupByLines {
+    [key: string] : Line
+} 
 
 let hashid = new Hashids('LINE')
 
@@ -100,8 +103,7 @@ export const getters: GetterTree<LineState, RootState> = {
     },
 
     linesGroupBy: (state, getters, rootState) => {
-        console.log(this, getters)
-        return getters.sortedLines.reduce( (a, c) => {
+        return getters.sortedLines.reduce( (a: any, c: Line) => {
            let d = c.created.substr(0,10)
            if(!a[d]) { a[d] = [] }
            a[d].push(c)
