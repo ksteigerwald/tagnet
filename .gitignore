@@ -3,6 +3,14 @@ node_modules
 xterm-*
 /tests/e2e/videos/
 /tests/e2e/screenshots/
+/src/*/*.js
+/src/*/*.map
+/tests/*/*.js
+/tests/*/*.map
+
+/src/*.js
+/src/*.map
+lambdas/.serverless/
 
 # local env files
 .env.local

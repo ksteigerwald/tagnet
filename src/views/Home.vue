@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="section">
+    <div class="wrap">
+        <div class="section pad">
             <div class="container">
                 <div class="columns is-mobile is-centered handler-wrap set-height">
                     <IntakeHandler 
@@ -12,6 +12,9 @@
         <div class="section">
             <Wall />
         </div>
+        <div id="drop-target">
+            <h1>Dropzone</h1>
+        </div>
     </div>
 </template>
 
@@ -22,18 +25,21 @@ import { mixins } from 'vue-class-component';
 import Wall from '@/components/Wall.vue'
 import IntakeHandler from '@/components/Intake/Handler.vue'
 import CRUDMixIn from '@/helpers/crudMixin'
+import DropzoneMixIn from '@/helpers/dropzone'
 
 @Component({
     components: {
         IntakeHandler,
         Wall
-    }
+    },
+    
 })
-export default class Home extends mixins(CRUDMixIn) {
+export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
 
     created() {
         this.loadTags() 
         this.loadMemos() 
+        console.log(this)
     }
 
 }
@@ -42,5 +48,16 @@ export default class Home extends mixins(CRUDMixIn) {
     .handler-wrap {
         z-index:1;
         position: relative;
+    }
+
+    div.pad {
+        min-height:10rem;
+    }
+
+    div#drop-target {
+        height:10rem;
+        width:100%;
+        background:#ccc;
+        
     }
 </style>

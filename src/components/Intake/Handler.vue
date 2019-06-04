@@ -88,6 +88,7 @@ export default class Handler extends Vue {
         background:#fff;
         z-index: 5;
         position: absolute;
+        border: 1px solid #cfcfcf;
     }
    .set-height {
         height:55px;
