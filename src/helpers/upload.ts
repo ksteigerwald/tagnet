@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default class S3Upload {
 
-  sign:string = 'http://localhost:3000/signed'
+  sign:string = 'https://tagnet-api.herokuapp.com/signed'
   constructor(file: File) {
     this.upload(file)
   }
@@ -17,7 +17,7 @@ export default class S3Upload {
   }
 
   async getURL(file: string = '') {
-    const resp = await axios.post('http://localhost:3000/signed', {
+    const resp = await axios.post(this.sign, {
       method: 'POST',
       fileName: file,
       responseType: 'json'
