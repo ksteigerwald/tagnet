@@ -7,11 +7,13 @@ import axios from "axios";
 export default class S3Upload {
 
   sign:string = 'http://localhost:3000/signed'
-  signed:string = ''
-  file:string = ''
+  constructor(file: File) {
+    this.upload(file)
+  }
 
-  constructor(file: string) {
-    this.file = file
+  async upload(file: File) {
+    let signed:string = await this.getURL(file.name)
+    this.postToS3(file, signed)
   }
 
   async getURL(file: string = '') {
@@ -24,7 +26,14 @@ export default class S3Upload {
     return resp.data
   }
 
-  async postToS3(path: string = '') {}
+  async postToS3(file: File, url: string) {
+    const resp = await axios.put(url, file, {
+      headers: {
+        'Content-Type': file.type,
+      }
+    })
+    return resp
+  }
 
 //import { S3Upload } from 'src/helpers/upload'
 }

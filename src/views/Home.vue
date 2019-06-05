@@ -12,9 +12,6 @@
         <div class="section">
             <Wall />
         </div>
-        <div id="drop-target">
-            <h1>Dropzone</h1>
-        </div>
     </div>
 </template>
 
