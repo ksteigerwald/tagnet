@@ -15,7 +15,6 @@ Vue.use(Buefy, {
     defaultIconPack: 'fas'
 })
 
-
 router.beforeEach((to:any, from:any, next:any) => {
 
     const publicPages: string[] = ['/login', '/about']

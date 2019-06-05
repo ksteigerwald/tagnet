@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import Dropzone from 'dropzone'
+import S3Upload from '@/helpers/upload'
 
 import { Subject, Observable, fromEvent, of, pipe, interval, ConnectableObservable } from 'rxjs';
 import { pluck, map, mapTo, debounceTime, tap, bufferTime,
@@ -26,6 +27,7 @@ export default class DropzoneMixIn extends Vue {
   mouseOver: any
   lastTarget: any = null
   dropZone: Dropzone = null
+  uploader: S3Upload = null
 
   printIt(e: any) {
     e.stopPropagation();
@@ -33,19 +35,19 @@ export default class DropzoneMixIn extends Vue {
   }
 
   mounted() {
-    this.dropZone = new Dropzone('div#drop-target', {
-      url: 'https://httpbin.org/post',
-      thumbnailWidth: 150,
-      maxFilesize: 0.5,
-      headers: { "My-Awesome-Header": "header value" }
-  })
+    this.uploader = new S3Upload([])
+    this.uploader.getURL('Tagnet-test.png').then(e => {
+      console.log(e)
+    })
   }
+
   created() {
     var self = this
     window.addEventListener("drop", function (e) {
       console.log(e)
       e.preventDefault();
     });
+
     window.addEventListener("dragenter", function (e) {
       if (isFile(e)) {
           self.lastTarget = e.target;
@@ -64,11 +66,28 @@ export default class DropzoneMixIn extends Vue {
   });
   
   window.addEventListener("drop", function (e) {
-      console.log(e, self.lastTarget)
       e.preventDefault();
-    if (e.dataTransfer.files.length == 1) {
-      console.log("<b>File selected:</b><br>" + e.dataTransfer.files[0].name)
+      const files = e.dataTransfer.files
+
+    if (files.length == 1) {
+      for(var i = 0; i++; i <= files.length) {
+        console.log('?', files[i].type)
+      }
+      console.log("<b>File selected:</b><br>" + e.dataTransfer.files[0].type)
+      //console.log(e.dataTransfer.getData(e.dataTransfer.files[0].name))
+      self.uploadHandler(e.dataTransfer.files[0])
     }
   });
+  }
+
+  uploadHandler(file: File) {
+    if(file.type.indexOf("image") !== 0) return
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        console.log('loaded', e)
+      }
+      reader.readAsDataURL(file)
+      //let upload = new S3Upload(file.name)
+      //upload.getURL(file.name)
   }
 }
