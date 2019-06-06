@@ -13,5 +13,8 @@
     "serverless": "^1.44.1",
     "serverless-offline": "^5.0.1",
     "serverless-plugin-typescript": "^1.1.7"
+  },
+  "devDependencies": {
+    "serverless-api-cloudfront": "^0.9.5"
   }
 }
