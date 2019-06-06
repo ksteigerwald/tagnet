@@ -1,6 +1,6 @@
 <template>
     <div class="cards columns is-centered is-3 is-desktop is-multiline">
-        <div :class="cardCSS(memo.TagMemo.label)" v-for="(memo, key, index) in memos">
+        <div :id="memo.code" :class="cardCSS(memo.TagMemo.label)" v-for="(memo, key, index) in memos">
             <router-link :to="{ name: 'memorandums', params: { memoId: memo.id }}">
                 <div class="card-box">
                     <span class="row"> 

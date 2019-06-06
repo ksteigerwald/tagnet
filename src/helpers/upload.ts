@@ -17,6 +17,7 @@ export default class S3Upload {
   }
 
   async getURL(file: string = '') {
+    
     const resp = await axios.post(this.sign, {
       method: 'POST',
       fileName: file,
@@ -27,11 +28,13 @@ export default class S3Upload {
   }
 
   async postToS3(file: File, url: string) {
+
     const resp = await axios.put(url, file, {
       headers: {
         'Content-Type': file.type,
       }
     })
+
     return resp
   }
 

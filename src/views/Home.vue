@@ -36,7 +36,6 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
     created() {
         this.loadTags() 
         this.loadMemos() 
-        console.log(this)
     }
 
 }

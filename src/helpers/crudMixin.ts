@@ -21,7 +21,6 @@ export default class CRUDMixIn extends Vue {
     @Getter('memos/filterMemos') filterMemos: (keys: any) => any[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/lines') lines!: Line[]
-    @Getter('memos/newMemo') newMemo: Memo
     @Action('memos/createMemo') createMemo: any
     @Action('lines/createLine') createLine: any
     @Action('memos/searchMemos') searchMemos: any
@@ -68,9 +67,10 @@ export default class CRUDMixIn extends Vue {
                 this.intakeData = this.filterMemos(stream.value)            
                 break
             case 'line-create':
-                console.log(stream)
+
                 var obj:any = this.process(stream.value)
                 var memo:Memo = this.findMemoByCode(obj.code).pop()
+
                 this.createLine({
                     label: obj.value,
                     memo_id: memo.id
