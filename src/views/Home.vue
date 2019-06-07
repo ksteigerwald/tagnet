@@ -28,8 +28,7 @@ import DropzoneMixIn from '@/helpers/dropzone'
     components: {
         IntakeHandler,
         Wall
-    },
-    
+    }
 })
 export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
 

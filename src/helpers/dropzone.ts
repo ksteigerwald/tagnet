@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from "axios";
 import Component from 'vue-class-component'
 import S3Upload from '@/helpers/upload'
 
@@ -7,6 +8,7 @@ import { pluck, map, mapTo, debounceTime, tap, bufferTime,
     distinctUntilChanged, switchMap, filter, mergeMap, switchAll } from 'rxjs/operators';
 
 import { printIntrospectionSchema } from 'graphql';
+import { Event } from '@/types';
 
 function isFile(evt:any) {
   var dt = evt.dataTransfer;
@@ -46,8 +48,8 @@ export default class DropzoneMixIn extends Vue {
   window.addEventListener("drop", function (e) {
       e.preventDefault();
       const files = e.dataTransfer.files
-      console.log(e)
-
+      const doms = (<any> e)
+      console.log(doms.target.offsetParent)
     if (files.length == 1) {
       console.log("File selected:" + e.dataTransfer.files[0].type)
       self.uploadHandler(e.dataTransfer.files[0])

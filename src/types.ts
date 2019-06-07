@@ -27,8 +27,9 @@ export enum Context {
     append = 'append',
     flyout = 'flyout',
     open = 'open',
-    toggle = 'toggle'
+    toggle = 'toggle',
 }
+
 export enum Event {
     create = 'create',
     add = 'add',
@@ -37,13 +38,23 @@ export enum Event {
     up = 'up',
     down = 'down',
     enter = 'enter',
-    click = 'click'
+    click = 'click',
+    drop = 'drop',
+    error = 'error'
 }
+
+export interface Format {
+    id: number 
+    type: string
+}
+
 export interface Stream {
     context: Context
     event: Event
     value?: any
 }
+
+
 // Store
 export interface RootState {
     count: number

@@ -7,6 +7,7 @@ import axios from "axios";
 export default class S3Upload {
 
   sign:string = 'https://tagnet-api.herokuapp.com/signed'
+
   constructor(file: File) {
     this.upload(file)
   }

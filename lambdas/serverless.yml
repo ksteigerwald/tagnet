@@ -10,7 +10,7 @@ custom:
   apiCloudFront:
     domain: tagnet.io
     certificate: arn:aws:acm:us-east-1:623518205793:certificate/d95735c3-7c50-48bb-b5c3-1bf6a868aa16
-    waf: 64282ded-4834-436c-aacf-53d69480e3fa
+    #    waf: 64282ded-4834-436c-aacf-53d69480e3fa
     compress: true
     logging:
       bucket: tagnet.s3.amazonaws.com
@@ -45,10 +45,6 @@ functions:
     name: ${self:provider.stage}-${self:service}-upload
     memorySize: 128
     events:
-      - http:
-          path: upload
-          method: get
-          cors: true
       - http:
           path: upload
           method: get

@@ -41,7 +41,6 @@ export const actions: ActionTree<MemoState, RootState> = {
 
         let code = hashid.encode(memo.id)
         memo.code = code
-        console.log(code, '<<hashid')
         const response: any = await apolloClient.mutate({
             mutation: updateMemoCode,
             variables: {
@@ -86,8 +85,13 @@ export const actions: ActionTree<MemoState, RootState> = {
             variables: { input: id }	
         })
         state.memos = response.data.memos
-        console.log(id, state.memos)
     },
+
+    //Find a memo with given code
+    //When no code is found, find image any bucket
+    //when no [image ANY] bucket, create image [ANY] bucket memo 
+    //Create line item with image any path
+
 }
 
 export const getters: GetterTree<MemoState, RootState> = {

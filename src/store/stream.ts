@@ -8,6 +8,8 @@ export const state: StreamState = {
     streams: [
       {context: Context.memo, event: Event.add },
       {context: Context.memo, event: Event.create },
+      {context: Context.memo, event: Event.drop },
+      {context: Context.memo, event: Event.error },
       {context: Context.toggle, event: Event.create },
       {context: Context.toggle, event: Event.append},
       {context: Context.line, event: Event.append},
