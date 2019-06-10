@@ -98,7 +98,7 @@ export interface Memo {
     created: string
     user_id: string
     code: string
-    autogen: boolean
+    autogen?: boolean
     type?: string
     MemoLines?: Line[]
     TagMemo?: Tag

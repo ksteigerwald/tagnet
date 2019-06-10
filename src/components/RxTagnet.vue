@@ -74,7 +74,8 @@ import ActionToggle from '@/components/ActionToggle.vue'
                     case "tags":
                         let memo: Memo = { uuid: '', id: 0, code: '',
                             created: '', user_id: '', label: obj.label, 
-                            tag_id: action.id 
+                            tag_id: action.id ,
+                            autogen: false
                         } 
 
                         this.createMemo(memo)
