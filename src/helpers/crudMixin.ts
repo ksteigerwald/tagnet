@@ -112,7 +112,11 @@ export default class CRUDMixIn extends Vue {
                 })
                 break
             case 'line-drop':
-                this.createLine(stream.value)
+                let lines = this.lines.filter(line => line.label == stream.value.label)
+                
+                console.log(lines, 'lines +++')
+                if(lines.length === 0)
+                    this.createLine(stream.value)
                 break
             case 'open-enter':
                 this.searchMemos(stream.value)

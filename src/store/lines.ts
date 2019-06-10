@@ -41,7 +41,7 @@ export const actions: ActionTree<LineState, RootState> = {
         })
 
         let line: Line = response.data.insert_lines.returning.pop()
-        dispatch('updateLineCode', line)
+        await dispatch('updateLineCode', line)
 
     },
 
