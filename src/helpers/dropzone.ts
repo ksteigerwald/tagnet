@@ -2,13 +2,14 @@ import Vue from 'vue'
 import axios from "axios";
 import Component from 'vue-class-component'
 import S3Upload from '@/helpers/upload'
+import { globalEventBus } from '@/helpers/EventBus'
 
 import { Subject, Observable, fromEvent, of, pipe, interval, ConnectableObservable } from 'rxjs';
 import { pluck, map, mapTo, debounceTime, tap, bufferTime,
     distinctUntilChanged, switchMap, filter, mergeMap, switchAll } from 'rxjs/operators';
 
 import { printIntrospectionSchema } from 'graphql';
-import { Event } from '@/types';
+import { Event, Context, Stream } from '@/types';
 
 function isFile(evt:any) {
   var dt = evt.dataTransfer;
@@ -24,6 +25,9 @@ function isFile(evt:any) {
 // You can declare a mixin as the same style as components.
 @Component
 export default class DropzoneMixIn extends Vue {
+  
+  signedURLEndpoing:string = 'https://tagnet-api.herokuapp.com/signed'
+
   drops:any[]
   mouseOver: any
   lastTarget: any = null
@@ -31,6 +35,7 @@ export default class DropzoneMixIn extends Vue {
 
   created() {
     var self = this
+
     window.addEventListener("dragenter", function (e) {
       if (isFile(e)) {
           self.lastTarget = e.target;
@@ -58,8 +63,45 @@ export default class DropzoneMixIn extends Vue {
   }
 
   //handle using RXJS
-  uploadHandler(file: File) {
+  async uploadHandler(file: File) {
     if(file.type.indexOf("image") !== 0) return
-     let upload = new S3Upload(file)
+    let url = await this.getURL(file.name)
+    let upload = await this.postToS3(file, url)
+    if(upload.status === 200) {
+
+      let stream: Stream = {
+        context: Context.memo,
+        event: Event.drop,
+        value:  file.name
+      }
+
+      console.log('upload sream', stream)
+
+      globalEventBus.$emit('emitInterface', stream) 
+      return 200
+    }
+     console.log({url, upload })
+  }
+
+  
+  async getURL(file: string = '') {
+    
+    const resp = await axios.post(this.signedURLEndpoing, {
+      method: 'POST',
+      fileName: file,
+      responseType: 'json'
+    })
+
+    return resp.data
+  }
+
+  async postToS3(file: File, url: string) {
+    const resp = await axios.put(url, file, {
+      headers: {
+        'Content-Type': file.type,
+      }
+    })
+
+    return resp
   }
 }

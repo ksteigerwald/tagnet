@@ -25,6 +25,7 @@ query {
         label
         created
         code
+        autogen
         MemoLines(limit: 10, order_by: {created: desc}) {
             id
         }
@@ -49,6 +50,7 @@ query {
         tag_id
         label
         created
+        autogen
         MemoLines(limit: 10, order_by: {created: desc}) {
             id
         }
@@ -68,6 +70,7 @@ query search_memos($input:String){
     tag_id
     created
     uuid
+    autogen
     MemoLines {
       id
     }
@@ -88,6 +91,7 @@ query get_memo($input: Int) {
     tag_id
     created
     uuid
+    autogen
     TagMemo {
       label
     }

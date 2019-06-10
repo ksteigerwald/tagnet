@@ -12,7 +12,7 @@
                 {{date}}
             <ul>
                 <li v-for="line in getGroupData(date)">
-                    <p v-html="line.label">  </p>
+                    <p v-html="format(line)">  </p>
                 </li>
             </ul>
             </li>
@@ -57,7 +57,16 @@ export default class Wall extends Vue {
         this.getMemo(this.memoId)
         this.linesByMemo(this.memoId) 
     }
-    
+
+    format(line: Line):string {
+        let {format_id, label} = line
+        if(format_id === 2) {
+            return `<img src="https://tagnet.s3.amazonaws.com/${label}"/>`
+        }
+        console.log(format_id, label)
+        return line.label
+    }
+
     mounted() {
         this.$store.subscribe((mutation, state) => {
             switch(mutation.type) {

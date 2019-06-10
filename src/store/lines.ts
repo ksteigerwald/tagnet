@@ -34,7 +34,8 @@ export const actions: ActionTree<LineState, RootState> = {
             variables: {
                 objects: [{
                     label: payload.label,
-                    memo_id: payload.memo_id
+                    memo_id: payload.memo_id,
+                    format_id: payload.format_id || null
                 }]
             }
         })

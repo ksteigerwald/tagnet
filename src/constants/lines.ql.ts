@@ -10,6 +10,7 @@ mutation insertLine($objects: [lines_insert_input!]!) {
       uuid
       user_id
       created
+      format_id
     }
   }
 }`
@@ -23,6 +24,7 @@ query {
       memo_id,
       label,
       created
+      format_id
     }
 }
 `
@@ -37,6 +39,7 @@ query search_lines($input: String) {
       uuid,
       memo_id,
       label
+      format_id
 	}
 }
 `
@@ -51,6 +54,7 @@ query linesByMemoId($input: Int) {
     user_id
     uuid
     created
+    format_id
     LineMemo {
       TagMemo {
         id

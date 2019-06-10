@@ -98,9 +98,11 @@ export interface Memo {
     created: string
     user_id: string
     code: string
+    autogen: boolean
     type?: string
     MemoLines?: Line[]
     TagMemo?: Tag
+
 }
 
 export interface Line {
@@ -111,6 +113,7 @@ export interface Line {
     created: string
     user_id: string
     code:string
+    format_id?:number
 }
 
 export interface User {

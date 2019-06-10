@@ -22,18 +22,21 @@ export const mutations: MutationTree<MemoState> = {
 
 export const actions: ActionTree<MemoState, RootState> = {
     async createMemo({ commit, dispatch, rootState }, payload:Memo) {
+        console.log('create memo invoked')
         const response: any = await apolloClient.mutate({
             mutation: memosInsert,
             variables: {
                 objects: [{
                     label: payload.label,
-                    tag_id: payload.tag_id
+                    tag_id: payload.tag_id,
+                    autogen: payload.autogen || false
                 }]
             }
         })
 
         let memo: Memo = response.data.insert_memos.returning.pop()
-        dispatch('updateMemoCode', memo)
+        await dispatch('updateMemoCode', memo)
+        await commit('addMemo', memo)
 
     },
     
@@ -48,8 +51,6 @@ export const actions: ActionTree<MemoState, RootState> = {
                     code: code
             }
         })
-
-        commit('addMemo', memo)
 
     },
 
@@ -113,7 +114,11 @@ export const getters: GetterTree<MemoState, RootState> = {
         return state.memos.filter(memo => {
             return memo.label.match(new RegExp(str + ".*", "i"))
         })
-    }
+    },
+
+    findImgAny: (state, dispatch, rootState): Memo[] => 
+        state.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
+
 }
 
 export const memos:Module<MemoState, RootState> ={

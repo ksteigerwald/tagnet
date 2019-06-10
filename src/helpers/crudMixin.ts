@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { State, Getter, Action, namespace,  } from 'vuex-class';
 import anchorme from "anchorme";
+import { globalEventBus } from '@/helpers/EventBus'
 
 import { Context, Event, Stream, Tag, TagState, Memo, 
         MemoState, Line, LineState } from '../types'
@@ -17,6 +18,9 @@ export default class CRUDMixIn extends Vue {
     @Getter('tags/tags') tags!: Tag[]
     @Getter('tags/findByCode') findTagByCode: any
     @Getter('memos/findByCode') findMemoByCode: any
+
+    @Getter('memos/findImgAny') findImgAny: Memo[]
+
     @Getter('tags/filterTags') filterTags: (keys: any) => any[]
     @Getter('memos/filterMemos') filterMemos: (keys: any) => any[]
     @Getter('memos/memos') memos!: Memo[]
@@ -29,6 +33,11 @@ export default class CRUDMixIn extends Vue {
 
     get syncData():any[] {
         return this.intakeData
+    }
+
+    beforeMount() {
+        console.log('beforeMount', globalEventBus)
+        globalEventBus.$on('emitInterface', this.onInterfaceChange)
     }
 
     keygen(stream: Stream): string {
@@ -45,7 +54,7 @@ export default class CRUDMixIn extends Vue {
         return { code: code, value: processed }
     }
 
-    onInterfaceChange(stream:Stream) {
+    async onInterfaceChange(stream:Stream) {
         console.log(this.keygen(stream), 'HOME PAGE - onInterfaceChange')
 
         switch (this.keygen(stream)) {
@@ -54,6 +63,32 @@ export default class CRUDMixIn extends Vue {
                 break
             case 'memo-add':
                 this.intakeData = this.filterTags(stream.value)            
+                break
+            case 'memo-drop':
+                //var obj = this.process(stream.value)
+                var dropMemo: Memo[] = this.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
+                console.log(dropMemo, '...')
+                if(dropMemo.length === 0) {
+                    await this.createMemo({
+                            label: 'Your Image Bucket',
+                            tag_id: 7,
+                            autogen: true })
+                    var dropMemo: Memo[] = this.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
+                    console.log(dropMemo, 'new memo created')
+                }
+                else {
+                    let newLine: Stream = {
+                        context: Context.line,
+                        event: Event.drop,
+                        value: {
+                            memo_id: dropMemo[0].id,
+                            format_id: 2,
+                            label: stream.value 
+                        }
+                    }
+                    console.log(newLine, '<<newLine')
+                    globalEventBus.$emit('emitInterface', newLine) 
+                }
                 break
             case 'memo-create':
                 var obj = this.process(stream.value)
@@ -75,6 +110,9 @@ export default class CRUDMixIn extends Vue {
                     label: obj.value,
                     memo_id: memo.id
                 })
+                break
+            case 'line-drop':
+                this.createLine(stream.value)
                 break
             case 'open-enter':
                 this.searchMemos(stream.value)
