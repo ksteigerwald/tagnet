@@ -53,8 +53,6 @@ export default class DropzoneMixIn extends Vue {
   window.addEventListener("drop", function (e) {
       e.preventDefault();
       const files = e.dataTransfer.files
-      //const doms = (<any> e)
-      //console.log('drop', doms.target.offsetParent)
     if (files.length === 1) {
       console.log("File selected:" + e.dataTransfer.files[0].type)
       self.uploadHandler(e.dataTransfer.files[0])

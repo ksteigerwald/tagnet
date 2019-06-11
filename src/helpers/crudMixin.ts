@@ -37,7 +37,9 @@ export default class CRUDMixIn extends Vue {
 
     beforeMount() {
         console.log('beforeMount', globalEventBus)
-        globalEventBus.$on('emitInterface', this.onInterfaceChange)
+        globalEventBus.$on('emitInterface', (data: Stream) => {
+            this.onInterfaceChange(data)
+        })
     }
 
     keygen(stream: Stream): string {
