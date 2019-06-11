@@ -68,7 +68,10 @@ export default class CRUDMixIn extends Vue {
                 break
             case 'memo-drop':
                 //var obj = this.process(stream.value)
-                var dropMemo: Memo[] = this.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
+                var dropMemo: Memo[] = (stream.value.code) ? 
+                    this.memos.filter(memo => memo.code === stream.value.code) :
+                    this.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
+
                 console.log(dropMemo, '...')
                 if(dropMemo.length === 0) {
                     await this.createMemo({
@@ -79,13 +82,14 @@ export default class CRUDMixIn extends Vue {
                     console.log(dropMemo, 'new memo created')
                 }
                 else {
+                    let memoId = dropMemo[0].id
                     let newLine: Stream = {
                         context: Context.line,
                         event: Event.drop,
                         value: {
-                            memo_id: dropMemo[0].id,
+                            memo_id: memoId,
                             format_id: 2,
-                            label: stream.value 
+                            label: stream.value.filename
                         }
                     }
                     console.log(newLine, '<<newLine')

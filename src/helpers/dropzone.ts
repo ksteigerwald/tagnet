@@ -53,24 +53,27 @@ export default class DropzoneMixIn extends Vue {
   window.addEventListener("drop", function (e) {
       e.preventDefault();
       const files = e.dataTransfer.files
+      const dom:any = (<any> e)
+      console.log('drop', dom.target.offsetParent)
     if (files.length === 1) {
       console.log("File selected:" + e.dataTransfer.files[0].type)
-      self.uploadHandler(e.dataTransfer.files[0])
+      self.uploadHandler(e.dataTransfer.files[0], dom)
     }
   });
   }
 
   //handle using RXJS
-  async uploadHandler(file: File) {
+  async uploadHandler(file: File, dom: any) {
     if(file.type.indexOf("image") !== 0) return
     let url = await this.getURL(file.name)
     let upload = await this.postToS3(file, url)
+    let $el = dom.target.offsetParent
     if(upload.status === 200) {
 
       let stream: Stream = {
         context: Context.memo,
         event: Event.drop,
-        value:  file.name
+        value: { filename: file.name, code: $el.id || null }
       }
 
       console.log('upload sream', stream)
