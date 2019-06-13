@@ -17,12 +17,16 @@ export const mutations: MutationTree<MemoState> = {
         const memoCopy = Object.assign({}, newMemo)
         console.log('memoCopy', memoCopy)
         state.memos.push(memoCopy)
+    },
+
+    commitState(state: MemoState, memos: Memo[]): void {
+        state.memos = memos
     }
 }
 
 export const actions: ActionTree<MemoState, RootState> = {
     async createMemo({ commit, dispatch, rootState }, payload:Memo) {
-        console.log('create memo invoked')
+
         const response: any = await apolloClient.mutate({
             mutation: memosInsert,
             variables: {
@@ -55,11 +59,12 @@ export const actions: ActionTree<MemoState, RootState> = {
     },
 
     async loadMemos( { commit, dispatch, rootState} ) {
-
         const response: any = await apolloClient.query({
             query: memosQry
         })
+
         state.memos = response.data.memos
+        return state.memos
     },
 
     async loadWall({ commit, dispatch, rootState} ) {
@@ -67,7 +72,8 @@ export const actions: ActionTree<MemoState, RootState> = {
             query: memosQryMemoLines
         })
 
-        state.memos = response.data.memos
+        commit('commitState', response.data.memos)
+        return state.memos
     },
 
     async searchMemos({ commit, dispatch, rootState}, term: string ) {
@@ -80,14 +86,6 @@ export const actions: ActionTree<MemoState, RootState> = {
         state.memos = response.data.memos
     },
 
-    async getMemo({ commit, dispatch, rootState}, id: number ) {
-        const response: any = await apolloClient.query({
-            query: memosGet,
-            variables: { input: id }	
-        })
-        state.memos = response.data.memos
-    },
-
     //Find a memo with given code
     //When no code is found, find image any bucket
     //when no [image ANY] bucket, create image [ANY] bucket memo 
@@ -96,7 +94,9 @@ export const actions: ActionTree<MemoState, RootState> = {
 }
 
 export const getters: GetterTree<MemoState, RootState> = {
-    memos: (state, getters, rootState) => state.memos,
+    memos: (state, getters, rootState) => state.memos.map(m => {
+        return m
+    }),
 
     findMemo: (state, getters, rootState, id) => (id: number) => {
         return state.memos.filter(memo => {

@@ -1,11 +1,11 @@
 <template>
 <div class="wall container">
-    <Card :key="componentKey" :memos="memos" />
+    <Card v-if="memos.length > 0" :key="componentKey" :memos="memos" />
 </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
@@ -22,25 +22,12 @@ export default class Wall extends Vue {
     
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
-    @Action('memos/loadWall') loadWall: any
-    @Action('lines/loadLines') loadLines: any
-    
+   
+    @Watch('memos')
     rerenderCards() {
         this.componentKey += 1
     } 
 
-	created() {
-        this.loadWall() 
-        this.loadLines() 
-        /*
-
-        this.$store.subscribe((action, state) => {
-            console.log(action.type)
-            console.log(action.payload)
-            setTimeout(() => { console.log(this, 'to');this.componentKey++}, 500)
-        })
-        */
-	}
 }
 </script>
 

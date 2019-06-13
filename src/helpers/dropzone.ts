@@ -33,33 +33,39 @@ export default class DropzoneMixIn extends Vue {
   lastTarget: any = null
   uploader: S3Upload = null
 
-  created() {
-    var self = this
 
-    window.addEventListener("dragenter", function (e) {
-      if (isFile(e)) {
-          self.lastTarget = e.target;
-      }
-  });
-  
-  window.addEventListener("dragleave", function (e) {
-      e.preventDefault();
-  });
-  
-  window.addEventListener("dragover", function (e) {
-      e.preventDefault();
-  });
+  mounted() {
+    window.addEventListener("dragcenter", this.preventEvn);
+    window.addEventListener("dragleave", this.preventEvn);
+    window.addEventListener("dragover", this.preventEvn);
+    window.addEventListener("drop", this.dropped);
+  }
 
-  window.addEventListener("drop", function (e) {
+  preventEvn(e: any){
       e.preventDefault();
-      const files = e.dataTransfer.files
-      const dom:any = (<any> e)
-      console.log('drop', dom.target.offsetParent)
+  }
+
+  dropped(e: any) {
+    'use strict';
+
+    e.preventDefault();
+    const files = e.dataTransfer.files
+    const dom: any = (<any>e)
+    console.log('drop', dom.target.offsetParent, files)
     if (files.length === 1) {
       console.log("File selected:" + e.dataTransfer.files[0].type)
-      self.uploadHandler(e.dataTransfer.files[0], dom)
+      this.uploadHandler(e.dataTransfer.files[0], dom)
     }
-  });
+
+    false
+  }
+
+  beforeDestroy() {
+    window.removeEventListener("dragenter", this.preventEvn)
+    window.removeEventListener("dragleave", this.preventEvn)
+    window.removeEventListener("dragover", this.preventEvn)
+    window.removeEventListener("drop", this.dropped)
+    console.log(window)
   }
 
   //handle using RXJS
@@ -68,6 +74,7 @@ export default class DropzoneMixIn extends Vue {
     let url = await this.getURL(file.name)
     let upload = await this.postToS3(file, url)
     let $el = dom.target.offsetParent
+
     if(upload.status === 200) {
 
       let stream: Stream = {

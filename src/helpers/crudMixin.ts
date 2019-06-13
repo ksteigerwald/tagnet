@@ -6,6 +6,7 @@ import { globalEventBus } from '@/helpers/EventBus'
 
 import { Context, Event, Stream, Tag, TagState, Memo, 
         MemoState, Line, LineState } from '../types'
+import { dispatch } from 'rxjs/internal/observable/range';
 
 // You can declare a mixin as the same style as components.
 @Component
@@ -36,10 +37,19 @@ export default class CRUDMixIn extends Vue {
     }
 
     beforeMount() {
-        console.log('beforeMount', globalEventBus)
+        var random = Math.random( ); 
+        console.log('beforeMount', random)
+        let appeared:any[] = []
         globalEventBus.$on('emitInterface', (data: Stream) => {
-            this.onInterfaceChange(data)
+            console.log(`%c globalEventsOn ${random}`, 'background: #222; color: #bada55');
+            if(appeared.indexOf(data) === -1)
+                appeared.push(data)
+                this.onInterfaceChange(data)
         })
+    }
+
+    beforeDestroy() {
+        console.log(`%c beforeDestroy `, 'background: #222; color: #bada55');
     }
 
     keygen(stream: Stream): string {
@@ -93,7 +103,7 @@ export default class CRUDMixIn extends Vue {
                         }
                     }
                     console.log(newLine, '<<newLine')
-                    globalEventBus.$emit('emitInterface', newLine) 
+                    this.onInterfaceChange(newLine)
                 }
                 break
             case 'memo-create':
@@ -120,9 +130,10 @@ export default class CRUDMixIn extends Vue {
             case 'line-drop':
                 let lines = this.lines.filter(line => line.label == stream.value.label)
                 
-                console.log(lines, 'lines +++')
+                console.log(lines, 'lines +++', stream.value)
                 if(lines.length === 0)
                     this.createLine(stream.value)
+                    this.$store.dispatch('memos/loadMemos')
                 break
             case 'open-enter':
                 this.searchMemos(stream.value)

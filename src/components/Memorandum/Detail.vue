@@ -1,7 +1,7 @@
 <template>
 <div class="memo-detail container">
     <ul>
-        <li v-for="memo in memos">
+        <li>
             <h1>{{memo.id}} - {{memo.label}}</h1>
         </li>
     </ul>
@@ -39,31 +39,29 @@ export default class Wall extends Vue {
     memoId:number = 0 
     dates:string[] = []
     groupByObj: any = {}    
-
+    memo: any 
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/lines') lines: Line[]
     @Getter('lines/linesGroupBy') linesGroupBy: any
-    @Action('lines/linesByMemo') linesByMemo: any
     @Getter('memos/findMemo') findMemo: any
-    @Action('memos/getMemo') getMemo: any
 
     rerenderCards() {
         this.componentKey += 1
     } 
 
-	created() {
+    beforeMount () {
         this.memoId = Number(this.$route.params.memoId)
-        this.getMemo(this.memoId)
-        this.linesByMemo(this.memoId) 
+        this.memo = this.findMemo(this.memoId)[0]
     }
 
     format(line: Line):string {
         let {format_id, label} = line
+
         if(format_id === 2) {
             return `<img src="https://tagnet.s3.amazonaws.com/${label}"/>`
         }
-        console.log(format_id, label)
+
         return line.label
     }
 
@@ -88,6 +86,7 @@ export default class Wall extends Vue {
     getGroupData(key: string): Line[] {
         return this.groupByObj[key]
     }
+
 }
 </script>
 

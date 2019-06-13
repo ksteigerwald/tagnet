@@ -22,7 +22,7 @@
                         <ul>
                             <li>
                                 <mark class="circle">
-                                    {{memoLines(memo.id).length}}
+                                    {{memo.MemoLines.length}}
                                 </mark>
                             </li>
                         </ul>
@@ -43,8 +43,6 @@ import { TagType } from '@/store/tags'
 export default class Card extends Vue {
 
     @Prop() memos:Memo[]
-
-    @Getter('lines/memoLines') memoLines: Line[]
 
     icon(val: string) {
         return (<any>TagType)[val]

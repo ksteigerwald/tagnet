@@ -15,6 +15,7 @@ mutation insert_memo($objects: [memos_insert_input!]!) {
   }
 }`
 
+
 export const memosQry = gql`
 query {
     memos(order_by: {created: desc}) {
@@ -26,8 +27,9 @@ query {
         created
         code
         autogen
-        MemoLines(limit: 10, order_by: {created: desc}) {
-            id
+        MemoLines(limit: 100, order_by: {created: desc}) {
+            id,
+            code
         }
         id,
         label,
@@ -51,7 +53,7 @@ query {
         label
         created
         autogen
-        MemoLines(limit: 10, order_by: {created: desc}) {
+        MemoLines(limit: 100, order_by: {created: desc}) {
             id
         }
         TagMemo {

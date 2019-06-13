@@ -7,6 +7,8 @@ import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import * as config from './helpers/config'
 
+import { State, Getter, Action, namespace } from 'vuex-class';
+
 
 Vue.config.productionTip = false;
 
