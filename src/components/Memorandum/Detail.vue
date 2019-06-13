@@ -1,10 +1,11 @@
 <template>
 <div class="memo-detail container">
-    <ul>
-        <li>
-            <h1>{{memo.id}} - {{memo.label}}</h1>
-        </li>
-    </ul>
+
+    <div class="columns is-multiline is-centered">
+    <div class="column is-half ">
+  <h1>{{memo.id}} - {{memo.label}}</h1>
+ </div>
+    </div>        
     <div class="columns is-multiline is-centered">
     <div class="column is-half ">
         <ul>

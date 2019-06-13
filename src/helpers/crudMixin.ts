@@ -38,7 +38,6 @@ export default class CRUDMixIn extends Vue {
 
     beforeMount() {
         var random = Math.random( ); 
-        console.log('beforeMount', random)
         let appeared:any[] = []
         globalEventBus.$on('emitInterface', (data: Stream) => {
             console.log(`%c globalEventsOn ${random}`, 'background: #222; color: #bada55');
@@ -59,10 +58,7 @@ export default class CRUDMixIn extends Vue {
     process(str: string): any {
         let data = str.split(' ') 
         let code = data.shift()
-        console.log('CODE>>>', code)
-        console.log('data>>>', data.join(' '))
         let processed = anchorme(data.join(' '))
-        console.log('processedd>>>', processed) 
         return { code: code, value: processed }
     }
 
@@ -82,14 +78,12 @@ export default class CRUDMixIn extends Vue {
                     this.memos.filter(memo => memo.code === stream.value.code) :
                     this.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
 
-                console.log(dropMemo, '...')
                 if(dropMemo.length === 0) {
                     await this.createMemo({
                             label: 'Your Image Bucket',
                             tag_id: 7,
                             autogen: true })
                     var dropMemo: Memo[] = this.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
-                    console.log(dropMemo, 'new memo created')
                 }
                 else {
                     let memoId = dropMemo[0].id
@@ -102,7 +96,7 @@ export default class CRUDMixIn extends Vue {
                             label: stream.value.filename
                         }
                     }
-                    console.log(newLine, '<<newLine')
+
                     this.onInterfaceChange(newLine)
                 }
                 break
@@ -130,7 +124,6 @@ export default class CRUDMixIn extends Vue {
             case 'line-drop':
                 let lines = this.lines.filter(line => line.label == stream.value.label)
                 
-                console.log(lines, 'lines +++', stream.value)
                 if(lines.length === 0)
                     this.createLine(stream.value)
                     this.$store.dispatch('memos/loadMemos')

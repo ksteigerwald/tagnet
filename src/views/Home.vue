@@ -11,14 +11,24 @@
         </div>
 
     <div v-if="loading" class="loading">
-      Loading...
+        <div class="container">
+            <div class="columns is-centered is-3 is-desktop is-multiline">
+               <div style="text-align:center" class="column is-quarter"> 
+                    <h1>Loading...</h1>
+                </div>
+            </div>
+         </div>
     </div>
 
     <div v-if="error" class="error">
-      {{ error }}
+        <div class="container">
+            <div class="columns is-centered is-3 is-desktop is-multiline">
+               <div class="column is-quarter"> {{ error }} </div>
+            </div>
+         </div>
     </div>
 
-    <div v-if="memos" class="section">
+    <div v-if="memos.length > 0 && !loading" class="section">
         <Wall :key="componentKey" />
     </div>
 
@@ -52,11 +62,9 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
 
     async beforeMount() {
         this.componentKey += 1; 
-        console.log('HOME IS MOUNTED')
         this.loading = true
         this.loadWall() 
             .then((e: any) => {
-                console.log('HOME IS MOUNTED', e, this.componentKey)
                 this.loading = false
             })
     }

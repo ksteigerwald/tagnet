@@ -65,7 +65,6 @@ export default class DropzoneMixIn extends Vue {
     window.removeEventListener("dragleave", this.preventEvn)
     window.removeEventListener("dragover", this.preventEvn)
     window.removeEventListener("drop", this.dropped)
-    console.log(window)
   }
 
   //handle using RXJS

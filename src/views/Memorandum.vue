@@ -10,8 +10,12 @@
             </div>
         </div>
 
-         <div v-if="loading" class="loading">
-            Loading...
+         <div v-if="loading" class="section loading">
+             <div class="container">
+                <div class="columns align-center is-mobile is-centered handler-wrap set-height">
+                    Loading...
+                </div>
+            </div>
         </div>
 
         <div v-if="error" class="error">
