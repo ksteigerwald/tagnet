@@ -17,6 +17,16 @@ Vue.use(Buefy, {
     defaultIconPack: 'fas'
 })
 
+function parseJwt (token: string) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+
 router.beforeEach((to:any, from:any, next:any) => {
 
     const publicPages: string[] = ['/login', '/about']
@@ -24,7 +34,13 @@ router.beforeEach((to:any, from:any, next:any) => {
 
     if(to.path === "/callback") {
         let token = to.hash.split('&').pop().split('=').pop()
+        let data = parseJwt(token)
+
+        console.log(data)
+        
         localStorage.setItem(config.localKey('user'), token)
+        localStorage.setItem(config.localKey('picture'), data.picture)
+
         router.push('/')
     }
 

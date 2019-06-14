@@ -14,7 +14,7 @@ export const state: MemoState = {
 
 export const mutations: MutationTree<MemoState> = {
     addMemo(state: MemoState, newMemo: Memo): void {
-        const memoCopy = Object.assign({}, newMemo)
+        const memoCopy = Object.assign({MemoLines:[]}, newMemo)
         console.log('memoCopy', memoCopy)
         state.memos.push(memoCopy)
     },

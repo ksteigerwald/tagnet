@@ -19,7 +19,7 @@
                         </h3>
                     </span>
                     <span class="row">
-                        <ul>
+                        <ul class="histo">
                             <li>
                                 <mark class="circle">
                                     {{memo.MemoLines.length}}
@@ -93,7 +93,7 @@ a { color:#000 }
         }
         ul {
             li {
-                text-align:left;
+
                 mark {
                     border-radius:25rem;
                     font-weight:700;

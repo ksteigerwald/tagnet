@@ -98,9 +98,14 @@ export default class Wall extends Vue {
             margin-bottom:2rem;
             background:#fff;
             margin-bottom:1.5rem; 
-            padding:1rem;
             ul > li {
-                margin-bottom: 1rem;
+                padding:0 0 0 1rem;
+                margin:0 0 0 1rem;
+                text-align:left;
+                border-left: #C4EFF5 1px solid;
+                p {
+                    padding:1rem 0;
+                }
             }
         }
     }
