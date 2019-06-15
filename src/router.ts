@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
+import Landing from './views/Landing.vue';
 import Memorandum from './views/Memorandum.vue';
 
 Vue.use(Router);
@@ -12,6 +13,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'landing',
+      component: Landing,
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home,
     },

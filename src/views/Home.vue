@@ -1,6 +1,5 @@
 <template>
     <div class="wrap">
-        <Header />
         <div class="section pad">
             <div class="container">
                 <div class="columns is-mobile is-centered handler-wrap set-height">
@@ -43,14 +42,12 @@ import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { mixins } from 'vue-class-component';
 
 import Wall from '@/components/Wall.vue'
-import Header from '@/components/Header.vue'
 import IntakeHandler from '@/components/Intake/Handler.vue'
 import CRUDMixIn from '@/helpers/crudMixin'
 import DropzoneMixIn from '@/helpers/dropzone'
 
 @Component({
     components: {
-        Header,
         IntakeHandler,
         Wall
     }
@@ -65,9 +62,12 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
     @Action('tags/loadTags') loadTags: any
 
     async beforeMount() {
+
         this.componentKey += 1; 
         this.loading = true
+
         await this.loadTags()
+        
         this.loadWall() 
             .then((e: any) => {
                 this.loading = false

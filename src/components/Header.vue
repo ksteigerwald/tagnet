@@ -1,5 +1,5 @@
 <template>
-<div class="header">
+<div v-if="loggedIn" class="header">
     <span class="profile" :style="cssStr"></span>
 </div>
 </template>
@@ -14,6 +14,7 @@ import { TagType } from '@/store/tags'
 export default class Header extends Vue {
   profile: string = localStorage.getItem('TAGNET-picture')
   cssStr: string = ''
+  loggedIn: boolean = true
   beforeMount() {
     this.cssStr = `background-image:url(${this.profile});` 
   }

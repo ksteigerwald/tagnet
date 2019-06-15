@@ -2,10 +2,11 @@
 <div class="memo-detail container">
 
     <div class="columns is-multiline is-centered">
-    <div class="column is-half ">
-  <h1>{{memo.id}} - {{memo.label}}</h1>
- </div>
+        <div class="column is-half ">
+            <h1>{{memo.id}} - {{memo.label}}</h1>
+        </div>
     </div>        
+
     <div class="columns is-multiline is-centered">
     <div class="column is-half ">
         <ul>

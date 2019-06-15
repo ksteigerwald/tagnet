@@ -9,7 +9,6 @@ import * as config from './helpers/config'
 
 import { State, Getter, Action, namespace } from 'vuex-class';
 
-
 Vue.config.productionTip = false;
 
 Vue.use(VueRx)
@@ -36,8 +35,6 @@ router.beforeEach((to:any, from:any, next:any) => {
         let token = to.hash.split('&').pop().split('=').pop()
         let data = parseJwt(token)
 
-        console.log(data)
-        
         localStorage.setItem(config.localKey('user'), token)
         localStorage.setItem(config.localKey('picture'), data.picture)
 
