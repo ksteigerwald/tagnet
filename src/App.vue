@@ -24,7 +24,7 @@ export default class App extends Vue {
     if(this.protected.indexOf(this.$route.name) !== -1) {
       this.showHeader = true
     }
-    console.log('ROUTE', this.$route)
+  //  console.log('ROUTE', this.$route)
   }
 
 

@@ -33,13 +33,15 @@ export default class DropzoneMixIn extends Vue {
   lastTarget: any = null
   uploader: S3Upload = null
 
-
   mounted() {
-    window.addEventListener("dragcenter", this.preventEvn);
-    window.addEventListener("dragleave", this.preventEvn);
-    window.addEventListener("dragover", this.preventEvn);
-    window.addEventListener("drop", this.dropped);
+    globalEventBus.$on('WindowDrop', (data: Stream) => {
+      this.dropped(data)
+    })
   }
+
+  beforeDestroy() {
+    globalEventBus.$off()
+}
 
   preventEvn(e: any){
       e.preventDefault();
@@ -59,6 +61,13 @@ export default class DropzoneMixIn extends Vue {
 
     false
   }
+  /*
+  mounted() {
+    window.addEventListener("dragcenter", this.preventEvn);
+    window.addEventListener("dragleave", this.preventEvn);
+    window.addEventListener("dragover", this.preventEvn);
+    window.addEventListener("drop", this.dropped);
+  }
 
   beforeDestroy() {
     window.removeEventListener("dragenter", this.preventEvn)
@@ -66,6 +75,7 @@ export default class DropzoneMixIn extends Vue {
     window.removeEventListener("dragover", this.preventEvn)
     window.removeEventListener("drop", this.dropped)
   }
+*/
 
   //handle using RXJS
   async uploadHandler(file: File, dom: any) {
