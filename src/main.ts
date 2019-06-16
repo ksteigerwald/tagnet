@@ -45,7 +45,7 @@ function parseJwt (token: string) {
 
 router.beforeEach((to:any, from:any, next:any) => {
 
-    const publicPages: string[] = ['/login', '/about']
+    const publicPages: string[] = ['/login', '/about', '/']
     const authRequired = !publicPages.includes(to.path);
 
     if(to.path === "/callback") {
