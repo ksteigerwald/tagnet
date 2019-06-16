@@ -47,10 +47,6 @@ export default class CRUDMixIn extends Vue {
         })
     }
 
-    beforeDestroy() {
-        console.log(`%c beforeDestroy `, 'background: #222; color: #bada55');
-    }
-
     keygen(stream: Stream): string {
         return stream.context + '-' + stream.event
     }

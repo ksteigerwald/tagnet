@@ -44,7 +44,7 @@ export default class DropzoneMixIn extends Vue {
 }
 
   preventEvn(e: any){
-      e.preventDefault();
+    e.preventDefault();
   }
 
   dropped(e: any) {
@@ -61,21 +61,6 @@ export default class DropzoneMixIn extends Vue {
 
     false
   }
-  /*
-  mounted() {
-    window.addEventListener("dragcenter", this.preventEvn);
-    window.addEventListener("dragleave", this.preventEvn);
-    window.addEventListener("dragover", this.preventEvn);
-    window.addEventListener("drop", this.dropped);
-  }
-
-  beforeDestroy() {
-    window.removeEventListener("dragenter", this.preventEvn)
-    window.removeEventListener("dragleave", this.preventEvn)
-    window.removeEventListener("dragover", this.preventEvn)
-    window.removeEventListener("drop", this.dropped)
-  }
-*/
 
   //handle using RXJS
   async uploadHandler(file: File, dom: any) {
