@@ -30,7 +30,7 @@ export default class CRUDMixIn extends Vue {
     @Action('lines/createLine') createLine: any
     @Action('memos/searchMemos') searchMemos: any
     
-    intakeData: String[] = []
+    intakeData: any[] = []
 
     get syncData():any[] {
         return this.intakeData
@@ -103,6 +103,13 @@ export default class CRUDMixIn extends Vue {
                     label: obj.value,
                     tag_id: tag.id
                 })
+                break
+            case 'line-app':
+                console.log('+++ LINE APP +++')
+                this.intakeData = [
+                    {label: 'foobar'},
+                    {label: 'barfoo'}
+                ]
                 break
             case 'line-add':
                 this.intakeData = this.filterMemos(stream.value)            

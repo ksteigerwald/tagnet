@@ -85,6 +85,17 @@ export default class IntakeStream extends Vue {
             event = this.isSubmit(pack.value) ? Event.create : Event.add   
         }
 
+        //determine if an app is being invoked
+        if(event === Event.add) {
+            let tokens = pack.value.split(' ')
+            if(tokens.length >= 2) {
+                let keyed = tokens[1].charAt('0')
+                if(keyed === '/') {
+                    event = Event.app
+                }
+            }
+        }
+
         return Object.assign(pack, { 
             event: event, 
             value: this.sanitize(pack.value)
@@ -93,8 +104,9 @@ export default class IntakeStream extends Vue {
 
     sanitize(str: string): string {
         let subs = str.substring(1, str.length - 1)  //.replace(/(@|\/)/gm,'')
-        let newStr = str.length === 1 ? str.replace(/(@|\/)/gm,'') : str.substring(1, str.length - 1) 
-        console.log('newStr', newStr, subs)
+        //console.log({subs, str})
+        let newStr = str.length === 1 ? str.replace(/(@|\/)/gm,'') : str.substring(1, str.length) 
+        //console.log('newStr', newStr, subs)
         if(newStr.charAt(newStr.length -1) === this.tail) {
             return newStr.substring(0, newStr.length -1)
         }
