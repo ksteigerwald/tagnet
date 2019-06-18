@@ -14,6 +14,7 @@ export const state: StreamState = {
       {context: Context.toggle, event: Event.append},
       {context: Context.line, event: Event.append},
       {context: Context.line, event: Event.drop },
+      {context: Context.line, event: Event.macro },
       {context: Context.toggle, event: Event.search},
       {context: Context.open, event: Event.up },
       {context: Context.open, event: Event.down},
@@ -23,7 +24,6 @@ export const state: StreamState = {
       {context: Context.toggle, event: Event.create},
       {context: Context.toggle, event: Event.append},
       {context: Context.toggle, event: Event.append},
-
      ]
 }
 

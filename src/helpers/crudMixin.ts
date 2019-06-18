@@ -105,11 +105,12 @@ export default class CRUDMixIn extends Vue {
                     tag_id: tag.id
                 })
                 break
-            case 'line-app':
+            case 'line-macro':
                 let macroSearch: string = stream.value.split('/').pop()
                 this.intakeData = this.filterMacros(macroSearch)
                 break
             case 'line-add':
+                
                 this.intakeData = this.filterMemos(stream.value)            
                 break
             case 'line-create':
@@ -132,7 +133,8 @@ export default class CRUDMixIn extends Vue {
             case 'open-enter':
                 this.searchMemos(stream.value)
                 break
-            case 'click-flyout':
+            case 'flyout-click':
+                console.log('CLICK FLYOUT', stream.value)
                 this.intakeData = []
                 //this.intakeData = this.searchMemos(stream.value)
                 break

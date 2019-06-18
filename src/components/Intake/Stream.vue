@@ -91,7 +91,7 @@ export default class IntakeStream extends Vue {
             if(tokens.length >= 2) {
                 let keyed = tokens[1].charAt('0')
                 if(keyed === '/') {
-                    event = Event.app
+                    event = Event.macro
                 }
             }
         }
@@ -105,7 +105,7 @@ export default class IntakeStream extends Vue {
     sanitize(str: string): string {
         let subs = str.substring(1, str.length - 1)  //.replace(/(@|\/)/gm,'')
         //console.log({subs, str})
-        let newStr = str.length === 1 ? str.replace(/(@|\/)/gm,'') : str.substring(1, str.length) 
+        let newStr = str.length === 1 ? this.keyStrip(str) : str.substring(1, str.length) 
         //console.log('newStr', newStr, subs)
         if(newStr.charAt(newStr.length -1) === this.tail) {
             return newStr.substring(0, newStr.length -1)
@@ -113,6 +113,10 @@ export default class IntakeStream extends Vue {
         return newStr
     }
 
+    keyStrip(str: string): string {
+        return str.replace(/(@|\/)/gm,'')
+    }
+    
     isCRUD(context: Context): Boolean {
         let cruds = [Context.memo, Context.line]
         return cruds.indexOf(context) != -1
@@ -124,18 +128,28 @@ export default class IntakeStream extends Vue {
     }
 
     emitter(val: Stream) {
+        console.log(val)
         this.$emit('interface', val) 
         return val
+    }
+
+    processIntake(stream: Stream): string {
+        if(stream.value.code) {
+            let inputs = this.cursor.split(' ')
+            if(inputs.length >= 2) {
+                return this.cursor + stream.value.code
+            }
+            return this.cursor.charAt(0) + stream.value.code
+        }
+
+        return this.cursor
     }
 
     @Watch('actionEvent')
     onActionIndexChanged(stream: Stream, oldStream: Stream) {
         if(!stream.value) return
-        if(stream.value.code) {
-            this.cursor = this.cursor.charAt(0) + stream.value.code
-        }
+        this.cursor = this.processIntake(stream)
         this.$el.focus()
-
     }
 
     onInput() {
@@ -170,13 +184,28 @@ export default class IntakeStream extends Vue {
     onEntered(): boolean {
         //console.log('onEntered')
         let pre = this.cursor.charAt(0).match(new RegExp(/(@|\/)/gm,'')) 
-        let boundary = this.cursor.split(' ').length
-        let append = (boundary >=2 || pre === null) ? this.tail : ' '
+        let chunks = this.cursor.split(' ')
+        let boundary = chunks.length
+        let codeCount = chunks[0].length
+        let macroCheck = (chunks.length >= 2) ? chunks[1].charAt(0) === '/' : false
+        let tern = (boundary >=2 || pre === null) 
+        let append = tern ? this.tail : ' '
+        let text = this.cursor
         //console.log('PRE', pre, append)
-        
+        let compareTail = this.tail === ' ' 
+        let compareAppend = append === this.tail
+        let ternCheck = (tern && !macroCheck)
+        console.log({codeCount, ternCheck, compareTail, compareAppend, tern, macroCheck, boundary, append})
+
         //This is very important as it requeues for completion
         //space is stripped in stream
-        this.cursor = this.cursor + append
+        if(macroCheck) {
+            append = ' '
+            text = chunks[0]  + ' ' + chunks[1].substr(1, chunks[1].length)
+        }
+        this.cursor = text + append
+        if(macroCheck)    
+            return false
         return boundary >= 2
     }
 

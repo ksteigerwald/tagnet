@@ -36,7 +36,7 @@ export enum Event {
     append = 'append',
     search = 'search',
     up = 'up',
-    app = 'app',
+    macro = 'macro',
     down = 'down',
     enter = 'enter',
     click = 'click',
