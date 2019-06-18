@@ -99,7 +99,7 @@ export const getters: GetterTree<MemoState, RootState> = {
     }),
 
     findMemo: (state, getters, rootState, id) => (id: number) => {
-        return state.memos.filter(memo => {
+       return state.memos.filter(memo => {
             return memo.id === id
         })
     },

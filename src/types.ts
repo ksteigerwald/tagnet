@@ -55,6 +55,12 @@ export interface Stream {
     value?: any
 }
 
+export interface Macro {
+    id: number 
+    label: string
+    desc: string
+    code: string
+}
 
 // Store
 export interface RootState {
@@ -64,6 +70,7 @@ export interface RootState {
     lines: LineState
     user: UserState
 }
+
 export interface StreamState {
     streams: Stream[]
 }
@@ -83,6 +90,10 @@ export interface LineState {
 export interface UserState {
     status: any
     user: any
+}
+
+export interface MacroState {
+    macros: Macro[]
 }
 
 export interface Tag {

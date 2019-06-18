@@ -49,7 +49,7 @@ export default class Handler extends Vue {
 
     get cssClasses(): string {
         let context = [Context.memo, Context.line].indexOf(this.tick.context)
-        let event = [Event.add, Event.add].indexOf(this.tick.event)
+        let event = [Event.add, Event.add, Event.app].indexOf(this.tick.event)
         let css = 'tagnet column is-half'
         return (context !== -1 && event !== -1) ? css : css + ' set-height'
     }

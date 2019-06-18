@@ -5,7 +5,7 @@ import anchorme from "anchorme";
 import { globalEventBus } from '@/helpers/EventBus'
 
 import { Context, Event, Stream, Tag, TagState, Memo, 
-        MemoState, Line, LineState } from '../types'
+        MemoState, Line, LineState, MacroState, Macro } from '../types'
 import { dispatch } from 'rxjs/internal/observable/range';
 
 // You can declare a mixin as the same style as components.
@@ -24,6 +24,7 @@ export default class CRUDMixIn extends Vue {
 
     @Getter('tags/filterTags') filterTags: (keys: any) => any[]
     @Getter('memos/filterMemos') filterMemos: (keys: any) => any[]
+    @Getter('macros/filterMacros') filterMacros: (keys: any) => any[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/lines') lines!: Line[]
     @Action('memos/createMemo') createMemo: any
@@ -105,11 +106,8 @@ export default class CRUDMixIn extends Vue {
                 })
                 break
             case 'line-app':
-                console.log('+++ LINE APP +++')
-                this.intakeData = [
-                    {label: 'foobar'},
-                    {label: 'barfoo'}
-                ]
+                let macroSearch: string = stream.value.split('/').pop()
+                this.intakeData = this.filterMacros(macroSearch)
                 break
             case 'line-add':
                 this.intakeData = this.filterMemos(stream.value)            
