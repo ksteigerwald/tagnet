@@ -7,6 +7,7 @@ import { globalEventBus } from '@/helpers/EventBus'
 import { Context, Event, Stream, Tag, TagState, Memo, 
         MemoState, Line, LineState, MacroState, Macro } from '../types'
 import { dispatch } from 'rxjs/internal/observable/range';
+import { format } from 'path';
 
 // You can declare a mixin as the same style as components.
 @Component
@@ -55,8 +56,19 @@ export default class CRUDMixIn extends Vue {
     process(str: string): any {
         let data = str.split(' ') 
         let code = data.shift()
+        let isMacro = this.filterMacros(data[0]).length > 0
+        let formatId = isMacro ? 3 : 1
+        let meta = null
+
+        if(isMacro) {
+            data.shift()
+            meta = { meta: { checked: "0" } }
+        } 
+
         let processed = anchorme(data.join(' '))
-        return { code: code, value: processed }
+        let obj = Object.assign({ code: code, value: processed, format_id: formatId }, meta)
+        console.log("OBJ>>.", obj, meta)
+        return obj
     }
 
     async onInterfaceChange(stream:Stream) {
@@ -110,17 +122,18 @@ export default class CRUDMixIn extends Vue {
                 this.intakeData = this.filterMacros(macroSearch)
                 break
             case 'line-add':
-                
                 this.intakeData = this.filterMemos(stream.value)            
                 break
             case 'line-create':
 
                 var obj:any = this.process(stream.value)
                 var memo:Memo = this.findMemoByCode(obj.code).pop()
-
+            console.log('META', obj.meta, obj)
                 this.createLine({
                     label: obj.value,
-                    memo_id: memo.id
+                    memo_id: memo.id,
+                    format_id: obj.format_id,
+                    meta: obj.meta
                 })
                 break
             case 'line-drop':

@@ -11,6 +11,7 @@ mutation insertLine($objects: [lines_insert_input!]!) {
       user_id
       created
       format_id
+      meta
     }
   }
 }`
@@ -25,6 +26,7 @@ query {
       label,
       created
       format_id
+      meta
     }
 }
 `
@@ -40,6 +42,7 @@ query search_lines($input: String) {
       memo_id,
       label
       format_id
+      meta
 	}
 }
 `
@@ -55,6 +58,7 @@ query linesByMemoId($input: Int) {
     uuid
     created
     format_id
+    meta
     LineMemo {
       TagMemo {
         id
@@ -77,5 +81,12 @@ mutation update_token($id: Int, $code: String) {
     returning {
       id
     }
+  }
+}`
+
+export const updateLineMeta = gql`
+mutation update_meta($id: Int, $meta: jsonb ) {
+  update_lines(where: {id: {_eq: $id }}, _set: {meta: $meta }) {
+    affected_rows
   }
 }`

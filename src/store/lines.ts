@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line } from '../types'
 import { apolloClient } from '@/constants/graphql'
-import { linesQry, searchQry, linesInsert, linesByMemoId, updateLineCode } from '@/constants/lines.ql'
+import { linesQry, searchQry, linesInsert, linesByMemoId, updateLineCode, updateLineMeta } from '@/constants/lines.ql'
 import { Subject, fromEvent, of, pipe } from 'rxjs';
 import { pluck, map, debounceTime, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import Hashids from 'hashids'
@@ -19,10 +19,18 @@ export const state: LineState = {
 }
 
 export const mutations: MutationTree<LineState> = {
+
     addLine(state: LineState, newLine: Line): void {
         const lineCopy = Object.assign({}, newLine) 
         state.lines.push(lineCopy)
-    }
+    },
+
+    updateLine(state: LineState, newLine: Line): void {
+        const lineCopy = Object.assign({}, newLine) 
+        let filtered = state.lines.filter(line => line.id != newLine.id)
+        filtered.push(newLine)
+        state.lines = filtered
+    },
 }
 
 export const actions: ActionTree<LineState, RootState> = {
@@ -35,7 +43,8 @@ export const actions: ActionTree<LineState, RootState> = {
                 objects: [{
                     label: payload.label,
                     memo_id: payload.memo_id,
-                    format_id: payload.format_id || 1
+                    format_id: payload.format_id || 1,
+                    meta: payload.meta || null
                 }]
             }
         })
@@ -60,6 +69,19 @@ export const actions: ActionTree<LineState, RootState> = {
         commit('addLine', line)
     },
 
+    async updateLineMeta({ commit, dispatch, rootState }, line:Line) {
+
+        const response: any = await apolloClient.mutate({
+            mutation: updateLineMeta,
+            variables: {
+                id: line.id,
+                meta: line.meta
+            }
+        })
+
+        commit('updateLine', line)
+    },
+
     async loadLines( { commit, dispatch, rootState} ) {
         const response: any = await apolloClient.query({
             query: linesQry
@@ -73,7 +95,7 @@ export const actions: ActionTree<LineState, RootState> = {
             query: linesByMemoId,
             variables: { input: memoId }	
         })
-
+        console.log(response.data.lines)
         state.lines = response.data.lines
     },
 
@@ -101,6 +123,10 @@ export const getters: GetterTree<LineState, RootState> = {
 
     memoLines: (state, getters, rootState) => (memoId:number) =>  {
         return state.lines.filter(line => line.memo_id === memoId) 
+    },
+
+    formatSelect: (state, getters, rootState) => (formatId:number) =>  {
+        return getters.lines.filter((line: Line) => line.format_id === formatId) 
     },
 
     linesGroupBy: (state, getters, rootState) => {

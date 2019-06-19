@@ -9,7 +9,9 @@
 
     <div class="columns is-multiline is-centered">
     <div class="column is-half ">
+        <ToDo v-if="todos.length > 0" :todos="todos" />
         <ul>
+
             <li class="slot" v-for="date in dates">
                 {{date}}
             <ul>
@@ -30,10 +32,13 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 import Card from '@/components/Card.vue'
+import ToDo from '@/components/Memorandum/todo.vue'
 import { groupBy, switchAll } from 'rxjs/operators';
 
 @Component({
-  components: {}
+  components: {
+      ToDo
+  }
 })
 export default class Wall extends Vue {
 
@@ -42,10 +47,12 @@ export default class Wall extends Vue {
     dates:string[] = []
     groupByObj: any = {}    
     memo: any 
+    todos:Line[] = []
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/lines') lines: Line[]
     @Getter('lines/linesGroupBy') linesGroupBy: any
+    @Getter('lines/formatSelect') formatSelect: (keys: any) => any[]
     @Getter('memos/findMemo') findMemo: any
 
     rerenderCards() {
@@ -82,6 +89,7 @@ export default class Wall extends Vue {
     @Watch('lines')
     outputGroup() {
         this.groupByObj = this.linesGroupBy
+        this.todos = this.formatSelect(3)
         this.dates = Object.keys(this.linesGroupBy)
     }
 

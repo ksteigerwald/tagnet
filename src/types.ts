@@ -60,6 +60,7 @@ export interface Macro {
     label: string
     desc: string
     code: string
+    format_id: number
 }
 
 // Store
@@ -126,6 +127,7 @@ export interface Line {
     user_id: string
     code:string
     format_id?:number
+    meta?:any
 }
 
 export interface User {
