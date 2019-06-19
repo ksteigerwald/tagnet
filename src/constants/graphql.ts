@@ -1,14 +1,10 @@
 import fetch from 'unfetch'
 import gql from 'graphql-tag'
 import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
-import { SchemaLink } from 'apollo-link-schema';
 import { createHttpLink  } from "apollo-link-http";
 import * as config from '../helpers/config';
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from 'apollo-link-context'
-import { makeExecutableSchema } from 'graphql-tools';
-import typeDefs from '@/constants/typedefs'
 let jwt_decode = require('jwt-decode')
 
 let GRAPH_QL_API = process.env.GRAPH_QL_API || 'https://hasura-velaru.herokuapp.com/v1/graphql'
@@ -35,15 +31,6 @@ const httpLink = createHttpLink({
     uri: GRAPH_QL_API,
 })
 
-const schema = makeExecutableSchema({
-    typeDefs,
- });
-
- const link = ApolloLink.from([
-//    new SchemaLink({ schema }),
-    authLink.concat(httpLink),
-  ]);
-
 const defaultOptions: DefaultOptions = {
     watchQuery: {
       fetchPolicy: 'no-cache',
@@ -56,7 +43,7 @@ const defaultOptions: DefaultOptions = {
   }
 
 export const apolloClient = new ApolloClient({
-    link: link,
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
     defaultOptions: defaultOptions
 })
