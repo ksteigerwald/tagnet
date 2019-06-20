@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { memosQry,memosQryMemoLines,memosSearch, memosInsert, memosGet, updateMemoCode } from '@/constants/memos.ql'
+import { deleteMemo, memosQry,memosQryMemoLines,memosSearch, memosInsert, memosGet, updateMemoCode } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 import Hashids from 'hashids'
 let hashid = new Hashids('MEMO')
@@ -20,6 +20,11 @@ export const mutations: MutationTree<MemoState> = {
     },
 
     commitState(state: MemoState, memos: Memo[]): void {
+        state.memos = memos
+    },
+
+    removeMemo(state: MemoState, memo: Memo): void {
+        let memos = state.memos.filter(mem => mem.id !== memo.id)
         state.memos = memos
     }
 }
@@ -56,6 +61,16 @@ export const actions: ActionTree<MemoState, RootState> = {
             }
         })
 
+    },
+
+    async deleteMemo({ commit, dispatch, rootState }, memo:Memo) {
+        const response: any = await apolloClient.mutate({
+            mutation: deleteMemo,
+            variables: {
+                    id: memo.id,
+            }
+        })
+        commit('removeMemo', memo)
     },
 
     async loadMemos( { commit, dispatch, rootState} ) {

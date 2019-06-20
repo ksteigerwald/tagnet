@@ -42,6 +42,15 @@ query {
 }
 `
 
+export const deleteMemo = gql`
+  mutation delete_card($id: Int){
+    delete_memos(where: {id: {_eq: $id}}) {
+      affected_rows
+    }
+    delete_lines(where: {memo_id: {_eq: $id}}) {
+      affected_rows
+    }
+  }`
 export const memosQryMemoLines = gql`
 query {
     memos(order_by: {created: desc}) {

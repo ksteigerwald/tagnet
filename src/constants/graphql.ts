@@ -27,6 +27,7 @@ const authLink = setContext((_, {headers} ) => {
         } 
     }
 })
+
 const httpLink = createHttpLink({
     uri: GRAPH_QL_API,
 })
