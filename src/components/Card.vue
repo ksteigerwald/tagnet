@@ -1,8 +1,8 @@
 <template>
     <div class="cards columns is-centered is-3 is-desktop is-multiline">
         <div :id="memo.code" :class="cardCSS(memo.TagMemo.label)" v-for="(memo, key, index) in memos">
-            <router-link :to="{ name: 'memorandums', params: { memoId: memo.id }}">
                 <div class="card-box">
+                    <router-link :to="{ name: 'memorandums', params: { memoId: memo.id }}">
                     <span class="row"> 
                         <mark class="tag-type">
                             <b-icon :icon="icon(memo.TagMemo.label)" size="is-small"/>
@@ -18,6 +18,7 @@
                             {{memo.label}}
                         </h3>
                     </span>
+            </router-link>
                     <span class="row">
                         <ul class="histo">
                             <li>
@@ -25,10 +26,14 @@
                                     {{memo.MemoLines.length}}
                                 </mark>
                             </li>
+                            <li>
+                                <mark class="circle">
+                                    <a @click="remove(memo)"><b-icon  icon="times" size="is-small" /></a>
+                                </mark>
+                            </li>
                         </ul>
                     </span>
                 </div>
-            </router-link>
         </div>
     </div>
 </template>
@@ -43,6 +48,10 @@ import { TagType } from '@/store/tags'
 export default class Card extends Vue {
 
     @Prop() memos:Memo[]
+
+    remove(memo: Memo) {
+        console.log(memo, '++++')
+    }
 
     icon(val: string) {
         return (<any>TagType)[val]
@@ -93,7 +102,8 @@ a { color:#000 }
         }
         ul {
             li {
-
+                float:left;
+                margin-right:2rem;
                 mark {
                     border-radius:25rem;
                     font-weight:700;
