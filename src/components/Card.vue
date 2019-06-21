@@ -43,15 +43,21 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import {  Memo, MemoState } from '@/types'
 import { TagType } from '@/store/tags'
+import { deleteMemo } from '../constants/memos.ql';
 
 @Component
 export default class Card extends Vue {
 
+
     @Prop() memos:Memo[]
-    @Action('memos/deleteMemo')
+
+    @Action('memos/deleteMemo') deleteMemo: any
 
     remove(memo: Memo) {
-        this.$store.dispatch('memo/deleteMemo', memo)
+        let check: boolean = confirm(`Are you sure you want to delete:${memo.label}`)
+        if(check) {
+            this.deleteMemo(memo)
+        }
     }
 
     icon(val: string) {

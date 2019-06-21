@@ -39,7 +39,7 @@ export default class CRUDMixIn extends Vue {
     }
 
     beforeMount() {
-        var random = Math.random( ); 
+        var random = Math.random(); 
         let appeared:any[] = []
         globalEventBus.$on('emitInterface', (data: Stream) => {
             console.log(`%c globalEventsOn ${random}`, 'background: #222; color: #bada55');
