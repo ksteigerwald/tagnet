@@ -41,16 +41,17 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
-import { ITagType, Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
+import {  Memo, MemoState } from '@/types'
 import { TagType } from '@/store/tags'
 
 @Component
 export default class Card extends Vue {
 
     @Prop() memos:Memo[]
+    @Action('memos/deleteMemo')
 
     remove(memo: Memo) {
-        console.log(memo, '++++')
+        this.$store.dispatch('memo/deleteMemo', memo)
     }
 
     icon(val: string) {

@@ -10,6 +10,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { globalEventBus } from '@/helpers/EventBus'
 import { ENOMEM } from 'constants';
 
+
 Vue.config.productionTip = false;
 
 Vue.use(VueRx)
