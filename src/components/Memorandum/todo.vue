@@ -32,20 +32,30 @@ export default class Todo extends Vue {
   checkClass: string = this.defaultCSS
   index:number = 0
 
+  mounted() {
+    this.sortTodos()
+  }  
+
+  sortTodos() {
+    this.todos.sort((a,b) => {
+      return Number(b.meta.checked) - Number(a.meta.checked)
+    })
+  }
+
   getClass(index: number ) : string {
     let onOff = this.todos[index].meta.checked
     return (onOff === "0") ? this.defaultCSS : "fas fa-check" 
   }
 
-  select(i: number, e: any){
+  async select(i: number, e: any){
     let onOff = this.todos[i].meta.checked
 
     let val = (onOff === "0") ? "1" : "0"
     this.todos[i].meta.checked = val
     
     e.target.className = (onOff === "0") ? this.defaultCSS : "fas fa-check" 
-    console.log(this.todos[i].meta.checked)
-    this.$store.dispatch('lines/updateLineMeta', this.todos[i])
+    await this.$store.dispatch('lines/updateLineMeta', this.todos[i])
+    this.sortTodos()
   }
 
 }
