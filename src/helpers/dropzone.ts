@@ -33,10 +33,18 @@ export default class DropzoneMixIn extends Vue {
   lastTarget: any = null
   uploader: S3Upload = null
 
+  IMAGE_MIME_REGEX:RegExp = /^image\/(p?jpeg|gif|png)$/i;
+
   mounted() {
     globalEventBus.$on('WindowDrop', (data: Stream) => {
       this.dropped(data)
     })
+
+    globalEventBus.$on('WindowPaste', (data: Stream) => {
+      console.log('WINDOWPASTE', data)
+      this.pasted(data)
+    })
+
   }
 
   beforeDestroy() {
@@ -47,6 +55,24 @@ export default class DropzoneMixIn extends Vue {
     e.preventDefault();
   }
 
+  pasted(e: any) {
+    var items = e.clipboardData.items;
+
+    const dom: any = (<any>e)
+
+    for (var i = 0; i < items.length; i++) {
+        if (this.IMAGE_MIME_REGEX.test(items[i].type)) {
+            //loadImage(items[i].getAsFile());
+            let file = items[i].getAsFile()
+        
+            console.log('file pasted:', items[i], file)
+            this.uploadHandler(file, dom)
+            return;
+        }
+    }
+    
+    e.preventDefault();
+  }
   dropped(e: any) {
     'use strict';
 

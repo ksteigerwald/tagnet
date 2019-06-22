@@ -123,6 +123,13 @@ export default class CRUDMixIn extends Vue {
                 break
             case 'line-add':
                 this.intakeData = this.filterMemos(stream.value)            
+                /*
+                let code = stream.value.split(' ').shift()
+                if(code) {
+                    let memo = this.findMemoByCode(code)[0]
+                    this.$router.push({ name: 'memorandums', params: { memoId: memo.id } })
+                }
+                */
                 break
             case 'line-create':
 

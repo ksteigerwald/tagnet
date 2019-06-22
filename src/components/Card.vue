@@ -50,7 +50,6 @@ export default class Card extends Vue {
 
 
     @Prop() memos:Memo[]
-
     @Action('memos/deleteMemo') deleteMemo: any
 
     remove(memo: Memo) {
