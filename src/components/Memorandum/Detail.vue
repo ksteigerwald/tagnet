@@ -68,7 +68,7 @@ export default class Wall extends Vue {
         let {format_id, label} = line
 
         if(format_id === 2) {
-            return `<img src="https://tagnet.s3.amazonaws.com/${label}"/>`
+            return `<img src="${label}"/>`
         }
 
         return line.label

@@ -15,6 +15,7 @@ export default class Header extends Vue {
   profile: string = localStorage.getItem('TAGNET-picture')
   cssStr: string = ''
   loggedIn: boolean = true
+
   beforeMount() {
     this.cssStr = `background-image:url(${this.profile});` 
   }

@@ -91,7 +91,8 @@ export default class CRUDMixIn extends Vue {
                     await this.createMemo({
                             label: 'Your Image Bucket',
                             tag_id: 7,
-                            autogen: true })
+                            autogen: true 
+                        })
                     var dropMemo: Memo[] = this.memos.filter(memo => memo.tag_id === 7 && memo.autogen === true)
                 }
                 else {

@@ -56,8 +56,8 @@ export const actions: ActionTree<MemoState, RootState> = {
         const response: any = await apolloClient.mutate({
             mutation: updateMemoCode,
             variables: {
-                    id: memo.id,
-                    code: code
+                id: memo.id,
+                code: code
             }
         })
 

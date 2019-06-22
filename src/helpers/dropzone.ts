@@ -3,6 +3,8 @@ import axios from "axios";
 import Component from 'vue-class-component'
 import S3Upload from '@/helpers/upload'
 import { globalEventBus } from '@/helpers/EventBus'
+import * as config from '@/helpers/config'
+import short from 'short-uuid';
 
 import { Subject, Observable, fromEvent, of, pipe, interval, ConnectableObservable } from 'rxjs';
 import { pluck, map, mapTo, debounceTime, tap, bufferTime,
@@ -11,23 +13,11 @@ import { pluck, map, mapTo, debounceTime, tap, bufferTime,
 import { printIntrospectionSchema } from 'graphql';
 import { Event, Context, Stream } from '@/types';
 
-function isFile(evt:any) {
-  var dt = evt.dataTransfer;
-
-  for (var i = 0; i < dt.types.length; i++) {
-      if (dt.types[i] === "Files") {
-          return true;
-      }
-  }
-  return false;
-}
-
 // You can declare a mixin as the same style as components.
 @Component
 export default class DropzoneMixIn extends Vue {
   
   signedURLEndpoing:string = 'https://tagnet-api.herokuapp.com/signed'
-
   drops:any[]
   mouseOver: any
   lastTarget: any = null
@@ -36,6 +26,7 @@ export default class DropzoneMixIn extends Vue {
   IMAGE_MIME_REGEX:RegExp = /^image\/(p?jpeg|gif|png)$/i;
 
   mounted() {
+
     globalEventBus.$on('WindowDrop', (data: Stream) => {
       this.dropped(data)
     })
@@ -73,13 +64,14 @@ export default class DropzoneMixIn extends Vue {
     
     e.preventDefault();
   }
+
   dropped(e: any) {
     'use strict';
 
     e.preventDefault();
     const files = e.dataTransfer.files
     const dom: any = (<any>e)
-    console.log('drop', dom.target.offsetParent, files)
+
     if (files.length === 1) {
       console.log("File selected:" + e.dataTransfer.files[0].type)
       this.uploadHandler(e.dataTransfer.files[0], dom)
@@ -88,10 +80,19 @@ export default class DropzoneMixIn extends Vue {
     false
   }
 
+  getKeyPath(fileName:string): string {
+    let user:string = localStorage.getItem(config.localKey('user'));
+    let key:string = short.generate()
+    return `foobar/${key}/${fileName}`
+  }
+
   //handle using RXJS
   async uploadHandler(file: File, dom: any) {
     if(file.type.indexOf("image") !== 0) return
-    let url = await this.getURL(file.name)
+
+    let url = await this.getURL(this.getKeyPath(file.name))
+    let img: string = url.split('?').shift()
+
     let upload = await this.postToS3(file, url)
     let $el = dom.target.offsetParent
 
@@ -100,7 +101,7 @@ export default class DropzoneMixIn extends Vue {
       let stream: Stream = {
         context: Context.memo,
         event: Event.drop,
-        value: { filename: file.name, code: $el.id || null }
+        value: { filename: img, code: $el.id || null }
       }
 
       console.log('upload sream', stream)

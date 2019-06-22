@@ -24,38 +24,12 @@ function emitter(eventKey: string) {
         globalEventBus.$emit(eventKey, e);
     }
 }
+
 let dragCenter = emitter('WindowDragCenter')
 let dragLeave = emitter('WindowDragLeave')
 let dragOver = emitter('WindowDragOver')
 let drop = emitter('WindowDrop')
 let paste = emitter('WindowPaste')
-
-var IMAGE_MIME_REGEX = /^image\/(p?jpeg|gif|png)$/i;
-var loadImage = function (file:any) {
-    var reader = new FileReader();
-    reader.onload = function(e: any){
-        var img = document.createElement('img');
-        img.src = e.target.result;
-        
-        var range = window.getSelection().getRangeAt(0);
-        range.deleteContents();
-        range.insertNode(img);
-    };
-    reader.readAsDataURL(file);
-};
-
-let pasteit = function(e:any) {
-    var items = e.clipboardData.items;
-
-    for (var i = 0; i < items.length; i++) {
-        if (IMAGE_MIME_REGEX.test(items[i].type)) {
-            loadImage(items[i].getAsFile());
-            return;
-        }
-    }
-    
-   e.PreventDefault()
-}
 
 window.addEventListener("dragcenter", dragCenter);
 window.addEventListener("dragleave", dragLeave);
