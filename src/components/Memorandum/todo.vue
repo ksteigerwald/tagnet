@@ -3,7 +3,7 @@
   <div class="todo-list-main">
 
       <ul class="goals-activity todo-timeline">
-          <li><span class="icon-activity"><img src="images/list-owl.svg" alt=""></span></li>
+          <li><span class="icon-activity"><ListOwl/></span></li>
           <li><span class="line-box"></span></li>
       </ul>
 
@@ -23,12 +23,12 @@ import { mount } from '@vue/test-utils';
 
 import { State, Getter, Action, namespace,  } from 'vuex-class';
 import { Line, LineState } from '@/types'
-import { dispatch } from 'rxjs/internal/observable/pairs';
-
 import CheckItem from '@/components/Memorandum/CheckItem.vue'
+import ListOwl from '@/components/Icons/ListOwl.vue'
 @Component({
   components: {
-    CheckItem
+    CheckItem,
+    ListOwl,
   }
 })
 export default class Todo extends Vue {
@@ -41,7 +41,6 @@ export default class Todo extends Vue {
   }  
 
   sortTodos() {
-    console.log('SORT IT')
     this.todos.sort((a,b) => {
       return Number(b.meta.checked) - Number(a.meta.checked)
     })

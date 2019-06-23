@@ -15,7 +15,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import {  Memo, MemoState } from '@/types'
 import { TagType } from '@/store/tags'
-import { deleteMemo } from '../constants/memos.ql';
 import Goal from '@/components/Icons/Goal.vue'
 import Tag from '@/components/Icons/Tag.vue'
 import Any from '@/components/Icons/Any.vue'
@@ -37,7 +36,7 @@ import Writting from '@/components/Icons/Writting.vue'
 })
 export default class Card extends Vue {
 
-    @Prop() memo:Memo[]
+    @Prop() memo:Memo
     card:string = null
 
     created() {

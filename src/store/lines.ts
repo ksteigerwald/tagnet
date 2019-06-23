@@ -130,12 +130,14 @@ export const getters: GetterTree<LineState, RootState> = {
     },
 
     linesGroupBy: (state, getters, rootState) => {
-        return getters.sortedLines.reduce( (a: any, c: Line) => {
-           let d = c.created.substr(0,10)
-           if(!a[d]) { a[d] = [] }
-           a[d].push(c)
-           return a
-        }, {});
+        return getters.sortedLines
+            .filter((line: Line) => line.format_id < 3)
+            .reduce((a: any, c: Line) => {
+                let d = c.created.substr(0, 10)
+                if (!a[d]) { a[d] = [] }
+                a[d].push(c)
+                return a
+            }, {});
     }
 }
 

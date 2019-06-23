@@ -4,23 +4,25 @@
       <ToDo v-if="todos.length > 0" :todos="todos" />
        
 
-        <div class="todo-list"> <span class="date">18-06-2019</span>
+        <div class="todo-list"  v-for="date in dates">  
+            <span class="date">{{date}}</span>
             <div class="todo-list-main todo-list-main-two">
                 <ul class="goals-activity todo-timeline" id="todo-timeline">
-                    <li><span class="icon-activity"><img src="images/web-link.svg" alt=""></span></li>
+                    <!-- 
+                    <li><span class="icon-activity"><WebLink/></span></li>
                     <li><span class="line-box"></span></li>
-                    <li><span class="icon-activity"><img src="images/frame-landscape.svg" alt=""></span></li>
+                    <li><span class="icon-activity"><FrameLandscape/></span></li>
                     <li><span class="line-box"></span></li>
-                    <li><span class="icon-activity"><img src="images/text-height-adjustment.svg" alt=""></span></li>
+                    <li><span class="icon-activity"><TextIcon/></span></li>
                     <li><span class="line-box"></span></li>
+                    -->
                 </ul>
                 <div class="desgin-main">
-                    <p>Everything you need to know about skeleton screens</p>
-                    <a href="#">https://uxdesign.cc/what-you-should-know-about-skeleton-screens-a820c45a571a</a>
-                    <div class="brand-holder">
-                        <p>5 things I wish new designers knew </p>
-                        <img src="images/brand.png" alt=""> </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nunc tortor, rhoncus sed suscipit non, ullamcorper nec nisi. Vestibulum vitae turpis sagittis, euismod urna nec, porta augue. Vestibulum in purus vehicula, dignissim lacus eu, auctor tortor. Fusce eget fringilla felis, id convallis massa. Mauris ac posuere mauris. Mauris non felis at velit pharetra consectetur. Quisque ac ultricies enim. Donec eu nunc varius enim tempor ullamcorper ac nec ligula.</p>
+                    <ul>
+                        <li v-for="line in getGroupData(date)">
+                            <p v-html="format(line)">  </p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -38,10 +40,18 @@ import ToDo from '@/components/Memorandum/todo.vue'
 import MemoDetailHead from '@/components/Memorandum/DetailHead.vue'
 import { groupBy, switchAll } from 'rxjs/operators';
 
+import WebLink from '@/components/Icons/WebLink.vue'
+import FrameLandscape from '@/components/Icons/FrameLandscap.vue'
+import TextIcon from '@/components/Icons/Text.vue'
+
 @Component({
   components: {
       ToDo,
       MemoDetailHead,
+      WebLink,
+      FrameLandscape,
+      TextIcon,
+
   }
 })
 export default class MemoDetail extends Vue {
@@ -52,6 +62,7 @@ export default class MemoDetail extends Vue {
     groupByObj: any = {}    
     memo: any 
     todos:Line[] = []
+
     @Getter('tags/tags') !tags: Tag[]
     @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/lines') lines: Line[]

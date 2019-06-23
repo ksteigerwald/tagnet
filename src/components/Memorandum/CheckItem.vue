@@ -22,11 +22,10 @@ import { Line, LineState } from '@/types'
 export default class Todo extends Vue {
 
   @Prop() todo: Line
-  index:number = "0"
+  index:string = "0"
 
   mounted() {
     this.index = this.todo.meta.checked
-    console.log(this.index, 'MOUNTED')
   }
 
   checkState(): string {
@@ -37,10 +36,8 @@ export default class Todo extends Vue {
   async select(){
     let val = (this.index === "1") ? "1" : "0"
     this.todo.meta.checked = val
-    console.log(this.todo.meta.checked)
     await this.$store.dispatch('lines/updateLineMeta', this.todo)
     this.$emit('sort')
-    //this.sortTodos()
   }
 
 }
