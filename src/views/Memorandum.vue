@@ -1,32 +1,19 @@
 <template>
-    <div>
-        <div class="section">
-            <div class="container">
-                <div class="columns is-mobile is-centered handler-wrap set-height">
-                    <IntakeHandler 
+ <section class="hero-sec">
+    <div class="container">
+            <div v-if="loading" class="loading"> <h1>Loading...</h1> </div>
+            <div v-if="error" class="error"> <h1>Error...</h1> </div>
+             <IntakeHandler 
                     @interface="onInterfaceChange"
                     :propList="syncData" />
-                </div>
-            </div>
-        </div>
+           
+            <MemoDetail v-if="memos.length > 0" />
+            
+     </div>
+ </section>
 
-         <div v-if="loading" class="section loading">
-             <div class="container">
-                <div class="columns align-center is-mobile is-centered handler-wrap set-height">
-                    Loading...
-                </div>
-            </div>
-        </div>
 
-        <div v-if="error" class="error">
-            {{ error }}
-        </div>
 
-        <div v-if="memos.length > 0" class="section">
-            <MemoDetail />
-        </div>
-
-    </div>
 </template>
 
 <script lang="ts">

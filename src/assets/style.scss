@@ -851,7 +851,7 @@ img {
 	top: 50%;
 	width: 9px;
 	height: 7px;
-	background-image: url(~/assets/images/check.svg);
+	background-image: url(assets/images/check.svg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
@@ -997,7 +997,7 @@ img {
 .dropdown-menu > ul:after {
 	content: "";
 	position: absolute;
-	background-image: url(~/assets/images/white-arrow.svg);
+	background-image: url(assets/images/white-arrow.svg);
 	width: 20px;
 	height: 20px;
 	background-position: center;

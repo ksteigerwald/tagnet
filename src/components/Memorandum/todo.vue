@@ -1,17 +1,20 @@
 <template>
-  <ul>
-    <li class="slot">
-      Get it done!
-      <ul>
-          <li 
-                v-for="(match, i) in todos"
-                :key="i">
-                  <span @click="select(i, $event)" :index="i" :class="getClass(i)"></span>
-                    {{match.label}}
-                </li>
+<div class="todo-list"> 
+  <div class="todo-list-main">
+
+      <ul class="goals-activity todo-timeline">
+          <li><span class="icon-activity"><img src="images/list-owl.svg" alt=""></span></li>
+          <li><span class="line-box"></span></li>
       </ul>
-    </li>
-  </ul>
+
+      <div class="check-main">
+          <!-- <h5>Today Todo-list</h5> -->
+          <div class="main-check-box">
+            <CheckItem  v-for="(todo, i) in todos" :todo="todo" @sort="sortTodos" :key="todo.code" />
+          </div>
+      </div>
+  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -22,14 +25,15 @@ import { State, Getter, Action, namespace,  } from 'vuex-class';
 import { Line, LineState } from '@/types'
 import { dispatch } from 'rxjs/internal/observable/pairs';
 
+import CheckItem from '@/components/Memorandum/CheckItem.vue'
 @Component({
-  components: {}
+  components: {
+    CheckItem
+  }
 })
 export default class Todo extends Vue {
 
-  @Prop() todos: any []
-  defaultCSS: string = "far fa-square"
-  checkClass: string = this.defaultCSS
+  @Prop() todos: Line[]
   index:number = 0
 
   mounted() {
@@ -37,46 +41,15 @@ export default class Todo extends Vue {
   }  
 
   sortTodos() {
+    console.log('SORT IT')
     this.todos.sort((a,b) => {
       return Number(b.meta.checked) - Number(a.meta.checked)
     })
-  }
-
-  getClass(index: number ) : string {
-    let onOff = this.todos[index].meta.checked
-    return (onOff === "0") ? this.defaultCSS : "fas fa-check" 
-  }
-
-  async select(i: number, e: any){
-    let onOff = this.todos[i].meta.checked
-
-    let val = (onOff === "0") ? "1" : "0"
-    this.todos[i].meta.checked = val
-    
-    e.target.className = (onOff === "0") ? this.defaultCSS : "fas fa-check" 
-    await this.$store.dispatch('lines/updateLineMeta', this.todos[i])
-    this.sortTodos()
   }
 
 }
 </script>
 
 <style scoped lang="scss">
-    ul {
-
-        li.slot {
-            margin-bottom:2rem;
-            background:#fff;
-            margin-bottom:1.5rem; 
-            ul > li {
-                padding:0 0 0 1rem;
-                margin:0 0 0 1rem;
-                text-align:left;
-                border-left: #C4EFF5 1px solid;
-                p {
-                    padding:1rem 0;
-                }
-            }
-        }
-    }
+   
 </style>

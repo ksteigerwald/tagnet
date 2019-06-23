@@ -2,7 +2,9 @@
     <header v-if="loggedIn" id="header">
         <div class="container">
 
-            <div class="main-head"> <a class="navbar-brand logo" href="index.html"><img src="@/assets/images/logo.svg" alt="logo"></a>
+            <div class="main-head"> 
+               <router-link :to="{ name: 'home'}">
+                <img src="@/assets/images/logo.svg" alt="logo"></router-link>
                 <form autocomplete="off" class="my-head-form">
                     <div class="main-search-box" id="main-search-box-two">
                         <div class="form-group position-relative autocomplete">
