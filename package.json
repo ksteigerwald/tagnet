@@ -45,6 +45,7 @@
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
     "vue-class-component": "^6.0.0",
+    "vue-meta": "^2.0.4",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vue-rx": "^6.1.0",
@@ -66,7 +67,10 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testMatch": ["**/__tests__/**/*.ts?(x)", "**/?(*.)+(spec|test).ts?(x)"],
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
+    ],
     "moduleNameMapper": {
       "^.+\\.css$": "identity-obj-proxy",
       "^(app/.+)$": "<rootDir>/src/$1/",
@@ -76,6 +80,8 @@
       "^(assets/.+)$": "<rootDir>/src/$1/",
       "^(models/.+)$": "<rootDir>/src/$1/"
     },
-    "setupFiles": ["./scripts/setupJest.js"]
+    "setupFiles": [
+      "./scripts/setupJest.js"
+    ]
   }
 }

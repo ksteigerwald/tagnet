@@ -3,20 +3,17 @@ import VueRx from 'vue-rx'
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import Buefy from 'buefy'
+// import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import * as config from './helpers/config'
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { globalEventBus } from '@/helpers/EventBus'
 import { ENOMEM } from 'constants';
 
-
 Vue.config.productionTip = false;
 
 Vue.use(VueRx)
-Vue.use(Buefy, {
-    defaultIconPack: 'fas'
-})
+//Vue.use(Buefy, { defaultIconPack: 'fas' })
 
 function emitter(eventKey: string) {
     return function(e: any) {

@@ -1,38 +1,80 @@
 <template>
-    <div class="wrap">
-        <div class="section pad">
-            <div class="container">
-                <div class="columns is-mobile is-centered handler-wrap set-height">
-                    <IntakeHandler 
-                    @interface="onInterfaceChange"
-                    :propList="syncData" />
+    <section class="hero-sec">
+        <div class="container">
+            <form autocomplete="off">
+                <div class="main-search-box">
+                    <div class="form-group position-relative autocomplete">
+                        <input type="search" class="form-control"  placeholder="&#34;&#47;&#34;for Create,&#34;@&#34;for Append, or Search" id="myInput" name="myCountry">
+                        <img src="@/assets/images/feild-icon.svg" alt="" class="gol-img">
+                        <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button>
+                    </div>
+                </div>
+            </form>
+            <div class="main-area">
+                <div class="col-one">
+                        
+                        <!--- MAKE COMPONENT -->
+                        <Wall :key="componentKey" />
+
+
+                </div>
+                <div class="col-two">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-one">
+                        <ul class="goals-activity">
+                            <li><span class="icon-activity"><img src="@/assets/images/gol-two.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                        </ul>
+                        <div class="activity-conatnt">
+                            <h4>Goals</h4>
+                            <p>Create Design System</p>
+                            <span>16/06/19, 14:25</span> </div>
+                    </div>
+                    <div class="activity-one activity-two">
+                        <ul class="goals-activity">
+                            <li><span class="icon-activity"><img src="@/assets/images/calendar.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                        </ul>
+                        <div class="activity-conatnt">
+                            <h4>Event</h4>
+                            <p>Tomorrow: Kickoff meeting ...</p>
+                            <span>16/06/19, 14:25</span> </div>
+                    </div>
+                    <div class="activity-one activity-three">
+                        <ul class="goals-activity">
+                            <li><span class="icon-activity"><img src="@/assets/images/light-two.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                        </ul>
+                        <div class="activity-conatnt">
+                            <h4>Idea</h4>
+                            <p>New optimization algorithm</p>
+                            <span>16/06/19, 14:25</span> </div>
+                    </div>
+                    <div class="activity-one activity-four">
+                        <ul class="goals-activity">
+                            <li><span class="icon-activity"><img src="@/assets/images/all.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                        </ul>
+                        <div class="activity-conatnt">
+                            <h4>Any</h4>
+                            <p>Good articles bookmark</p>
+                            <span>16/06/19, 14:25</span> </div>
+                    </div>
+                    <div class="activity-one activity-five">
+                        <ul class="goals-activity">
+                            <li><span class="icon-activity"><img src="@/assets/images/topic.svg" alt=""></span></li>
+                        </ul>
+                        <div class="activity-conatnt">
+                            <h4>Topic</h4>
+                            <p>Inspiration - Startup Thinking</p>
+                            <span>16/06/19, 14:25</span> </div>
+                    </div>
+                    <div class="all-activity"> <a href="#">See All Activity</a> </div>
                 </div>
             </div>
         </div>
-
-    <div v-if="loading" class="loading">
-        <div class="container">
-            <div class="columns is-centered is-3 is-desktop is-multiline">
-               <div style="text-align:center" class="column is-quarter"> 
-                    <h1>Loading...</h1>
-                </div>
-            </div>
-         </div>
-    </div>
-
-    <div v-if="error" class="error">
-        <div class="container">
-            <div class="columns is-centered is-3 is-desktop is-multiline">
-               <div class="column is-quarter"> {{ error }} </div>
-            </div>
-         </div>
-    </div>
-
-    <div v-if="memos.length > 0 && !loading" class="section">
-        <Wall :key="componentKey" />
-    </div>
-
-    </div>
+    </section>
+   
 </template>
 
 <script lang="ts">
@@ -73,25 +115,8 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
                 this.loading = false
             })
     }
-
-
-
 }
 </script>
 <style scoped lang="scss">
-    .handler-wrap {
-        z-index:1;
-        position: relative;
-    }
-
-    div.pad {
-        min-height:10rem;
-    }
-
-    div#drop-target {
-        height:10rem;
-        width:100%;
-        background:#ccc;
-        
-    }
+  
 </style>

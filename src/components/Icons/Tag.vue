@@ -1,0 +1,17 @@
+<template>
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+                        <g id="tag_1_" data-name="tag (1)" transform="translate(0)">
+                        <path class="tag-fill" data-name="Path 152" d="M10.873,0H7.491A3.136,3.136,0,0,0,5.567.8L.329,6.035a1.131,1.131,0,0,0,0,1.594L4.37,11.671a1.13,1.13,0,0,0,1.594,0L11.2,6.433A3.137,3.137,0,0,0,12,4.509V1.127A1.131,1.131,0,0,0,10.873,0Zm-1.5,3.75A1.125,1.125,0,1,1,10.5,2.625,1.125,1.125,0,0,1,9.375,3.75Z" fill="#fed49a"/>
+                        </g>
+                    </svg>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component
+export default class Tag extends Vue {}
+</script>
+
+<style scoped lang="scss">
+</style>

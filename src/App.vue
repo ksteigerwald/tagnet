@@ -1,10 +1,10 @@
 <template>
- <main id="app">
+<div id="app" class="wrapper">
     <Header v-if="showHeader" />
      <transition name="fade" mode="out-in">
         <router-view></router-view>
      </transition>
-  </main>
+</div>
 </template>
 
 <script lang="ts">
@@ -26,37 +26,10 @@ export default class App extends Vue {
     }
   //  console.log('ROUTE', this.$route)
   }
-
-
 }
 </script>
 <style lang="scss">
-html {
-  height: 100%;
-  background-color:#F4F4F4 !important;
-}
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
-<style>
-@import "https://use.fontawesome.com/releases/v5.2.0/css/all.css";
+    @import '@/assets/responsive.scss';
+    @import '@/assets/style.scss';
+
 </style>

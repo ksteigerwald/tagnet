@@ -1,6 +1,9 @@
 <template>
-<div class="wall container">
-    <Card v-if="memos.length > 0" :key="componentKey" :memos="memos" />
+<div class="main-catgaory">
+    <!--- MAKE COMPONENT -->
+    <div class="catgory-main">
+        <Card v-for="(memo, key, index) in memos" :key="memo.id" :memo="memo" />
+    </div>
 </div>
 </template>
 
@@ -32,17 +35,6 @@ export default class Wall extends Vue {
 </script>
 
 <style scoped lang="scss">
-    .card {
-        margin-bottom: 1rem;
-        padding:1rem;
-        h2 {
-            text-align:left;
-        }
-        ul {
-            li {
-                text-align:left;
-            }
-        }
-    }
+   
 </style>
 

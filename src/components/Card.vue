@@ -1,41 +1,32 @@
 <template>
-    <div class="cards columns is-centered is-3 is-desktop is-multiline">
-        <div :id="memo.code" :class="cardCSS(memo.TagMemo.label)" v-for="(memo, key, index) in memos">
-                <div class="card-box">
-                    <router-link :to="{ name: 'memorandums', params: { memoId: memo.id }}">
-                    <span class="row"> 
-                        <mark class="tag-type">
-                            <b-icon :icon="icon(memo.TagMemo.label)" size="is-small"/>
-                        </mark>
-                    </span>
-                    <span class="row">
-                        <h2>
-                            {{memo.TagMemo.label}}
-                        </h2>
-                    </span>
-                    <span class="row">
-                        <h3>
-                            {{memo.label}}
-                        </h3>
-                    </span>
-            </router-link>
-                    <span class="row">
-                        <ul class="histo">
-                            <li>
-                                <mark class="circle">
-                                    {{memo.MemoLines.length}}
-                                </mark>
-                            </li>
-                            <li>
-                                <mark class="circle">
-                                    <a @click="remove(memo)"><b-icon  icon="times" size="is-small" /></a>
-                                </mark>
-                            </li>
-                        </ul>
-                    </span>
-                </div>
+        <div :id="memo.code" :class="cardCSS(memo.TagMemo.label)" >
+                <div class="head-item">
+                                    <h2><span>
+                                        <Goal></Goal>
+                                        </span>{{memo.TagMemo.label}}</h2>
+                                    <div class="sample-menu-style dropdown-menu"> 
+                                        <a href="#" tabindex="0" onclick="return true">
+                                        <img src="@/assets/images/list.svg" alt="">
+                                        </a>
+                                        <div tabindex="0" onclick="return true"></div>
+                                        <ul>
+                                            <li><a href="#" onclick="sampleMenu(this)"><img src="@/assets/images/padlock-unlock.svg" alt="">Make Public</a></li>
+                                            <li><a href="#" onclick="sampleMenu(this)"><img src="@/assets/images/delete.svg" alt="">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <router-link :to="{ name: 'memorandums', params: { memoId: memo.id }}">
+                                <p> {{memo.label}} </p>
+                                </router-link>
+                                <ul class="number-main">
+               <li><span>
+                    <Writting/>
+                   </span>{{memo.MemoLines.length}}</li>
+                <li><span>
+                    <Tag/>
+                    </span>12</li>
+            </ul>
         </div>
-    </div>
 </template>
 
 <script lang="ts">
@@ -44,12 +35,21 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import {  Memo, MemoState } from '@/types'
 import { TagType } from '@/store/tags'
 import { deleteMemo } from '../constants/memos.ql';
+import Goal from '@/components/Icons/Goal.vue'
+import Tag from '@/components/Icons/Tag.vue'
+import Writting from '@/components/Icons/Writting.vue'
 
-@Component
+@Component({
+    components:{
+        Goal,
+        Tag,
+        Writting,
+    }
+})
 export default class Card extends Vue {
 
 
-    @Prop() memos:Memo[]
+    @Prop() memo:Memo[]
     @Action('memos/deleteMemo') deleteMemo: any
 
     remove(memo: Memo) {
@@ -65,93 +65,11 @@ export default class Card extends Vue {
 
     cardCSS(key: string) {
         let cardType = (<any>TagType)[key]
-        return `card column is-one-quarter ${cardType}`
+        return `catagory-itme ${cardType}`
     }
 
 }
 </script>
 
 <style scoped lang="scss">
-a { color:#000 }
-.card {
-    border-radius: 20px;
-    padding:1rem;
-    margin:0.75rem;
-    min-height:205px;
-    max-width:205px;
-    .card-box {
-        width:190px;
-        height:190px;
-        mark.tag-type { 
-            font-size:1.5rem;
-        }
-        mark {
-            display:inline-block;
-            background:#fff;
-            border-radius:10px; 
-            padding:10px 18px;
-        }
-        span.row:first-child { 
-            display:block;
-            margin-bottom:20px; 
-        }
-        h2 {
-            font-weight:700;
-            text-transform: capitalize;
-        }
-        h3 {
-            text-transform: capitalize;
-        }
-        span.row:nth-child(3) { 
-            display:block;
-            margin-bottom:20px; 
-        }
-        ul {
-            li {
-                float:left;
-                margin-right:2rem;
-                mark {
-                    border-radius:25rem;
-                    font-weight:700;
-                }
-            }
-        }
-    }
-}
-.card.user-alt {
-    mark {
-        color:#FF4052;
-    }
-    background:#FF4052;
-}
-.card.trophy {
-    mark {
-        color:#32E083;
-    }
-    background:#32E083;
-}
-.card.lightbulb {
-    mark {
-        color:#FCCC07;
-    }
-    background:#FFE165;
-}
-.card.calendar-alt {
-    mark {
-        color:#40DFF5;
-    }
-    background:#C4EFF5;
-}
-.card.asterisk {
-    mark {
-        color:#FF5E40;
-    }
-    background:#FF5E40;
-}
-.card.newspaper {
-    mark {
-        color:#55C1FF;
-    }
-    background:#55C1FF;
-}
 </style>

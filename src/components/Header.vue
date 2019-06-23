@@ -1,7 +1,23 @@
 <template>
-<div v-if="loggedIn" class="header">
-    <span class="profile" :style="cssStr"></span>
-</div>
+    <header v-if="loggedIn" id="header">
+        <div class="container">
+
+            <div class="main-head"> <a class="navbar-brand logo" href="index.html"><img src="@/assets/images/logo.svg" alt="logo"></a>
+                <form autocomplete="off" class="my-head-form">
+                    <div class="main-search-box" id="main-search-box-two">
+                        <div class="form-group position-relative autocomplete">
+                            <input type="search" class="form-control"  placeholder="&#34;&#47;&#34;for Create,&#34;@&#34;for Append, or Search" id="myInput2" name="myCountry">
+                            <img src="@/assets/images/feild-icon.svg" alt="" class="gol-img">
+                            <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button>
+                        </div>
+                    </div>
+                </form>
+                <div class="head-brand ml-auto">
+                    <div class="img-holder"><img :src="profile" alt=""> </div>
+                </div>
+            </div>
+        </div>
+    </header>
 </template>
 
 <script lang="ts">
