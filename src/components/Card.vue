@@ -4,7 +4,7 @@
                     <CardTitle :memo="memo" />
                                     <div class="sample-menu-style dropdown-menu"> 
                                         <a href="#" tabindex="0" onclick="return true">
-                                        <img src="@/assets/images/list.svg" alt="">
+                                        <MenuList />
                                         </a>
                                         <div tabindex="0" onclick="return true"></div>
                                         <ul>
@@ -17,9 +17,7 @@
                                 <p> {{memo.label}} </p>
                                 </router-link>
                                 <ul class="number-main">
-               <li><span>
-                    <Writting/>
-                   </span>{{memo.MemoLines.length}}</li>
+                                <li><span><Writting/></span>{{memo.MemoLines.length}}</li>
                 <li><span>
                     <Tag/>
                     </span>12</li>
@@ -37,6 +35,7 @@ import Goal from '@/components/Icons/Goal.vue'
 import CardTitle from '@/components/CardTitle.vue'
 import Tag from '@/components/Icons/Tag.vue'
 import Writting from '@/components/Icons/Writting.vue'
+import MenuList from '@/components/Icons/MenuList.vue'
 
 @Component({
     components:{
@@ -44,6 +43,7 @@ import Writting from '@/components/Icons/Writting.vue'
         Tag,
         Writting,
         CardTitle,
+        MenuList,
     }
 })
 export default class Card extends Vue {
