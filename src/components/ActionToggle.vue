@@ -2,7 +2,7 @@
     <a class="action-toggle" 
         @click="toggleAction()" 
         @tab="toggleAction()">
-
+        
     <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g id="flyout" transform="translate(-350.000000, -177.000000)" fill="#4A4A4A">

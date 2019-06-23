@@ -1,20 +1,26 @@
 <template>
+<form onsubmit="return false" autocomplete="off">
     <div :class="cssClasses"
                 @keydown.down="onArrowDown"
                 @keydown.up="onArrowUp"
                 @keydown.enter="onEnter">
-        <ActionToggle
+                <div class="form-group position-relative autocomplete">
+        <!-- <ActionToggle
             :pointer="context"
             :actionEvent="actionToggleIndex"
-            @interface="onInterfaceChange"/>
+            @interface="onInterfaceChange"/> -->
         <IntakeStream 
             @interface="onInterfaceChange"
             v-bind:actionEvent="actionToggleIndex" /> 
+                <img src="@/assets/images/feild-icon.svg" alt="" class="gol-img">
+            <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button>
         <Flyout
             ref="flyout"
             @interface="onInterfaceChange"
             v-bind:list="propList" />
     </div>
+</div>
+</form>
 </template>
 
 <script lang="ts">
@@ -25,7 +31,6 @@ import IntakeStream from '@/components/Intake/Stream.vue'
 import Flyout from '@/components/Intake/Flyout.vue'
 import { Context, Stream, Event, UIFlyout } from '@/types'
 import { debug } from 'util';
-
 
 @Component({
  components: {
@@ -50,7 +55,7 @@ export default class Handler extends Vue {
     get cssClasses(): string {
         let context = [Context.memo, Context.line].indexOf(this.tick.context)
         let event = [Event.add, Event.add, Event.macro].indexOf(this.tick.event)
-        let css = 'tagnet column is-half'
+        let css = 'main-search-box'
         return (context !== -1 && event !== -1) ? css : css + ' set-height'
     }
 
@@ -86,12 +91,12 @@ export default class Handler extends Vue {
     .tagnet {
         border-radius:30px;
         background:#fff;
-        z-index: 5;
-        position: absolute;
-        border: 1px solid #cfcfcf;
+        //z-index: 5;
+        //position: absolute;
+        //border: 1px solid #cfcfcf;
     }
    .set-height {
-        height:55px;
-        min-height:55px;
+        //height:55px;
+        //min-height:55px;
    }
 </style>

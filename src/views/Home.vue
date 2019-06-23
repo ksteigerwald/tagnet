@@ -1,15 +1,12 @@
 <template>
     <section class="hero-sec">
         <div class="container">
-            <form autocomplete="off">
-                <div class="main-search-box">
-                    <div class="form-group position-relative autocomplete">
-                        <input type="search" class="form-control"  placeholder="&#34;&#47;&#34;for Create,&#34;@&#34;for Append, or Search" id="myInput" name="myCountry">
-                        <img src="@/assets/images/feild-icon.svg" alt="" class="gol-img">
-                        <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button>
-                    </div>
-                </div>
-            </form>
+            <div v-if="loading" class="loading"> <h1>Loading...</h1> </div>
+            <div v-if="error" class="error"> <h1>Error...</h1> </div>
+             <IntakeHandler 
+                    @interface="onInterfaceChange"
+                    :propList="syncData" />
+         
             <div class="main-area">
                 <div class="col-one">
                     <!--- MAKE COMPONENT -->

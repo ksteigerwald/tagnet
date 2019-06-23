@@ -1,6 +1,7 @@
 <template>
 <div class="main-catgaory">
     <!--- MAKE COMPONENT -->
+        <FilterBar />
     <div class="catgory-main">
         <Card v-for="(memo, key, index) in memos" :key="memo.id" :memo="memo" />
     </div>
@@ -13,10 +14,12 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 import Card from '@/components/Card.vue'
+import FilterBar from '@/components/FilterBar.vue'
 
 @Component({
   components: {
-    Card
+    Card,
+    FilterBar
   }
 })
 export default class Wall extends Vue {

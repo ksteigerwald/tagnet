@@ -24,7 +24,6 @@
     "axios": "^0.19.0",
     "axios-curlirize": "^1.2.0",
     "axios-debug-log": "^0.6.1",
-    "buefy": "^0.7.7",
     "dropzone": "^5.5.1",
     "express": "^4.16.4",
     "fakerator": "^0.3.0",

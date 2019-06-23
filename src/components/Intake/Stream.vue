@@ -1,12 +1,11 @@
 <template>
-    <input class="single-line" 
+    <input class="form-control" 
          v-bind:class="[(isFocused) ? 'foo' : 'is-placeholder']"
          :value="cursor"
          @input="onInput()"
          @focus="focus()"
          @blur="blur()"
-         @keyup.enter="submitHandler"
-         />
+         @keyup.enter="submitHandler" />
 </template>
 
 <script lang="ts">

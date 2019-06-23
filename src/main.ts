@@ -3,8 +3,6 @@ import VueRx from 'vue-rx'
 import App from './App.vue';
 import router from './router';
 import store from './store';
-// import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
 import * as config from './helpers/config'
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { globalEventBus } from '@/helpers/EventBus'
