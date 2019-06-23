@@ -1,9 +1,7 @@
 <template>
         <div :id="memo.code" :class="cardCSS(memo.TagMemo.label)" >
                 <div class="head-item">
-                                    <h2><span>
-                                        <Goal></Goal>
-                                        </span>{{memo.TagMemo.label}}</h2>
+                    <CardTitle :memo="memo" />
                                     <div class="sample-menu-style dropdown-menu"> 
                                         <a href="#" tabindex="0" onclick="return true">
                                         <img src="@/assets/images/list.svg" alt="">
@@ -36,6 +34,7 @@ import {  Memo, MemoState } from '@/types'
 import { TagType } from '@/store/tags'
 import { deleteMemo } from '../constants/memos.ql';
 import Goal from '@/components/Icons/Goal.vue'
+import CardTitle from '@/components/CardTitle.vue'
 import Tag from '@/components/Icons/Tag.vue'
 import Writting from '@/components/Icons/Writting.vue'
 
@@ -44,6 +43,7 @@ import Writting from '@/components/Icons/Writting.vue'
         Goal,
         Tag,
         Writting,
+        CardTitle,
     }
 })
 export default class Card extends Vue {

@@ -12,67 +12,12 @@
             </form>
             <div class="main-area">
                 <div class="col-one">
-                        
-                        <!--- MAKE COMPONENT -->
-                        <Wall :key="componentKey" />
-
-
+                    <!--- MAKE COMPONENT -->
+                    <Wall :key="componentKey" />
                 </div>
-                <div class="col-two">
-                    <h3>Recent Activity</h3>
-                    <div class="activity-one">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="@/assets/images/gol-two.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Goals</h4>
-                            <p>Create Design System</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-two">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="@/assets/images/calendar.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Event</h4>
-                            <p>Tomorrow: Kickoff meeting ...</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-three">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="@/assets/images/light-two.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Idea</h4>
-                            <p>New optimization algorithm</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-four">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="@/assets/images/all.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Any</h4>
-                            <p>Good articles bookmark</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-five">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="@/assets/images/topic.svg" alt=""></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Topic</h4>
-                            <p>Inspiration - Startup Thinking</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="all-activity"> <a href="#">See All Activity</a> </div>
-                </div>
-            </div>
+                <ActivityLog />   
         </div>
+     </div>
     </section>
    
 </template>
@@ -84,6 +29,7 @@ import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { mixins } from 'vue-class-component';
 
 import Wall from '@/components/Wall.vue'
+import ActivityLog from '@/components/ActivityLog.vue'
 import IntakeHandler from '@/components/Intake/Handler.vue'
 import CRUDMixIn from '@/helpers/crudMixin'
 import DropzoneMixIn from '@/helpers/dropzone'
@@ -91,7 +37,8 @@ import DropzoneMixIn from '@/helpers/dropzone'
 @Component({
     components: {
         IntakeHandler,
-        Wall
+        Wall,
+        ActivityLog
     }
 })
 export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
