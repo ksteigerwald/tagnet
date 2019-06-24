@@ -9,6 +9,7 @@
 </head>
 
 <body class="detail">
+<div class="overlay"></div>
 <div class="wrapper">
     <header id="header">
         <div class="container">
@@ -30,7 +31,7 @@
     </header>
     
     <!--hero-sec-->
-    <section class="hero-sec">
+    <section class="hero-sec m-box">
         <div class="container">
             <form autocomplete="off">
                 <div class="main-search-box">
@@ -52,6 +53,12 @@
                             <li><span class="line-box"></span></li>
                         </ul>
                         <div class="check-main">
+							<ul class="goals-activity todo-timeline" id="mob-timeline">
+                            <li><span class="icon-activity"><img src="images/list-owl.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                        </ul>
+							
+							
                             <h5>Today Todo-list</h5>
                             <div class="main-check-box">
                                 <label class="check-area">
@@ -78,11 +85,34 @@
                             <li><span class="line-box"></span></li>
                         </ul>
                         <div class="desgin-main">
+							
+							<ul class="goals-activity todo-timeline" id="todo-timeline1">
+                            <li><span class="icon-activity"><img src="images/web-link.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                            
+                        </ul>
+							
+							
+							
                             <p>Everything you need to know about skeleton screens</p>
                             <a href="#">https://uxdesign.cc/what-you-should-know-about-skeleton-screens-a820c45a571a</a>
+							<ul class="goals-activity todo-timeline" id="todo-timeline2">
+                           
+                            <li><span class="icon-activity"><img src="images/frame-landscape.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                            
+                        </ul>
+							
                             <div class="brand-holder">
                                 <p>5 things I wish new designers knew </p>
                                 <img src="images/brand.png" alt=""> </div>
+							
+							<ul class="goals-activity todo-timeline" id="todo-timeline3">
+                            
+                            <li><span class="icon-activity"><img src="images/text-height-adjustment.svg" alt=""></span></li>
+                            <li><span class="line-box"></span></li>
+                        </ul>
+							
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nunc tortor, rhoncus sed suscipit non, ullamcorper nec nisi. Vestibulum vitae turpis sagittis, euismod urna nec, porta augue. Vestibulum in purus vehicula, dignissim lacus eu, auctor tortor. Fusce eget fringilla felis, id convallis massa. Mauris ac posuere mauris. Mauris non felis at velit pharetra consectetur. Quisque ac ultricies enim. Donec eu nunc varius enim tempor ullamcorper ac nec ligula.</p>
                         </div>
                     </div>
@@ -113,7 +143,18 @@
  		}
  	});
 	
-	
+	$("#myInput").click(function () {
+
+ 		$("body").addClass("active");
+
+
+ 	});
+	$(".overlay").click(function () {
+
+ 		$("body").removeClass("active");
+
+
+ 	});
 	</script>
 </body>
 </html>

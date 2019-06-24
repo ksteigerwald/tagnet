@@ -1,5 +1,5 @@
 <template>
-    <section class="hero-sec">
+    <section class="hero-sec m-box">
         <div class="container">
              <IntakeHandler 
                     @interface="onInterfaceChange"

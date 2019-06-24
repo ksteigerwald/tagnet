@@ -73,29 +73,43 @@ export default class Flyout extends Vue {
 </script>
 
 <style scoped lang="scss">
+    ul.intake {
+      display: none;
+   } 
     ul.intake.open {
-        padding-top:1rem;
+      display: block;
+      padding-top:1rem;
    } 
     ul.intake {
-        display:flex;  
-        flex-direction:column;;
+        position: absolute;
+	    background-color: #fff;
+	    width: 99.8%;
+	    z-index: 999;
+	    border-radius: 0px 0px 12px 12px;
+	    padding: 10px 0 21px 0px;
+	    border: 1px solid #F4F4F4;
+	    border-top: none;
+	    margin-top: -9px;
+        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
         li {
+            padding: 4px 12px;
+	        cursor: pointer;
+	        color: #1A1A1A;
+	        font-size: 14px;
+            padding-left: 68px;
             display:block;
-		    margin: 0 0 .5rem 0;
-		    padding: 0;
-		    position: relative;
+
 		    transition: all linear 0.1s;	
             text-transform: capitalize;
-            background-position: 10px 3px;
+            background-position: 35px 4px;
     	}
         li:hover,
         li.is-active {
             background:url('~@/assets/carrot.svg');
             background-repeat: no-repeat;
-            background-position: 10px 3px;
+            background-position: 35px 4px;
         }
         li > a {
-            padding-left:2.25rem;
             color:#FF6956;
         }
     }

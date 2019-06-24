@@ -72,7 +72,7 @@
 	font-size: 18px;
 }
 .desgin-main {
-	padding-left: 20px;
+	padding-left: 0;
 }
 .todo-list-main {
 	padding-left: 0px;
@@ -83,6 +83,22 @@
 .catgory-head .dropdown-menu > ul:after {
 	left: 0;
 	right: auto;
+}
+.goals-activity {
+	display: none;
+}
+#mob-timeline, #todo-timeline1, #todo-timeline2, #todo-timeline3 {
+	display: block;
+	margin: 0 auto 10px;
+}
+.todo-timeline .line-box {
+	height: 44px !important;
+}
+.date {
+	margin-bottom: 6px;
+}
+.check-main {
+	width: 100%;
 }
 }
 

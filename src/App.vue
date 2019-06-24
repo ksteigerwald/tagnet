@@ -1,5 +1,6 @@
 <template>
 <div id="app" class="wrapper">
+    <div class="overlay"></div>
     <Header v-if="showHeader" />
      <transition name="fade" mode="out-in">
         <router-view></router-view>

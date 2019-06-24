@@ -82,6 +82,9 @@ img {
 #header {
 	background: #fff;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.08);
+	position: fixed;
+	width: 100%;
+	z-index: 5;
 }
 .hero-sec {
 	padding: 40px 0 0 0;
@@ -156,19 +159,23 @@ img {
  color: rgba(26, 26, 26, 0.24);
 }
 #myInputautocomplete-list {
+	position: absolute;
 	background-color: #fff;
-	margin-top: -7px;
-	/* box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08); */
+	width: 99.8%;
+	z-index: 999;
 	border-radius: 0px 0px 12px 12px;
-	padding: 10px 0 21px 68px;
+	padding: 10px 0 21px 0px;
+	border: 1px solid #F4F4F4;
+	border-top: none;
+	margin-top: -9px;
+	box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
 }
 #myInputautocomplete-list div {
 	padding: 8px 12px;
 	cursor: pointer;
 	color: #1A1A1A;
 	font-size: 14px;
-	width: 100%;
-	max-width: 343px;
+	padding-left: 68px;
 }
 #myInputautocomplete-list div:hover {
 	background-color: #F6FAFD;
@@ -241,6 +248,7 @@ img {
 	position: relative;
 	box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
 	border-radius: 12px;
+	z-index: 2;
 }
 .head-item {
 	margin-bottom: 27px;
@@ -820,7 +828,7 @@ img {
 #myInput2autocomplete-list {
 	position: absolute;
 	background-color: #fff;
-	width: 100%;
+	width: 99.8%;
 	z-index: 999;
 	border-radius: 0px 0px 12px 12px;
 	padding: 10px 0 21px 0px;
@@ -870,4 +878,23 @@ img {
 }
 .catgory-head .sample-menu-style li:last-child a {
 	color: #1A1A1A;
+}
+.m-box {
+	margin-top: 72px;
+}
+.overlay {
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	display: none;
+	left: 0;
+	z-index: 1;
+}
+body.active .overlay {
+	display: block;
+}
+#mob-timeline, #todo-timeline1, #todo-timeline2, #todo-timeline3 {
+	display: none;
 }
