@@ -60,6 +60,10 @@ export default class DropzoneMixIn extends Vue {
             this.uploadHandler(file, dom)
             return;
         }
+        if (e.target.type === 'text' && items[i].type === 'text/plain') {
+            e.target.value = e.clipboardData.getData('text/plain') 
+            return;
+        }
     }
     
     e.preventDefault();
