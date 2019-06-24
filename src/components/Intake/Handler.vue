@@ -13,7 +13,7 @@
             @interface="onInterfaceChange"
             v-bind:actionEvent="actionToggleIndex" /> 
                 <img src="@/assets/images/feild-icon.svg" alt="" class="gol-img">
-            <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button>
+            <!-- <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button> -->
         <Flyout
             ref="flyout"
             @interface="onInterfaceChange"

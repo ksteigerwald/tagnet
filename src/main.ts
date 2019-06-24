@@ -30,7 +30,7 @@ window.addEventListener("dragcenter", dragCenter);
 window.addEventListener("dragleave", dragLeave);
 window.addEventListener("dragover", dragOver);
 window.addEventListener("drop", drop);
-window.addEventListener("paste", paste, false);
+//window.addEventListener("paste", paste, false);
 
 
 

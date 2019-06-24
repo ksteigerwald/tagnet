@@ -1,8 +1,6 @@
 <template>
     <section class="hero-sec">
         <div class="container">
-            <div v-if="loading" class="loading"> <h1>Loading...</h1> </div>
-            <div v-if="error" class="error"> <h1>Error...</h1> </div>
              <IntakeHandler 
                     @interface="onInterfaceChange"
                     :propList="syncData" />
@@ -11,6 +9,8 @@
                 <div class="col-one">
                     <!--- MAKE COMPONENT -->
                     <Wall :key="componentKey" />
+                    <div v-if="loading" class="loading"> <h1>Loading...</h1> </div>
+                    <div v-if="error" class="error"> <h1>Error...</h1> </div>
                 </div>
                 <ActivityLog />   
         </div>

@@ -75,14 +75,13 @@ export default class Flyout extends Vue {
 <style scoped lang="scss">
     ul.intake.open {
         padding-top:1rem;
-        border-top: 1px solid #cfcfcf;
    } 
     ul.intake {
         display:flex;  
         flex-direction:column;;
         li {
             display:block;
-		    margin: 0;
+		    margin: 0 0 .5rem 0;
 		    padding: 0;
 		    position: relative;
 		    transition: all linear 0.1s;	
@@ -97,6 +96,7 @@ export default class Flyout extends Vue {
         }
         li > a {
             padding-left:2.25rem;
+            color:#FF6956;
         }
     }
     
