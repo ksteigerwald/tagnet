@@ -3,22 +3,11 @@
       <MemoDetailHead :memo="memo" />
         <ul class="loop-list">
             <li v-if="todos.length > 0"><span class="date">ToDo's</span></li>
-            <TodoWrap :todos="todos" />
+            <TodoWrap v-if="todos.length > 0" :todos="todos" />
     
             <template v-for="date in dates">
             <li> <span class="date">{{date}}</span></li>
-            <li>
-                <div class="todo-list">
-                    <div v-for="content in getGroupData(date)" class="todo-list-main todo-list-main-two mb-0">
-                        <ul class="goals-activity todo-timeline" id="todo-timeline2">
-                            <li><span class="icon-activity"><img src="@/assets/images/web-link.svg" alt=""></span></li>
-                        </ul>
-                        <div class="desgin-main-first desgin-main">
-                            <p v-html="format(content)"></p>
-                        </div>
-                   </div>
-               </div>
-            </li>
+            <TextAndImage :data="getGroupData(date)" />
             </template>
         </ul>
     </div>
@@ -31,6 +20,7 @@ import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 import Card from '@/components/Card.vue'
 import TodoWrap from '@/components/Memorandum/TodoWrap.vue'
+import TextAndImage from '@/components/Memorandum/TextAndImage.vue'
 import MemoDetailHead from '@/components/Memorandum/DetailHead.vue'
 import { groupBy, switchAll } from 'rxjs/operators';
 
@@ -45,6 +35,7 @@ import TextIcon from '@/components/Icons/Text.vue'
       WebLink,
       FrameLandscape,
       TextIcon,
+      TextAndImage,
 
   }
 })
@@ -71,16 +62,6 @@ export default class MemoDetail extends Vue {
     beforeMount () {
         this.memoId = Number(this.$route.params.memoId)
         this.memo = this.findMemo(this.memoId)[0]
-    }
-
-    format(line: Line):string {
-        let {format_id, label} = line
-
-        if(format_id === 2) {
-            return `<img src="${label}"/>`
-        }
-
-        return line.label
     }
 
     mounted() {
