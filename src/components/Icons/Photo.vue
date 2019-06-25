@@ -11,7 +11,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class FrameLandscape extends Vue {}
+export default class Photo extends Vue {}
 </script>
 
 <style scoped lang="scss">

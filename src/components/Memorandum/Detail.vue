@@ -7,7 +7,7 @@
     
             <template v-for="date in dates">
             <li> <span class="date">{{date}}</span></li>
-            <TextAndImage :data="getGroupData(date)" />
+                <TextAndImage :data="getGroupData(date)" />
             </template>
         </ul>
     </div>
@@ -24,17 +24,10 @@ import TextAndImage from '@/components/Memorandum/TextAndImage.vue'
 import MemoDetailHead from '@/components/Memorandum/DetailHead.vue'
 import { groupBy, switchAll } from 'rxjs/operators';
 
-import WebLink from '@/components/Icons/WebLink.vue'
-import FrameLandscape from '@/components/Icons/FrameLandscap.vue'
-import TextIcon from '@/components/Icons/Text.vue'
-
 @Component({
   components: {
       TodoWrap,
       MemoDetailHead,
-      WebLink,
-      FrameLandscape,
-      TextIcon,
       TextAndImage,
 
   }
