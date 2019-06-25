@@ -2,17 +2,9 @@
   <div class="deatil-main">
       <MemoDetailHead :memo="memo" />
         <ul class="loop-list">
-            <li><span class="date">ToDo's</span></li>
-            <li>
-                <div class="todo-list">
-                    <div class="todo-list-main todo-list-main-first">
-                        <ul class="goals-activity todo-timeline" id="timeline1">
-                            <li><span class="icon-activity"><img src="@/assets/images/list-owl.svg" alt=""></span></li>
-                        </ul>
-                        <ToDo v-if="todos.length > 0" :todos="todos" />
-                    </div>
-                </div>
-            </li>
+            <li v-if="todos.length > 0"><span class="date">ToDo's</span></li>
+            <TodoWrap :todos="todos" />
+    
             <template v-for="date in dates">
             <li> <span class="date">{{date}}</span></li>
             <li>
@@ -38,7 +30,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 import Card from '@/components/Card.vue'
-import ToDo from '@/components/Memorandum/todo.vue'
+import TodoWrap from '@/components/Memorandum/TodoWrap.vue'
 import MemoDetailHead from '@/components/Memorandum/DetailHead.vue'
 import { groupBy, switchAll } from 'rxjs/operators';
 
@@ -48,7 +40,7 @@ import TextIcon from '@/components/Icons/Text.vue'
 
 @Component({
   components: {
-      ToDo,
+      TodoWrap,
       MemoDetailHead,
       WebLink,
       FrameLandscape,
