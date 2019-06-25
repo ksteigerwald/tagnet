@@ -5,6 +5,7 @@
          @input="onInput()"
          @focus="focus()"
          @blur="blur()"
+         placeholder="'/' To create a new bucekt, '@' to add to that bucket"
          @keyup.enter="submitHandler" />
 </template>
 

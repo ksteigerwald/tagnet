@@ -1,7 +1,7 @@
 <template>
-<div class="detail-head">  <router-link class="back-btn" :to="{ name: 'home'}"> <BackArrow/>Back</router-link>
+<div class="detail-head">  <router-link class="back-btn" :to="{ name: 'home'}"> <BackArrow/> &nbsp;Back</router-link>
     <h3>{{memo.label}}</h3>
-    <a href="#" @click="remove()" class="delete-btn"><span><TrashCan/></span>Delete</a> </div>
+    <a href="#" @click="remove()" class="delete-btn"><span><TrashCan/></span>&nbsp;Delete</a> </div>
 </template>
 
 <script lang="ts">

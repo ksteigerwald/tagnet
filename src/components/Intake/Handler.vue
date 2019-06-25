@@ -12,14 +12,16 @@
         <IntakeStream 
             @interface="onInterfaceChange"
             v-bind:actionEvent="actionToggleIndex" /> 
-                <img src="@/assets/images/feild-icon.svg" alt="" class="gol-img">
-            <!-- <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button> -->
+        <Upload />
+             <!--   <img src="@/assets/images/feild-icon.svg" alt="" class="gol-img">
+             <button type="submit" class="creat-btn">Create <img src="@/assets/images/creat-btn.svg" alt=""></button> -->
         <Flyout
             ref="flyout"
             @interface="onInterfaceChange"
             v-bind:list="propList" />
     </div>
 </div>
+
 </form>
 </template>
 
@@ -28,6 +30,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import ActionToggle from '@/components/ActionToggle.vue'
 import IntakeStream from '@/components/Intake/Stream.vue'
+import Upload from '@/components/Icons/Upload.vue'
 import Flyout from '@/components/Intake/Flyout.vue'
 import { Context, Stream, Event, UIFlyout } from '@/types'
 import { debug } from 'util';
@@ -36,7 +39,8 @@ import { debug } from 'util';
  components: {
       IntakeStream,
       ActionToggle,
-      Flyout
+      Flyout,
+      Upload
   }
 })
 export default class Handler extends Vue {

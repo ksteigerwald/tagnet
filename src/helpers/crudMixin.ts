@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { State, Getter, Action, namespace,  } from 'vuex-class';
 import anchorme from "anchorme";
-import { globalEventBus } from '@/helpers/EventBus'
+import { globalEventBus } from '@/helpers/EventBus';
 
 import { Context, Event, Stream, Tag, TagState, Memo, 
         MemoState, Line, LineState, MacroState, Macro } from '../types'
@@ -136,7 +136,7 @@ export default class CRUDMixIn extends Vue {
 
                 var obj:any = this.process(stream.value)
                 var memo:Memo = this.findMemoByCode(obj.code).pop()
-            console.log('META', obj.meta, obj)
+
                 this.createLine({
                     label: obj.value,
                     memo_id: memo.id,

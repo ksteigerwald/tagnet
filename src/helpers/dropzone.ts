@@ -52,6 +52,8 @@ export default class DropzoneMixIn extends Vue {
     const dom: any = (<any>e)
 
     for (var i = 0; i < items.length; i++) {
+        console.log(items[i].type, '<<<', e.clipboardData.getData('text/plain'))
+        console.log(e.target.type)
         if (this.IMAGE_MIME_REGEX.test(items[i].type)) {
             //loadImage(items[i].getAsFile());
             let file = items[i].getAsFile()
