@@ -1,20 +1,10 @@
 <template>
-<div class="todo-list"> 
-  <div class="todo-list-main">
-
-      <ul class="goals-activity todo-timeline">
-          <li><span class="icon-activity"><ListOwl/></span></li>
-          <li><span class="line-box"></span></li>
-      </ul>
-
-      <div class="check-main">
-          <!-- <h5>Today Todo-list</h5> -->
-          <div class="main-check-box">
-            <CheckItem  v-for="(todo, i) in todos" :todo="todo" @sort="sortTodos" :key="todo.code" />
-          </div>
-      </div>
-  </div>
-</div>
+ <div class="check-main">
+     <h5>Today Todo-list</h5>
+     <div class="main-check-box">
+        <CheckItem  v-for="(todo, i) in todos" :todo="todo" @sort="sortTodos" :key="todo.code" />
+     </div>
+ </div>
 </template>
 
 <script lang="ts">

@@ -1,32 +1,34 @@
 <template>
   <div class="deatil-main">
       <MemoDetailHead :memo="memo" />
-      <ToDo v-if="todos.length > 0" :todos="todos" />
-       
-
-        <div class="todo-list"  v-for="date in dates">  
-            <span class="date">{{date}}</span>
-            <div class="todo-list-main todo-list-main-two">
-                <ul class="goals-activity todo-timeline" id="todo-timeline">
-                    <!-- 
-                    <li><span class="icon-activity"><WebLink/></span></li>
-                    <li><span class="line-box"></span></li>
-                    <li><span class="icon-activity"><FrameLandscape/></span></li>
-                    <li><span class="line-box"></span></li>
-                    <li><span class="icon-activity"><TextIcon/></span></li>
-                    <li><span class="line-box"></span></li>
-                    -->
-                </ul>
-                <div class="desgin-main">
-                    <ul>
-                        <li v-for="line in getGroupData(date)">
-                            <p v-html="format(line)">  </p>
-                        </li>
-                    </ul>
+        <ul class="loop-list">
+            <li><span class="date">ToDo's</span></li>
+            <li>
+                <div class="todo-list">
+                    <div class="todo-list-main todo-list-main-first">
+                        <ul class="goals-activity todo-timeline" id="timeline1">
+                            <li><span class="icon-activity"><img src="@/assets/images/list-owl.svg" alt=""></span></li>
+                        </ul>
+                        <ToDo v-if="todos.length > 0" :todos="todos" />
+                    </div>
                 </div>
-            </div>
-        </div>
-
+            </li>
+            <template v-for="date in dates">
+            <li> <span class="date">{{date}}</span></li>
+            <li>
+                <div class="todo-list">
+                    <div v-for="content in getGroupData(date)" class="todo-list-main todo-list-main-two mb-0">
+                        <ul class="goals-activity todo-timeline" id="todo-timeline2">
+                            <li><span class="icon-activity"><img src="@/assets/images/web-link.svg" alt=""></span></li>
+                        </ul>
+                        <div class="desgin-main-first desgin-main">
+                            <p v-html="format(content)"></p>
+                        </div>
+                   </div>
+               </div>
+            </li>
+            </template>
+        </ul>
     </div>
 </template>
 

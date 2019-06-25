@@ -9,6 +9,7 @@
 </head>
 
 <body class="home">
+<div class="overlay"></div>
 <div class="wrapper">
     <header id="header">
         <div class="container">
@@ -30,7 +31,7 @@
     </header>
     
     <!--hero-sec-->
-    <section class="hero-sec">
+    <section class="hero-sec m-box">
         <div class="container">
             <form autocomplete="off">
                 <div class="main-search-box">
@@ -182,55 +183,63 @@
                 </div>
                 <div class="col-two">
                     <h3>Recent Activity</h3>
-                    <div class="activity-one">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="images/gol-two.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Goals</h4>
-                            <p>Create Design System</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-two">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="images/calendar.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Event</h4>
-                            <p>Tomorrow: Kickoff meeting ...</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-three">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="images/light-two.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Idea</h4>
-                            <p>New optimization algorithm</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-four">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="images/all.svg" alt=""></span></li>
-                            <li><span class="line-box"></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Any</h4>
-                            <p>Good articles bookmark</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
-                    <div class="activity-one activity-five">
-                        <ul class="goals-activity">
-                            <li><span class="icon-activity"><img src="images/topic.svg" alt=""></span></li>
-                        </ul>
-                        <div class="activity-conatnt">
-                            <h4>Topic</h4>
-                            <p>Inspiration - Startup Thinking</p>
-                            <span>16/06/19, 14:25</span> </div>
-                    </div>
+                    <ul class="activity-loop">
+                        <li>
+                            <div class="activity-one">
+                                <ul class="goals-activity">
+                                    <li><span class="icon-activity"><img src="images/gol-two.svg" alt=""></span></li>
+                                </ul>
+                                <div class="activity-conatnt">
+                                    <h4>Goals</h4>
+                                    <p>Create Design System</p>
+                                    <span>16/06/19, 14:25</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="activity-one activity-two">
+                                <ul class="goals-activity">
+                                    <li><span class="icon-activity"><img src="images/calendar.svg" alt=""></span></li>
+                                </ul>
+                                <div class="activity-conatnt">
+                                    <h4>Event</h4>
+                                    <p>Tomorrow: Kickoff meeting ...</p>
+                                    <span>16/06/19, 14:25</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="activity-one activity-three">
+                                <ul class="goals-activity">
+                                    <li><span class="icon-activity"><img src="images/light-two.svg" alt=""></span></li>
+                                </ul>
+                                <div class="activity-conatnt">
+                                    <h4>Idea</h4>
+                                    <p>New optimization algorithm</p>
+                                    <span>16/06/19, 14:25</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="activity-one activity-four">
+                                <ul class="goals-activity">
+                                    <li><span class="icon-activity"><img src="images/all.svg" alt=""></span></li>
+                                </ul>
+                                <div class="activity-conatnt">
+                                    <h4>Any</h4>
+                                    <p>Good articles bookmark</p>
+                                    <span>16/06/19, 14:25</span> </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="activity-one activity-five">
+                                <ul class="goals-activity">
+                                    <li><span class="icon-activity"><img src="images/topic.svg" alt=""></span></li>
+                                </ul>
+                                <div class="activity-conatnt">
+                                    <h4>Topic</h4>
+                                    <p>Inspiration - Startup Thinking</p>
+                                    <span>16/06/19, 14:25</span> </div>
+                            </div>
+                        </li>
+                    </ul>
                     <div class="all-activity"> <a href="#">See All Activity</a> </div>
                 </div>
             </div>
@@ -246,6 +255,31 @@
         </div>
     </footer>
 </div>
+<script src="js/jquery.min.js"></script> 
+<script src="js/custom.js"></script> 
+<script>
+	$(window).scroll(function () {
+ 		if ($(window).scrollTop() >= 20) {
+ 			$('#header').addClass('fixed-bar');
 
+ 		} else {
+ 			$('#header').removeClass('fixed-bar');
+
+ 		}
+ 	});
+	
+	$("#myInput").click(function () {
+
+ 		$("body").addClass("active");
+
+
+ 	});
+	$(".overlay").click(function () {
+
+ 		$("body").removeClass("active");
+
+
+ 	});
+	</script>
 </body>
 </html>
