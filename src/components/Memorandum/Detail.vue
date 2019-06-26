@@ -3,11 +3,10 @@
       <MemoDetailHead :memo="memo" />
         <ul class="loop-list">
             <li v-if="todos.length > 0"><span class="date">ToDo's</span></li>
-            <Loader v-if="loading" />
             <TodoWrap v-if="todos.length > 0" :todos="todos" />
     
-            <template v-for="date in dates">
-            <li><span class="date"> {{date}} </span></li>
+            <template v-for="date in dates"> 
+                <li><span class="date"> {{date}} </span></li> 
                 <TextAndImage :data="getGroupData(date)" />
             </template>
         </ul>
@@ -30,7 +29,6 @@ import { groupBy, switchAll } from 'rxjs/operators';
       TodoWrap,
       MemoDetailHead,
       TextAndImage,
-
   }
 })
 export default class MemoDetail extends Vue {

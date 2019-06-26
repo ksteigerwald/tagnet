@@ -9,7 +9,7 @@
                 <div class="col-one">
                     <!--- MAKE COMPONENT -->
                     <Wall :key="componentKey" />
-                    <Loader v-if="loading" />
+                    <Loading v-if="loading" />
                     <div v-if="error" class="error"> <h1>Error...</h1> </div>
                 </div>
                 <ActivityLog />   
@@ -32,7 +32,7 @@ import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { mixins } from 'vue-class-component';
 
 import Wall from '@/components/Wall.vue'
-import Loader from '@/components/Loader.vue'
+import Loading from '@/components/Loading.vue'
 import Modal from '@/components/Modal.vue'
 import ActivityLog from '@/components/ActivityLog.vue'
 import IntakeHandler from '@/components/Intake/Handler.vue'
@@ -46,7 +46,7 @@ import { globalEventBus } from '@/helpers/EventBus'
         Wall,
         ActivityLog,
         Modal,
-        Loader,
+        Loading,
     }
 })
 export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {

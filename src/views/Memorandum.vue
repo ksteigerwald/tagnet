@@ -6,9 +6,8 @@
                     :propList="syncData" />
            
             <MemoDetail v-if="memos.length > 0" />
-            <Loader v-if="loading" />
+            <Loading v-if="loading" />
             <div v-if="error" class="error"> <h1>Error...</h1> </div>
-            
      </div>
  </section>
 
@@ -24,7 +23,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 
 import MemoDetail from '@/components/Memorandum/Detail.vue'
-import Loader from '@/components/Loader.vue'
+import Loading from '@/components/Loading.vue'
 import IntakeHandler from '@/components/Intake/Handler.vue'
 import CRUDMixIn from '@/helpers/crudMixin'
 
@@ -32,7 +31,7 @@ import CRUDMixIn from '@/helpers/crudMixin'
     components:{
         IntakeHandler,
         MemoDetail,
-        Loader
+        Loading
     }
 })
 export default class Memorandum extends mixins(CRUDMixIn) {
