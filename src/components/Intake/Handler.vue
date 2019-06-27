@@ -1,10 +1,10 @@
 <template>
-<form onsubmit="return false" autocomplete="off">
+<form onsubmit="return false"  autocomplete="off">
     <div :class="cssClasses"
                 @keydown.down="onArrowDown"
                 @keydown.up="onArrowUp"
                 @keydown.enter="onEnter">
-                <div class="form-group position-relative autocomplete">
+                <div class="form-group position-absolute autocomplete">
         <!-- <ActionToggle
             :pointer="context"
             :actionEvent="actionToggleIndex"
@@ -59,7 +59,7 @@ export default class Handler extends Vue {
     get cssClasses(): string {
         let context = [Context.memo, Context.line].indexOf(this.tick.context)
         let event = [Event.add, Event.add, Event.macro].indexOf(this.tick.event)
-        let css = 'main-search-box'
+        let css = 'main-search-box position-relative'
         return (context !== -1 && event !== -1) ? css : css + ' set-height'
     }
 
@@ -92,9 +92,13 @@ export default class Handler extends Vue {
 </script>
 
 <style scoped lang="scss">
-    .tagnet {
-        border-radius:30px;
+    form {
+        display: block;
+    }
+    .main-search-box {
+        border-radius:5px;
         background:#fff;
+        min-height: 65px;
         //z-index: 5;
         //position: absolute;
         //border: 1px solid #cfcfcf;
@@ -102,5 +106,12 @@ export default class Handler extends Vue {
    .set-height {
         //height:55px;
         //min-height:55px;
+   }
+   .position-absolute {
+       position: absolute;
+       z-index:999;
+       width:100%;
+       min-height: 65px;
+       padding-bottom: 3rem;
    }
 </style>

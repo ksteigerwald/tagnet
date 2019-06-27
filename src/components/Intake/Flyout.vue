@@ -81,15 +81,17 @@ export default class Flyout extends Vue {
       padding-top:1rem;
    } 
     ul.intake {
-        position: absolute;
+        //position: absolute;
 	    background-color: #fff;
-	    width: 99.8%;
-	    z-index: 999;
+	    //width: 99.8%;
 	    border-radius: 0px 0px 12px 12px;
 	    padding: 10px 0 21px 0px;
 	    border: 1px solid #F4F4F4;
 	    border-top: none;
 	    margin-top: -9px;
+        //overflow: hidden;
+        overflow-y:scroll;
+        max-height: 200px;
         box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
         li {
             padding: 4px 12px;
@@ -98,7 +100,6 @@ export default class Flyout extends Vue {
 	        font-size: 14px;
             padding-left: 68px;
             display:block;
-
 		    transition: all linear 0.1s;	
             text-transform: capitalize;
             background-position: 35px 4px;
