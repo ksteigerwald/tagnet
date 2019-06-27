@@ -17,8 +17,26 @@
      </div>
 
     <modal v-if="showModal" @close="showModal = false">
-        <h3 slot="header">Upload An Image</h3>
-        <p slot="body">Put all your upload stuff here</p>
+        <h3 slot="header">Upload An Imagez</h3>
+        <div slot="body">
+        <form class="form-box" enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+            <h1>Upload images</h1>
+                <div class="dropbox">
+                <input type="file" multiple 
+                    :name="uploadFieldName" 
+                    :disabled="isSaving" 
+                    @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
+                    accept="image/*" class="input-file">
+
+            <p v-if="isInitial">
+              Drag your file(s) here to begin<br> or click to browse
+            </p>
+            <p v-if="isSaving">
+              Uploading {{ fileCount }} files...
+            </p>
+        </div>
+      </form>
+      </div>
     </modal>
 
     </section>
@@ -77,5 +95,9 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
 }
 </script>
 <style scoped lang="scss">
-  
+    .form-box {
+        display: block;
+        border:1px solid red;
+
+    }
 </style>

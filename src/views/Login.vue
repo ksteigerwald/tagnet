@@ -46,7 +46,7 @@ viewBox="0 0 106 31">
               <p>or login by</p>
             </div>
             <ul class="login-page__social-list">
-              <li class="login-page__social-item login-page__social-item--fb"><a href="#"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              <li class="login-page__social-item login-page__social-item--fb"><a href="/"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 486.392 486.392" style="enable-background:new 0 0 486.392 486.392;" xml:space="preserve">
 <g>
 	<g>

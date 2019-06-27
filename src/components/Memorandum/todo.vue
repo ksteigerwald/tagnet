@@ -10,11 +10,12 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { mount } from '@vue/test-utils';
-
 import { State, Getter, Action, namespace,  } from 'vuex-class';
 import { Line, LineState } from '@/types'
+
 import CheckItem from '@/components/Memorandum/CheckItem.vue'
 import ListOwl from '@/components/Icons/ListOwl.vue'
+
 @Component({
   components: {
     CheckItem,

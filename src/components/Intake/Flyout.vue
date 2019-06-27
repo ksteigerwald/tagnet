@@ -1,14 +1,12 @@
 <template>
     <ul :class="isOpen()">
-          <li 
-                v-for="(match, i) in list"
-                :key="i"
-                :class="{ 'is-active': i === index && hover === false}"
-                @mouseover="hover = true"
-                @mouseleave="hover = false"
-                @click="onClick(i)">
-                    <a href="#">{{match.label}}</a>
-                </li>
+          <li v-for="(match, i) in list"
+              :key="i"
+              :class="{ 'is-active': i === index && hover === false}"
+              @mouseover="hover = true"
+              @mouseleave="hover = false"
+              @click="onClick(i)">
+                <a href="#">{{match.label}}</a> </li>
     </ul>
 </template>
 
@@ -94,7 +92,7 @@ export default class Flyout extends Vue {
         max-height: 200px;
         box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.08);
         li {
-            padding: 4px 12px;
+            padding: 8px 12px;
 	        cursor: pointer;
 	        color: #1A1A1A;
 	        font-size: 14px;

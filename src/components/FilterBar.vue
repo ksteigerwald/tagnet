@@ -5,8 +5,7 @@
             <span class="filter-img"> <FilterToggle/> </span> Filter &nbsp;<ArrowDown/></a>
         <div tabindex="0" onclick="return true"></div>
         <ul>
-            <li><a href="#" onclick="sampleMenu(this)">Item one</a></li>
-            <li><a href="#" onclick="sampleMenu(this)">Item Two</a></li>
+            <li v-for="tag in tags" :key="tag.code"><a href="#" class="tag-filter">{{tag.label}}</a></li>
         </ul>
     </li>
     <li class="sample-menu-style dropdown-menu"><a href="#"  tabindex="0" onclick="return true"> <span class="filter-img"> <Arrows/> </span> Sort by &nbsp; <ArrowDown/></a>
@@ -28,6 +27,9 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { State, Getter, Action, namespace } from 'vuex-class';
+import { Tag, TagState } from '@/types'
+
 import FilterToggle from '@/components/Icons/FilterToggle.vue'
 import Arrows from '@/components/Icons/Arrows.vue'
 import Menu from '@/components/Icons/Menu.vue'
@@ -41,8 +43,13 @@ import ArrowDown from '@/components/Icons/ArrowDown.vue'
      ArrowDown
  }
 })
-export default class FilterBar extends Vue {}
+export default class FilterBar extends Vue {
+    @Getter('tags/tags') !tags: Tag[]
+}
 </script>
 
 <style scoped lang="scss">
+    .tag-filter {
+        text-transform: capitalize;
+    }
 </style>
