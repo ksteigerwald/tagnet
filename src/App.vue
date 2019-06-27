@@ -18,13 +18,16 @@ import Header from '@/components/Header.vue'
     }
 })
 export default class App extends Vue { 
+
   protected: string[] = ['home', 'memorandums']
   showHeader: boolean = false 
+
   mounted() {
     console.log('+++++')
     console.log(this)
   }
-  @Watch('$route', { immediate: true, deep: false})
+
+  @Watch('$route', { immediate: true, deep: false })
   onRouteEnter() {
     if(this.protected.indexOf(this.$route.name) !== -1) {
       this.showHeader = true
@@ -36,5 +39,4 @@ export default class App extends Vue {
 <style lang="scss">
     @import '@/assets/responsive.scss';
     @import '@/assets/style.scss';
-
 </style>

@@ -56,7 +56,7 @@ router.beforeEach((to:any, from:any, next:any) => {
         localStorage.setItem(config.localKey('user'), token)
         localStorage.setItem(config.localKey('picture'), data.picture)
 
-        router.push('/')
+        router.push('/home')
     }
 
     const loggedIn = localStorage.getItem(config.localKey('user'));

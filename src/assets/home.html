@@ -1,5 +1,16 @@
-<template>
-    <div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tagnet</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <link href="assets/css/app.min.css" rel="stylesheet">
+  </head>
+  <body class="main">
+    <script src="assets/js/resizer.min.js"></script>
     <header class="header">
       <div class="header__container"><a class="logo" href="#"><svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +47,7 @@ viewBox="0 0 106 31">
 </svg>
           </div>
           <div class="login__text">
-            <p>
-              <router-link :to="{ name: 'login'}"> Login to try Tagnet </router-link></p>
+            <p>Login to try Tagnet</p>
           </div></a>
       </div>
     </header>
@@ -94,10 +104,10 @@ viewBox="0 0 106 31">
                 <p>Leading companies trusts us</p>
               </div>
               <ul class="companies__list">
-                <li class="companies__item"><img src="../assets/images/companies/1.png" alt=""></li>
-                <li class="companies__item"><img src="../assets/images/companies/2.png" alt=""></li>
-                <li class="companies__item"><img src="../assets/images/companies/3.png" alt=""></li>
-                <li class="companies__item"><img src="../assets/images/companies/4.png" alt=""></li>
+                <li class="companies__item"><img src="assets/images/companies/1.png" alt=""></li>
+                <li class="companies__item"><img src="assets/images/companies/2.png" alt=""></li>
+                <li class="companies__item"><img src="assets/images/companies/3.png" alt=""></li>
+                <li class="companies__item"><img src="assets/images/companies/4.png" alt=""></li>
               </ul>
             </div>
           </div>
@@ -159,12 +169,12 @@ viewBox="0 0 106 31">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut iaculis eget sapien eu vehicula. Morbi vitae est sit amet est efficitur semper vehicula.</p>
               </div>
             </div>
-            <div class="block__image"><img src="../assets/images/blocks/1.png" alt=""></div>
+            <div class="block__image"><img src="assets/images/blocks/1.png" alt=""></div>
           </div>
         </div>
         <div class="block block--image-first">
           <div class="block__container">
-            <div class="block__image"><img src="../assets/images/blocks/2.png" alt=""></div>
+            <div class="block__image"><img src="assets/images/blocks/2.png" alt=""></div>
             <div class="block__content block__content--right">
               <div class="block__title">
                 <p>Note taking</p>
@@ -185,12 +195,12 @@ viewBox="0 0 106 31">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut iaculis eget sapien eu vehicula. Morbi vitae est sit amet est efficitur semper vehicula.</p>
               </div>
             </div>
-            <div class="block__image"><img src="../assets/images/blocks/3.png" alt=""></div>
+            <div class="block__image"><img src="assets/images/blocks/3.png" alt=""></div>
           </div>
         </div>
         <div class="block block--image-first">
           <div class="block__container">
-            <div class="block__image"><img src="../assets/images/blocks/4.png" alt=""></div>
+            <div class="block__image"><img src="assets/images/blocks/4.png" alt=""></div>
             <div class="block__content block__content--right">
               <div class="block__title">
                 <p>Todo List</p>
@@ -205,9 +215,9 @@ viewBox="0 0 106 31">
       <div class="testimonials">
         <div class="testimonials__container">
           <div class="testimonials__persons">
-            <div class="testimonials__image"><img src="../assets/images/testimonials/1.png"></div>
-            <div class="testimonials__image testimonials__image--center"><img src="../assets/images/testimonials/2.png"></div>
-            <div class="testimonials__image"><img src="../assets/images/testimonials/3.png"></div>
+            <div class="testimonials__image"><img src="assets/images/testimonials/1.png"></div>
+            <div class="testimonials__image testimonials__image--center"><img src="assets/images/testimonials/2.png"></div>
+            <div class="testimonials__image"><img src="assets/images/testimonials/3.png"></div>
           </div>
           <div class="testimonials__content">
             <div class="testimonials__title">
@@ -293,21 +303,6 @@ viewBox="0 0 106 31">
         </div>
       </footer>
     </div>
-     <div class="class_name" :style="{'--conditional-landing': '' + isLanding + ''}"> </div>
-  </div>
-</template>
-
-<script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-
-@Component({
-  components: {}
-})
-export default class Landing extends Vue {
-  isLanding:boolean = true
-}
-</script>
-
-<style lang="scss">
-  @import '@/assets/app.scss';
-</style>
+    <script src="assets/js/app.min.js"></script>
+  </body>
+</html>

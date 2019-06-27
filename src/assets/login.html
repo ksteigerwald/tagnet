@@ -1,6 +1,17 @@
-<template>
-<div>
-  <header class="header">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tagnet</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <link href="assets/css/app.min.css" rel="stylesheet">
+  </head>
+  <body class="main">
+    <script src="assets/js/resizer.min.js"></script>
+    <header class="header">
       <div class="header__container"><a class="logo" href="#"><svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -60,7 +71,7 @@ viewBox="0 0 106 31">
 </g>
 </svg>
 </a></li>
-              <li class="login-page__social-item login-page__social-item--google"><a :href="authLink()"><svg
+              <li class="login-page__social-item login-page__social-item--google"><a href="#"><svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         width="24px" height="24px" viewBox="0 0 24 24">
@@ -80,50 +91,5 @@ viewBox="0 0 106 31">
         <div class="login-page__background"></div>
       </div>
     </div>
-</div>
-	
-</template>
-
-<script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { State, Getter, Action, namespace } from 'vuex-class';
-import { User, UserState } from '@/types'
-@Component({
-	components: {
-	}
-})
-export default class Login extends Vue {
-
-	username: string = ''
-	password: string = ''
-	submitted: boolean = false
-
-  @Getter('user/status') logginInStatus: any
-	
-	get loggingIn() {
-		return this.logginInStatus
-	}
-    
-  authLink() {
-    let redirect:string = (process.env.NODE_ENV === 'production') ? 'tagnet.herokuapp.com' : 'localhost:8080';
-    let proc:string = (process.env.NODE_ENV === 'production') ? 'https' : 'http';
-    return `https://tagnet.auth0.com/login?client=2rUl0BvJ91rrfBI7t0tXcFC6yxx0HF3K&protocol=oauth2&response_type=token id_token&redirect_uri=${proc}://${redirect}/callback&scope=openid profile`
-	}
-
-	handleSubmit (e: any) {
-		e.preventDefault();
-
-		this.submitted = true;
-		const { username, password } = this;
-		const { dispatch } = this.$store;
-
-		if (username && password) {
-			dispatch('user/login', { username, password });
-		}
-	}
-};
-</script>
-
-<style lang="scss">
-
-</style>
+  </body>
+</html>
