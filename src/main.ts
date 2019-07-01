@@ -12,9 +12,6 @@ import VueAnalytics from 'vue-analytics'
 Vue.config.productionTip = false;
 
 Vue.use(VueRx)
-Vue.use(VueAnalytics, {
-    id: 'UA-143100940-1'
-  })
 //Vue.use(Buefy, { defaultIconPack: 'fas' })
 
 function emitter(eventKey: string) {
@@ -73,6 +70,15 @@ router.beforeEach((to:any, from:any, next:any) => {
     }
 
     next();
+})
+
+Vue.use(VueAnalytics, {
+    id: 'UA-143100940-1',
+    debug: {
+        enabled: true
+    },
+    router,
+    ignoreRoutes: ['/login']
 })
 
 new Vue({
