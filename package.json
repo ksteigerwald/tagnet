@@ -42,6 +42,7 @@
     "unfetch": "^4.0.1",
     "uuid": "^3.3.2",
     "vue": "^2.6.10",
+    "vue-analytics": "^5.17.0",
     "vue-axios": "^2.1.4",
     "vue-class-component": "^6.0.0",
     "vue-meta": "^2.0.4",

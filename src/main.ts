@@ -7,10 +7,14 @@ import * as config from './helpers/config'
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { globalEventBus } from '@/helpers/EventBus'
 import { ENOMEM } from 'constants';
+import VueAnalytics from 'vue-analytics'
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRx)
+Vue.use(VueAnalytics, {
+    id: 'UA-143100940-1'
+  })
 //Vue.use(Buefy, { defaultIconPack: 'fas' })
 
 function emitter(eventKey: string) {
