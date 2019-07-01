@@ -49,7 +49,7 @@ viewBox="0 0 106 31">
         </div>
         <div class="top__container">
           <div class="top__title">
-            <h1>All stuffs in your hands, <br> Get more productive</h1>
+            <h1>A search engine <br> for all your data</h1>
           </div>
           <div class="top__input">
             <div class="create-input">
@@ -156,7 +156,7 @@ viewBox="0 0 106 31">
                 <p>Better <br> bookmark tool</p>
               </div>
               <div class="block__text">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut iaculis eget sapien eu vehicula. Morbi vitae est sit amet est efficitur semper vehicula.</p>
+                <p>Log bookmark links by category, or drop them into a Bookmark bucket. Tagnet.io gives you the ability to find that one website you looked at years ago.</p>
               </div>
             </div>
             <div class="block__image"><img src="../assets/images/blocks/1.png" alt=""></div>
@@ -170,11 +170,12 @@ viewBox="0 0 106 31">
                 <p>Note taking</p>
               </div>
               <div class="block__text">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut iaculis eget sapien eu vehicula. Morbi vitae est sit amet est efficitur semper vehicula.</p>
+                <p>Log a quick note, pull it up from any device or computer. Taganet.io is the way for you to get an idea down fast and then pull it up whenever you need it. </p>
               </div>
             </div>
           </div>
         </div>
+        <!--
         <div class="block">
           <div class="block__container">
             <div class="block__content">
@@ -188,6 +189,7 @@ viewBox="0 0 106 31">
             <div class="block__image"><img src="../assets/images/blocks/3.png" alt=""></div>
           </div>
         </div>
+        -->
         <div class="block block--image-first">
           <div class="block__container">
             <div class="block__image"><img src="../assets/images/blocks/4.png" alt=""></div>
@@ -196,12 +198,13 @@ viewBox="0 0 106 31">
                 <p>Todo List</p>
               </div>
               <div class="block__text">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut iaculis eget sapien eu vehicula. Morbi vitae est sit amet est efficitur semper vehicula.</p>
+                <p>Create a ToDo and categorize them under one of your buckets. Tagnet has lots of little apps built in to make you more productive. </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!--
       <div class="testimonials">
         <div class="testimonials__container">
           <div class="testimonials__persons">
@@ -218,7 +221,7 @@ viewBox="0 0 106 31">
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="sing">
         <div class="sing__container">
           <div class="sing__ball-left"></div>
