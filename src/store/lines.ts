@@ -1,5 +1,5 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
-import { RootState, LineState, Line } from '../types'
+import { RootState, LineState, Line, Fact } from '../types'
 import { apolloClient } from '@/constants/graphql'
 import { linesQry, searchQry, linesInsert, linesByMemoId, updateLineCode, updateLineMeta } from '@/constants/lines.ql'
 import { Subject, fromEvent, of, pipe } from 'rxjs';
@@ -51,7 +51,10 @@ export const actions: ActionTree<LineState, RootState> = {
 
         let line: Line = response.data.insert_lines.returning.pop()
         await dispatch('updateLineCode', line)
-
+        
+        await dispatch('createFact', {
+            memo_id: line.memo_id,
+            line_id: line.id }, { root: true })
     },
 
     async updateLineCode({ commit, dispatch, rootState }, line:Line) {
@@ -110,6 +113,7 @@ export const actions: ActionTree<LineState, RootState> = {
 
         state.lines = response.data.lines
         dispatch('sortedLines') 
+        await dispatch('createFact', { search: term }, { root: true })
     }
 }
 

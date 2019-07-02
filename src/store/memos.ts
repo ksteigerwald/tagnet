@@ -46,7 +46,7 @@ export const actions: ActionTree<MemoState, RootState> = {
         let memo: Memo = response.data.insert_memos.returning.pop()
         await dispatch('updateMemoCode', memo)
         await commit('addMemo', memo)
-
+        await dispatch('facts/createFact', { memo_id: memo.id }, { root: true })
     },
     
     async updateMemoCode({ commit, dispatch, rootState }, memo:Memo) {
@@ -99,6 +99,8 @@ export const actions: ActionTree<MemoState, RootState> = {
         })
         console.log('searchMemos', response.data.memos)
         state.memos = response.data.memos
+
+        await dispatch('facts/createFact', { search: term }, { root: true })
     },
 
     //Find a memo with given code

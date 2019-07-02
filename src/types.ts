@@ -9,6 +9,7 @@ export const selectProtected: SelectProtected = {
     wrapperElement: document.createElement("div"),
     inputElement: document.createElement("input")
 };
+
 export interface UIFlyout {
     onSignal(direction: string):void
 }
@@ -97,6 +98,10 @@ export interface MacroState {
     macros: Macro[]
 }
 
+export interface FactState {
+    facts: Fact[]
+}
+
 export interface Tag {
     id: number
     code: string
@@ -128,6 +133,14 @@ export interface Line {
     code:string
     format_id?:number
     meta?:any
+}
+
+export interface Fact {
+    id: number
+    memo_id?: number
+    line_id?: number
+    search?: string
+    user_id: string
 }
 
 export interface User {

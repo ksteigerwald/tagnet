@@ -6,6 +6,7 @@ import { lines } from './lines'
 import { user } from './user'
 import { streams } from './stream'
 import { macros } from './macros'
+import { facts } from './facts'
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
+      facts,
       macros,
       streams,
       tags,
