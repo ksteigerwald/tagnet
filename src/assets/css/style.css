@@ -488,6 +488,15 @@ img {
 .activity-five .goals-activity .line-box {
 	background-color: #DBB7FF;
 }
+.activity-six .goals-activity .icon-activity {
+	background-color: rgba(254, 212, 154, 0.2);
+}
+.activity-six .activity-conatnt h4 {
+	color: #FED49A;
+}
+.activity-six .goals-activity .line-box {
+	background-color: #FED49A;
+}
 .all-activity {
 	text-align: right;
 	padding-right: 24px;
