@@ -51,10 +51,8 @@ export const actions: ActionTree<LineState, RootState> = {
 
         let line: Line = response.data.insert_lines.returning.pop()
         await dispatch('updateLineCode', line)
+        await dispatch('facts/createFact', { memo_id: line.memo_id, line_id: line.id }, { root: true })
         
-        await dispatch('createFact', {
-            memo_id: line.memo_id,
-            line_id: line.id }, { root: true })
     },
 
     async updateLineCode({ commit, dispatch, rootState }, line:Line) {
