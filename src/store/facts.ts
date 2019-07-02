@@ -11,7 +11,7 @@ export const state: FactState = {
 }
 
 export const getters: GetterTree<FactState, RootState> = {
-  Facts: (sFacte, getters, rootState) => state.facts,
+  facts: (state, getters, rootState) => state.facts,
 }
 
 export const mutations: MutationTree<FactState> = {
