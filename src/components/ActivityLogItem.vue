@@ -22,15 +22,16 @@ import { create } from 'domain';
 export default class ActivityLog extends Vue {
     
   @Prop() log: Fact
-  heading: string = ''
+//  heading: string = ''
 
   get text() {
     if(this.log.search) return this.log.search
     if(this.log.line_id) return `[+] ${this.log.FactLine.label}`
     return `NEW ${this.log.FactMemo.label}`
   }
-  beforeMount() {
-    this.heading = (this.log.search) ? 'Search' : this.log.FactMemo.TagMemo.label
+
+  get heading() {
+    return (this.log.search) ? 'Search' : this.log.FactMemo.TagMemo.label
   }
 }
 </script>
