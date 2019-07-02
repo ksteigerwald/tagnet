@@ -16,13 +16,23 @@ mutation insertFact($objects: [facts_insert_input!]!) {
 
 export const factsQry = gql`
 query {
-    facts {
-      id
-      memo_id
-      line_id
-      search
-      user_id
-      created
+  facts(limit: 10, order_by: {created: desc}) {
+    id
+    memo_id
+    search
+    line_id
+    FactMemo {
+      label
+      tag_id
+      code
+      TagMemo {
+        label
+      }
     }
+    FactLine {
+      code
+      label
+    }
+  }
 }
 `

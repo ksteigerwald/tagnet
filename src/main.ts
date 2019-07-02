@@ -74,9 +74,7 @@ router.beforeEach((to:any, from:any, next:any) => {
 
 Vue.use(VueAnalytics, {
     id: 'UA-143100940-1',
-    debug: {
-        enabled: true
-    },
+    //debug: { enabled: true },
     router,
     ignoreRoutes: ['/login']
 })

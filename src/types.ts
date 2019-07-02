@@ -141,6 +141,8 @@ export interface Fact {
     line_id?: number
     search?: string
     user_id: string
+    FactMemo?: any
+    FactLine?: any
 }
 
 export interface User {

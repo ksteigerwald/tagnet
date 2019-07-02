@@ -12,7 +12,7 @@
                     <Loading v-if="loading" />
                     <div v-if="error" class="error"> <h1>Error...</h1> </div>
                 </div>
-                <ActivityLog />   
+                <ActivityLog  :logs="facts" />   
         </div>
      </div>
 
@@ -28,7 +28,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
-import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
+import { Tag, TagState, Memo, MemoState, Line, LineState, Fact, FactState } from '@/types'
 import { mixins } from 'vue-class-component';
 
 import Wall from '@/components/Wall.vue'
@@ -58,12 +58,14 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
 
     @Action('memos/loadWall') loadWall: any
     @Action('tags/loadTags') loadTags: any
+    @Action('facts/loadFacts') loadFacts: any
 
     async beforeMount() {
         this.componentKey += 1; 
         this.loading = true
 
         await this.loadTags()
+        await this.loadFacts()
 
         globalEventBus.$on('uploadModalOpen', () => {
             this.showModal = true

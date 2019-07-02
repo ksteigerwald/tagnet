@@ -44,7 +44,7 @@ export const actions: ActionTree<FactState, RootState> = {
         })
 
         let fact: Fact = response.data.insert_facts.returning.pop()
-        await commit('addFact', fact)
+        await commit('loadFacts')
         
     },
 
