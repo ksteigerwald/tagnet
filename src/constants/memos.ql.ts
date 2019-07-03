@@ -75,6 +75,26 @@ query {
     }
 }`
 
+export const filterMemos = gql`
+query filter_memos($id: Int){ 
+  memos(where: {TagMemo: {id: {_eq: $id }}}, order_by: {created: desc}) {
+    id
+    code
+    uuid
+    user_id
+    tag_id
+    label
+    created
+    updated
+    autogen
+    MemoLines(limit: 100, order_by: {created: desc}) {
+      id
+    }
+    TagMemo {
+      label
+    }
+  }
+}`
 export const memosSearch = gql`
 query search_memos($input:String){
   memos(where: {_or:[{label: {_like: $input }}, {MemoLines:{label:{_like:$input}}}]}) {

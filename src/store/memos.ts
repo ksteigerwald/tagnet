@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { deleteMemo, memosQry,memosQryMemoLines,memosSearch, 
+import { deleteMemo, memosQry, memosQryMemoLines, memosSearch, filterMemos, 
          memosInsert, updateMemoUpdated, memosGet, updateMemoCode } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 import Hashids from 'hashids'
@@ -111,6 +111,16 @@ export const actions: ActionTree<MemoState, RootState> = {
         return state.memos
     },
 
+    async filterWall({ commit, dispatch, rootState}, tagId:number ) {
+        const response: any = await apolloClient.query({
+            query: filterMemos,
+            variables: { id: tagId }	
+        })
+
+        commit('commitState', response.data.memos)
+        return state.memos
+    },
+
     async searchMemos({ commit, dispatch, rootState}, term: string ) {
         let vars: string = `%${term}%`
         const response: any = await apolloClient.query({
@@ -150,6 +160,12 @@ export const getters: GetterTree<MemoState, RootState> = {
     filterMemos: (state, getters, rootState, str) => (str: string) => {
         return state.memos.filter(memo => {
             return memo.label.match(new RegExp(str + ".*", "i"))
+        })
+    },
+
+    filterByTag: (state, getters, rootState, str) => (tagId: number) => {
+        return state.memos.filter(memo => {
+            return memo.tag_id === tagId
         })
     },
 
