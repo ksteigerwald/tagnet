@@ -12,7 +12,7 @@
                     <Loading v-if="loading" />
                     <div v-if="error" class="error"> <h1>Error...</h1> </div>
                 </div>
-                <ActivityLog  :logs="facts" />   
+                <ActivityLog />   
         </div>
      </div>
 

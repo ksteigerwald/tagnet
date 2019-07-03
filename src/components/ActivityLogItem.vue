@@ -52,7 +52,9 @@ export default class ActivityLog extends Vue {
   css:string = 'activity-one'
   cssRoot: string = 'activity-one'
   beforeMount() {
-    switch(this.log.FactMemo.TagMemo.label) {
+    let key = (this.log.FactMemo) ? this.log.FactMemo.TagMemo.label : 'search'
+    console.log(key)
+    switch(key) {
       case 'goal':
         this.icon = 1
         this.css = `${this.cssRoot}`
@@ -77,22 +79,27 @@ export default class ActivityLog extends Vue {
         this.icon = 6
         this.css = `${this.cssRoot} activity-six`
         break
+      case 'search':
+        break
       default:
-        this.icon = 0
-        this.css = `${this.cssRoot}`
         break
     }
   }
   get text() {
-    var str: string = `NEW ${this.log.FactMemo.label}`
-    if(this.log.search) str = this.log.search
-    if(this.log.line_id) str = `[+] ${this.log.FactLine.label}`
+    
+    var str: string = this.log.search
+    if(this.log.FactMemo) str = `NEW ${this.log.FactMemo.label}`
+    if(this.log.FactLine) str = `[+] ${this.log.FactLine.label}`
+    if(!str) return 'Empty Search'
     if(str.length < 20) return str
     return str.substring(0,20) + '...'
   }
 
   get heading() {
-    return (this.log.search) ? 'Search' : this.log.FactMemo.TagMemo.label
+    if(this.log.search) return 'Search'
+    let root = this.log.FactMemo
+    if(root) return root.TagMemo.label
+    return 'Empty Search'
   }
 }
 </script>
