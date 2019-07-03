@@ -5,6 +5,9 @@
         <div class="modal-container">
 
           <div class="modal-header">
+            <div class="modal-action" align="right">
+              <span @click="$emit('close')">x</span>
+            </div>
             <slot name="header">
               default header
             </slot>
@@ -62,23 +65,32 @@ export default class Modal extends Vue {
 }
 
 .modal-container {
-  width: 25%;
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  min-height: 200px;
   margin: 0px auto;
-  padding: 20px 30px;
+  padding: 25px;
   background-color: #fff;
-  border-radius: 2px;
+  border-radius: 15px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
 
+.modal-header {
+}
+
 .modal-header h3 {
-  margin-top: 0;
   color: #42b983;
 }
 
 .modal-body {
   margin: 20px 0;
+  flex-grow: 1;
+}
+
+.modal-footer {
 }
 
 .modal-default-button {
@@ -106,6 +118,16 @@ export default class Modal extends Vue {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+.modal-action {
+  color: orange;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.modal-action span {
+  cursor: pointer;
 }
 
 </style>
