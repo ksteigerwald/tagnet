@@ -1,6 +1,6 @@
 <template>
 <transition name="modal">
-    <div class="modal-mask">
+    <div v-if="show" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
 
@@ -34,7 +34,11 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Modal extends Vue {}
+export default class Modal extends Vue {
+  
+  @Prop() show: boolean
+
+}
 
 </script>
 

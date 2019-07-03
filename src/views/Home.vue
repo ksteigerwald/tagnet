@@ -16,7 +16,7 @@
         </div>
      </div>
 
-    <modal v-if="showModal" @close="showModal = false">
+    <modal :show="showModal" @close="showModal = false">
         <h3 slot="header">Upload An Image</h3>
         <p slot="body">Put all your upload stuff here</p>
     </modal>
