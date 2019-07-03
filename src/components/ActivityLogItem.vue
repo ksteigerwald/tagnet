@@ -84,9 +84,11 @@ export default class ActivityLog extends Vue {
     }
   }
   get text() {
-    if(this.log.search) return this.log.search
-    if(this.log.line_id) return `[+] ${this.log.FactLine.label}`
-    return `NEW ${this.log.FactMemo.label}`
+    var str: string = `NEW ${this.log.FactMemo.label}`
+    if(this.log.search) str = this.log.search
+    if(this.log.line_id) str = `[+] ${this.log.FactLine.label}`
+    if(str.length < 20) return str
+    return str.substring(0,20) + '...'
   }
 
   get heading() {
