@@ -311,6 +311,6 @@ export default class Landing extends Vue {
 }
 </script>
 
-<style lang="scss">
-  @import '@/assets/app.scss';
-</style>
+<!--<style lang="scss">-->
+  <!--@import '@/assets/app.scss';-->
+<!--</style>-->

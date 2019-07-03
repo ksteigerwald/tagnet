@@ -1,0 +1,19 @@
+$orange: #ff6956;
+$orangeBlack: #d64834;
+
+$imagePath: '/static/images/';
+$fontPath: '/static/fonts/';
+
+@import "partials/mixins";
+@import "partials/reset";
+@import "partials/fonts";
+@import "partials/base";
+
+@import "pages/home";
+@import "pages/login";
+@import "pages/register";
+
+.mobile {
+  @import "partials/mobile";
+}
+

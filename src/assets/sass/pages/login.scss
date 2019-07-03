@@ -1,0 +1,113 @@
+.login-page {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 4.6875em);
+
+  &__container {
+    max-width: em(1170);
+    padding: 0 em(10);
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+  }
+
+  &__background {
+    position: absolute;
+    right: -55%;
+    top: -55%;
+    width: em(964);
+    height: em(964);
+    transform: translate3d(-55%, 0, 0);
+    background-image: url($imagePath + "/login/background-figure.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+
+  &__title {
+    padding-top: em(35);
+
+    p {
+      @include FontExtra;
+      font-size: em(48);
+      line-height: em(60, 48);
+
+    }
+  }
+
+  &__block {
+    max-width: em(460);
+    width: 100%;
+  }
+
+  &__form {
+    margin-top: em(55);
+
+    .input {
+      margin-bottom: em(32);
+    }
+  }
+
+  &__social {
+    margin-top: em(32);
+  }
+
+  &__social-title {
+
+    p {
+      @include Font;
+      font-size: em(14);
+    }
+  }
+
+  &__social-list {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    margin-top: em(20);
+  }
+
+  &__social-item {
+    margin-right: em(20);
+
+    svg {
+      width: em(30);
+      height: em(30);
+    }
+
+    &--google {
+      background: #fff;
+      border-radius: 100%;
+      padding: em(5);
+
+      svg {
+        width: em(25);
+        height: em(25);
+      }
+    }
+
+    &--fb {
+      svg {
+        path {
+          fill: #4267b2;
+        }
+      }
+    }
+  }
+
+  &__register {
+    margin-top: em(45);
+
+    a {
+      @include FontSemi;
+      font-size: em(14);
+      color: $orange;
+      transition: .15s ease-in-out color;
+
+      &:hover {
+        color: $orangeBlack;
+      }
+    }
+  }
+
+}

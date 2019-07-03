@@ -1,20 +1,22 @@
 <template>
-<div id="app" class="wrapper">
-    <div class="overlay"></div>
-    <Header v-if="showHeader" />
-     <transition name="fade" mode="out-in">
-        <router-view></router-view>
-     </transition>
-</div>
+    <Resize id="app" class="wrapper">
+        <div class="overlay"></div>
+        <Header v-if="showHeader" />
+         <transition name="fade" mode="out-in">
+            <router-view></router-view>
+         </transition>
+    </Resize>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import Header from '@/components/Header.vue'
+import Header from '@/components/Header.vue';
+import Resize from '@/components/common/Resize';
 
 @Component({
     components: {
         Header,
+        Resize
     }
 })
 export default class App extends Vue { 
@@ -36,7 +38,7 @@ export default class App extends Vue {
   }
 }
 </script>
-<style lang="scss">
-    @import '@/assets/responsive.scss';
-    @import '@/assets/style.scss';
-</style>
+<!--<style lang="scss">-->
+    <!--@import '@/assets/responsive.scss';-->
+    <!--@import '@/assets/style.scss';-->
+<!--</style>-->

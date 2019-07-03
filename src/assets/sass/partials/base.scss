@@ -1,0 +1,204 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: em(600);
+  @include Font;
+  font-weight: 400;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  color: #1a1a1a;
+  //overflow: hidden;
+  //overflow-y: auto;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+label {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+.header {
+  height: em(75);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e8ebee;
+  background: #fff;
+  position: relative;
+  z-index: 3;
+
+  &__container {
+    display: flex;
+    width: 100%;
+    max-width: em(1170);
+    padding: 0 em(12);
+    margin: 0 auto;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+}
+
+
+.login {
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    width: em(25);
+    height: em(25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__text {
+    padding-left: em(5);
+
+    p {
+      @include FontSemi;
+      font-size: em(18);
+      transition: .15s ease-in-out color;
+    }
+  }
+
+  &:hover {
+    .login__text {
+      color: $orange;
+    }
+  }
+
+}
+
+.footer {
+  margin-top: em(100);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &__menu {
+
+  }
+
+  &__menu-item {
+    margin: em(24) 0;
+
+    a {
+      @include Font;
+      font-size: em(16);
+      transition: .15s ease-in-out color;
+    }
+
+    &:hover a {
+      color: $orange;
+    }
+  }
+
+  &__social {
+    margin-top: em(30);
+    display: flex;
+
+    svg {
+      width: em(15);
+      height: em(15);
+      path {
+        fill: rgb(150, 165, 255);
+      }
+    }
+  }
+
+  &__social-item {
+    margin: em(10);
+  }
+
+  &__copy {
+    margin-top: em(50);
+    margin-bottom: em(20);
+
+    p {
+      @include Font;
+      color: #142453;
+      font-size: em(13);
+    }
+  }
+
+}
+
+.input {
+  display: flex;
+  flex-flow: column wrap;
+
+  label {
+    @include FontSemi;
+    font-size: em(14);
+    color: $orange;
+  }
+
+  input {
+    @include Font;
+    font-size: em(16);
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    padding: em(10) 0;
+    margin-top: em(5);
+    margin-bottom: em(15);
+  }
+
+}
+
+.button {
+  display: flex;
+  height: em(50);
+  justify-content: center;
+  align-items: center;
+  background: $orange;
+  border-radius: em(50);
+  width: 100%;
+  transition: .15s ease-in-out background-color;
+
+  span {
+    @include FontSemi;
+    font-size: em(18);
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  &--login {
+    max-width: em(165);
+  }
+
+  &--register {
+    max-width: em(165);
+  }
+
+  &:hover {
+    background-color: $orangeBlack;
+  }
+
+}
+
+.check {
+  margin-top: em(-15);
+  display: flex;
+  align-items: center;
+
+  label {
+    @include Font;
+    font-size: em(14);
+    color: $orange;
+  }
+}
