@@ -1,7 +1,8 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { deleteMemo, memosQry,memosQryMemoLines,memosSearch, memosInsert, memosGet, updateMemoCode } from '@/constants/memos.ql'
+import { deleteMemo, memosQry,memosQryMemoLines,memosSearch, 
+         memosInsert, updateMemoUpdated, memosGet, updateMemoCode } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 import Hashids from 'hashids'
 let hashid = new Hashids('MEMO')
@@ -13,9 +14,9 @@ export const state: MemoState = {
 }
 
 export const mutations: MutationTree<MemoState> = {
+
     addMemo(state: MemoState, newMemo: Memo): void {
         const memoCopy = Object.assign({MemoLines:[]}, newMemo)
-        console.log('memoCopy', memoCopy)
         state.memos.push(memoCopy)
     },
 
@@ -25,6 +26,12 @@ export const mutations: MutationTree<MemoState> = {
 
     removeMemo(state: MemoState, memo: Memo): void {
         let memos = state.memos.filter(mem => mem.id !== memo.id)
+        state.memos = memos
+    },
+
+    updateMemo(state: MemoState, memo: Memo): void {
+        let memos = state.memos.filter(mem => mem.id !== memo.id)
+        memos.push(memo)
         state.memos = memos
     }
 }
@@ -46,7 +53,7 @@ export const actions: ActionTree<MemoState, RootState> = {
         let memo: Memo = response.data.insert_memos.returning.pop()
         await dispatch('updateMemoCode', memo)
         await commit('addMemo', memo)
-
+        await dispatch('facts/createFact', { memo_id: memo.id }, { root: true })
     },
     
     async updateMemoCode({ commit, dispatch, rootState }, memo:Memo) {
@@ -63,11 +70,24 @@ export const actions: ActionTree<MemoState, RootState> = {
 
     },
 
+    async updateMemoUpdated({ commit, dispatch, rootState }, memoId: number) {
+        const response: any = await apolloClient.mutate({
+            mutation: updateMemoUpdated,
+            variables: {
+                id: memoId,
+                update: (new Date()).toISOString()
+            }
+        })
+
+        const memo: Memo = response.data.update_memos.returning.pop()
+        commit('updateMemo', memo)
+    },
+
     async deleteMemo({ commit, dispatch, rootState }, memo:Memo) {
         const response: any = await apolloClient.mutate({
             mutation: deleteMemo,
             variables: {
-                    id: memo.id,
+                id: memo.id,
             }
         })
         commit('removeMemo', memo)
@@ -99,6 +119,8 @@ export const actions: ActionTree<MemoState, RootState> = {
         })
         console.log('searchMemos', response.data.memos)
         state.memos = response.data.memos
+
+        await dispatch('facts/createFact', { search: term }, { root: true })
     },
 
     //Find a memo with given code
@@ -107,11 +129,11 @@ export const actions: ActionTree<MemoState, RootState> = {
     //Create line item with image any path
 
 }
-
+function _d(date: string): number {
+    return new Date(date).getTime()
+}
 export const getters: GetterTree<MemoState, RootState> = {
-    memos: (state, getters, rootState) => state.memos.map(m => {
-        return m
-    }),
+    memos: (state, getters, rootState) => state.memos.sort((a,b) => _d(b.updated)  - _d(a.updated)),
 
     findMemo: (state, getters, rootState, id) => (id: number) => {
        return state.memos.filter(memo => {

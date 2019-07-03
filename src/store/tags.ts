@@ -19,12 +19,15 @@ export const state: TagState = {
 }
 
 export const getters: GetterTree<TagState, RootState> = {
+
   tags: (stage, getters, rootState) => state.tags,
+
   filterTags: (state, getters, rootState, str) => (str: string) => {
     return state.tags.filter(tag => {
       return tag.label.match(new RegExp(str + ".*", "i"))
     })
   },
+
   findByCode: (state, getters, rootState, str) => (code: string) => {
     return state.tags.filter(tag => {
       return tag.code === code

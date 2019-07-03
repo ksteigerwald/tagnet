@@ -8,6 +8,8 @@ mutation insert_memo($objects: [memos_insert_input!]!) {
       label
       uuid
       tag_id
+      created
+      updated
       TagMemo {
         label
       }
@@ -25,6 +27,7 @@ query {
         tag_id
         label
         created
+        updated
         code
         autogen
         MemoLines(limit: 100, order_by: {created: desc}) {
@@ -61,6 +64,7 @@ query {
         tag_id
         label
         created
+        updated
         autogen
         MemoLines(limit: 100, order_by: {created: desc}) {
             id
@@ -80,6 +84,7 @@ query search_memos($input:String){
     user_id
     tag_id
     created
+    updated
     uuid
     autogen
     MemoLines {
@@ -101,6 +106,7 @@ query get_memo($input: Int) {
     user_id
     tag_id
     created
+    updated
     uuid
     autogen
     TagMemo {
@@ -123,4 +129,24 @@ mutation update_token($id: Int, $code: String) {
       id
     }
   }
+}`
+
+export const updateMemoUpdated = gql`
+  mutation update_memo($id: Int, $update: timestamptz){
+    update_memos(where: {id: {_eq: $id}}, _set: {updated: $update}) {
+      returning {
+        id
+        code
+        label
+        user_id
+        tag_id
+        created
+        updated
+        uuid
+        autogen
+        TagMemo {
+          label
+        }
+      }
+    }
 }`

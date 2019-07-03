@@ -106,7 +106,7 @@ export default class IntakeStream extends Vue {
         let subs = str.substring(1, str.length - 1)  //.replace(/(@|\/)/gm,'')
         //console.log({subs, str})
         let newStr = str.length === 1 ? this.keyStrip(str) : str.substring(1, str.length) 
-        //console.log('newStr', newStr, subs)
+        //console.log('newStr', newStr, subs, 'str:', str)
         if(newStr.charAt(newStr.length -1) === this.tail) {
             return newStr.substring(0, newStr.length -1)
         }
