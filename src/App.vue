@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import Header from '@/components/Header.vue';
-import Resize from '@/components/common/Resize';
+import Resize from '@/components/common/Resize.vue';
 
 @Component({
     components: {

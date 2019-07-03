@@ -9,7 +9,7 @@ import { State, Getter, Action, namespace } from 'vuex-class';
 import { globalEventBus } from '@/helpers/EventBus'
 import { ENOMEM } from 'constants';
 import VueAnalytics from 'vue-analytics'
-import Helpers from '@/helpers/Helpers';
+import Helpers from '@/helpers/Helpers'
 
 Vue.config.productionTip = false;
 
