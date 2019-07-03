@@ -36,6 +36,7 @@ export const mutations: MutationTree<LineState> = {
 export const actions: ActionTree<LineState, RootState> = {
 
     async createLine({ commit, dispatch, rootState }, payload:Line) {
+        if(payload.label === '') return
 
         const response: any = await apolloClient.mutate({
             mutation: linesInsert,
