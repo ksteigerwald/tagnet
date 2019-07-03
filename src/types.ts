@@ -114,6 +114,7 @@ export interface Memo {
     label: string
     tag_id: number
     created: string
+    updated: string
     user_id: string
     code: string
     autogen?: boolean
@@ -129,6 +130,7 @@ export interface Line {
     memo_id: number
     label: string
     created: string
+    updated: string
     user_id: string
     code:string
     format_id?:number

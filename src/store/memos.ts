@@ -1,7 +1,8 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { deleteMemo, memosQry,memosQryMemoLines,memosSearch, memosInsert, memosGet, updateMemoCode } from '@/constants/memos.ql'
+import { deleteMemo, memosQry,memosQryMemoLines,memosSearch, 
+         memosInsert, updateMemoUpdated, memosGet, updateMemoCode } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 import Hashids from 'hashids'
 let hashid = new Hashids('MEMO')
@@ -25,6 +26,12 @@ export const mutations: MutationTree<MemoState> = {
 
     removeMemo(state: MemoState, memo: Memo): void {
         let memos = state.memos.filter(mem => mem.id !== memo.id)
+        state.memos = memos
+    },
+
+    updateMemo(state: MemoState, memo: Memo): void {
+        let memos = state.memos.filter(mem => mem.id !== memo.id)
+        memos.push(memo)
         state.memos = memos
     }
 }
@@ -63,11 +70,24 @@ export const actions: ActionTree<MemoState, RootState> = {
 
     },
 
+    async updateMemoUpdated({ commit, dispatch, rootState }, memoId: number) {
+        const response: any = await apolloClient.mutate({
+            mutation: updateMemoUpdated,
+            variables: {
+                id: memoId,
+                update: (new Date()).toISOString()
+            }
+        })
+
+        const memo: Memo = response.data.update_memos.returning.pop()
+        commit('updateMemo', memo)
+    },
+
     async deleteMemo({ commit, dispatch, rootState }, memo:Memo) {
         const response: any = await apolloClient.mutate({
             mutation: deleteMemo,
             variables: {
-                    id: memo.id,
+                id: memo.id,
             }
         })
         commit('removeMemo', memo)
@@ -113,7 +133,7 @@ function _d(date: string): number {
     return new Date(date).getTime()
 }
 export const getters: GetterTree<MemoState, RootState> = {
-    memos: (state, getters, rootState) => state.memos.sort((a,b) => _d(b.created)  - _d(a.created)),
+    memos: (state, getters, rootState) => state.memos.sort((a,b) => _d(b.updated)  - _d(a.updated)),
 
     findMemo: (state, getters, rootState, id) => (id: number) => {
        return state.memos.filter(memo => {
