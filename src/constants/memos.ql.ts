@@ -8,6 +8,7 @@ mutation insert_memo($objects: [memos_insert_input!]!) {
       label
       uuid
       tag_id
+      created
       TagMemo {
         label
       }

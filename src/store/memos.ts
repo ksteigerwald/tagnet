@@ -13,9 +13,9 @@ export const state: MemoState = {
 }
 
 export const mutations: MutationTree<MemoState> = {
+
     addMemo(state: MemoState, newMemo: Memo): void {
         const memoCopy = Object.assign({MemoLines:[]}, newMemo)
-        console.log('memoCopy', memoCopy)
         state.memos.push(memoCopy)
     },
 
@@ -109,11 +109,11 @@ export const actions: ActionTree<MemoState, RootState> = {
     //Create line item with image any path
 
 }
-
+function _d(date: string): number {
+    return new Date(date).getTime()
+}
 export const getters: GetterTree<MemoState, RootState> = {
-    memos: (state, getters, rootState) => state.memos.map(m => {
-        return m
-    }),
+    memos: (state, getters, rootState) => state.memos.sort((a,b) => _d(b.created)  - _d(a.created)),
 
     findMemo: (state, getters, rootState, id) => (id: number) => {
        return state.memos.filter(memo => {
