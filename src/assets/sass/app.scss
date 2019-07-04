@@ -9,6 +9,7 @@ $fontPath: '/static/fonts/';
 @import "partials/fonts";
 @import "partials/base";
 
+@import "pages/auth";
 @import "pages/home";
 @import "pages/login";
 @import "pages/register";
