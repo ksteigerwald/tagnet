@@ -122,16 +122,6 @@ export const actions: ActionTree<MemoState, RootState> = {
         return state.memos
     },
 
-    async filterWall({ commit, dispatch, rootState}, tagId:number ) {
-        const response: any = await apolloClient.query({
-            query: filterMemos,
-            variables: { id: tagId }	
-        })
-
-        commit('commitState', response.data.memos)
-        return state.memos
-    },
-
     async searchMemos({ commit, dispatch, rootState}, term: string ) {
         let vars: string = `%${term}%`
         const response: any = await apolloClient.query({

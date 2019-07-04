@@ -5,6 +5,7 @@ import Login from './views/Login.vue';
 import Landing from './views/Landing.vue';
 import Register from './views/Register.vue';
 import Memorandum from './views/Memorandum.vue';
+import Public from './views/Public.vue';
 
 Vue.use(Router);
 
@@ -45,7 +46,7 @@ export default new Router({
     {
       path: '/public/memorandums/:memoId',
       name: 'public',
-      component: Memorandum,
+      component: Public,
     },
     {
       path: '/callback',
