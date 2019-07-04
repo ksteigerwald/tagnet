@@ -43,6 +43,11 @@ export default new Router({
       component: Memorandum,
     },
     {
+      path: '/public/memorandums/:memoId',
+      name: 'public',
+      component: Memorandum,
+    },
+    {
       path: '/callback',
       name: 'callback',
       //component: Login,

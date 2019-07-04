@@ -49,7 +49,8 @@ viewBox="0 0 106 31">
         </div>
         <div class="top__container">
           <div class="top__title">
-            <h1>A search engine <br> for all your data</h1>
+            <h1>Easy. Flexible. Practical: <br>The best way to organize your digital
+self</h1>
           </div>
           <div class="top__input">
             <div class="create-input">

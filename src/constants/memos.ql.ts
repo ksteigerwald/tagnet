@@ -75,26 +75,20 @@ query {
     }
 }`
 
-export const filterMemos = gql`
-query filter_memos($id: Int){ 
-  memos(where: {TagMemo: {id: {_eq: $id }}}, order_by: {created: desc}) {
-    id
-    code
-    uuid
-    user_id
-    tag_id
-    label
-    created
-    updated
-    autogen
-    MemoLines(limit: 100, order_by: {created: desc}) {
-      id
+export const memoPublic = gql`
+mutation set_public($id: Int, $public: Boolean) {
+  update_memos(where: {id: {_eq: $id}}, _set: {is_public: $public}) {
+    returning {
+      code
     }
-    TagMemo {
-      label
+  }
+  update_lines(where: {memo_id: {_eq: $id}}, _set: {is_public: $public}) {
+    returning {
+      code
     }
   }
 }`
+
 export const memosSearch = gql`
 query search_memos($input:String){
   memos(where: {_or:[{label: {_like: $input }}, {MemoLines:{label:{_like:$input}}}]}) {

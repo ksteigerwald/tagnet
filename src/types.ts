@@ -121,7 +121,7 @@ export interface Memo {
     type?: string
     MemoLines?: Line[]
     TagMemo?: Tag
-
+    is_public: boolean
 }
 
 export interface Line {
@@ -135,6 +135,7 @@ export interface Line {
     code:string
     format_id?:number
     meta?:any
+    is_public: boolean
 }
 
 export interface Fact {

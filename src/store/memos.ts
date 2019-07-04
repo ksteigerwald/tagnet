@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { deleteMemo, memosQry, memosQryMemoLines, memosSearch, filterMemos, 
+import { deleteMemo, memosQry, memosQryMemoLines, memosSearch, memoPublic, 
          memosInsert, updateMemoUpdated, memosGet, updateMemoCode } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 import Hashids from 'hashids'
@@ -83,6 +83,17 @@ export const actions: ActionTree<MemoState, RootState> = {
         commit('updateMemo', memo)
     },
 
+    async updatePublic({ commit, dispatch, rootState }, memo: Memo) {
+        const response: any = await apolloClient.mutate({
+            mutation: memoPublic,
+            variables: {
+                id: memo.id,
+                public: memo.is_public
+            }
+        })
+
+        commit('updateMemo', memo)
+    },
     async deleteMemo({ commit, dispatch, rootState }, memo:Memo) {
         const response: any = await apolloClient.mutate({
             mutation: deleteMemo,
