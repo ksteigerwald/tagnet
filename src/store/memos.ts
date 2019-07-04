@@ -133,6 +133,12 @@ export const actions: ActionTree<MemoState, RootState> = {
         await dispatch('facts/createFact', { search: term }, { root: true })
     },
 
+    onboard({ commit, dispatch, rootState}) {
+        dispatch('createMemo',{label: 'My Bookmarks', tag_id: 7, autogen: true})
+        dispatch('createMemo',{label: 'My Notes', tag_id: 7, autogen: true})
+        dispatch('createMemo',{label: 'My Idea Book', tag_id: 6, autogen: true})
+    },
+
     //Find a memo with given code
     //When no code is found, find image any bucket
     //when no [image ANY] bucket, create image [ANY] bucket memo 

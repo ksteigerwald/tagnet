@@ -87,9 +87,8 @@ export const state: UserState = localUser
         variables: { fname: jwt.given_name }
       })
 
-      console.log('>>>>>>>>>', response)
-
       state.profile = response.data.insert_users.returning.pop()
+      dispatch('memos/onboard', null, { root: true })
 
     },
     async authOProfileCheck({ commit, dispatch, rootState}, jwt: any) {
