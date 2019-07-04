@@ -1,7 +1,8 @@
 <template>
     <Resize id="app" class="wrapper">
         <div class="overlay"></div>
-        <Header v-if="showHeader" />
+        <!--<Header v-if="showHeader" />-->
+        <Header/>
          <transition name="fade" mode="out-in">
             <router-view></router-view>
          </transition>
@@ -21,12 +22,12 @@ import Resize from '@/components/common/Resize.vue';
 })
 export default class App extends Vue { 
 
-  protected: string[] = ['home', 'memorandums']
-  showHeader: boolean = false 
+  protected: string[] = ['home', 'memorandums'];
+  showHeader: boolean = false;
 
   mounted() {
-    console.log('+++++')
-    console.log(this)
+    console.log('+++++');
+    console.log(this);
   }
 
   @Watch('$route', { immediate: true, deep: false })
