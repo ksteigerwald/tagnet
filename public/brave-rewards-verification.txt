@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: tagnet.io
+Token: b19c43236ba60b092c49c3194fe92025f2b46774b6974df42d40907b3bf827fd
