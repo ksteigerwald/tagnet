@@ -8,7 +8,8 @@
         </div>
         <div class="top__container">
           <div class="top__title">
-            <h1>A search engine <br> for all your data</h1>
+            <h1>The best way </br> to organize your digital
+self</h1>
           </div>
           <div class="top__input">
             <div class="create-input">

@@ -2,6 +2,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, UserState, User } from '../types'
 import * as config from '../helpers/config';
 import { apolloClient } from '../constants/graphql'
+import { usersQury, userNew} from '@/constants/users.ql'
 
 import router from '../router'
 
@@ -12,8 +13,8 @@ let jsonKey: any = localStorage.getItem(config.localKey('user')) || ''
 const localUser: User = (jsonKey) ? jsonKey : null;
 
 export const state: UserState = localUser
-  ? { status: { loggedIn: true }, user: localUser }
-  : { status: {}, user: null };
+  ? { status: { loggedIn: true }, user: localUser, profile: null }
+  : { status: {}, user: null, profile: null };
 
   export const getters: GetterTree<UserState, RootState> = {
     status: (stage, getters, rootState) => state.status.loggingIn
@@ -72,9 +73,39 @@ export const state: UserState = localUser
         //dispatch('alert/error', error, { root: true });
       })
     },
+
     logout({ commit }) {
       commit('logout');
+    },
+
+    async authOProfileBuild({ commit, dispatch, rootState}, jwt: any) { 
+
+      console.log('auth', jwt.given_name)
+
+      const response: any = await apolloClient.mutate({
+        mutation: userNew,
+        variables: { fname: jwt.given_name }
+      })
+
+      state.profile = response.data.insert_users.returning.pop()
+      dispatch('memos/onboard', null, { root: true })
+
+    },
+    async authOProfileCheck({ commit, dispatch, rootState}, jwt: any) {
+      console.log('JWT', jwt)
+
+        const response: any = await apolloClient.query({
+            query: usersQury
+        })
+
+        if(response.data.users.length > 0) {
+          state.profile = response.data.users.pop()
+        }
+        else {
+          dispatch('authOProfileBuild', jwt)
+        }
     }
+    
   }
 
   export const user:Module<UserState, RootState> = {

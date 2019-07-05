@@ -25,11 +25,6 @@ export default class App extends Vue {
   protected: string[] = ['home', 'memorandums'];
   showHeader: boolean = false;
 
-  mounted() {
-    console.log('+++++');
-    console.log(this);
-  }
-
   @Watch('$route', { immediate: true, deep: false })
   onRouteEnter() {
     if(this.protected.indexOf(this.$route.name) !== -1) {

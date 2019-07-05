@@ -55,7 +55,7 @@ router.beforeEach((to:any, from:any, next:any) => {
     if(to.path === "/callback") {
         let token = to.hash.split('&').pop().split('=').pop()
         let data = parseJwt(token)
-
+        store.dispatch('user/authOProfileCheck', data) 
         localStorage.setItem(config.localKey('user'), token)
         localStorage.setItem(config.localKey('picture'), data.picture)
 

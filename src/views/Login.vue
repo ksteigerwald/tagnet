@@ -29,7 +29,7 @@ viewBox="0 0 106 31">
       <div class="login-page__container">
         <div class="login-page__block">
           <div class="login-page__title">
-            <p>Start your<br> productive today</p>
+            <p>Digital </br> de-cluttering, within your reach!</p>
           </div>
           <div class="login-page__form">
             <div class="input">
