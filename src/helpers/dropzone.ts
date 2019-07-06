@@ -27,14 +27,14 @@ export default class DropzoneMixIn extends Vue {
 
   mounted() {
 
-    globalEventBus.$on('WindowDrop', (data: Stream) => {
-      this.dropped(data)
-    })
+    // globalEventBus.$on('WindowDrop', (data: Stream) => {
+    //   this.dropped(data)
+    // })
 
-    globalEventBus.$on('WindowPaste', (data: Stream) => {
-      console.log('WINDOWPASTE', data)
-      this.pasted(data)
-    })
+    // globalEventBus.$on('WindowPaste', (data: Stream) => {
+    //   console.log('WINDOWPASTE', data)
+    //   this.pasted(data)
+    // })
 
   }
 
