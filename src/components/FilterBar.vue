@@ -4,21 +4,21 @@
         <a href="#" tabindex="0" @click.prevent>
             <span class="filter-img"> <FilterToggle/> </span> Filter &nbsp;<ArrowDown/></a>
         <div tabindex="0" @click.prevent></div>
-        <ul>
+        <ul class="dropdown-menu__sub">
             <li v-for="tag in tags" :key="tag.code"><a @click.prevent="filterBy(tag)">{{tag.label}}</a></li>
             <li><a @click.prevent="filterBy({id: -1})">All</a></li>
         </ul>
     </li>
     <li class="sample-menu-style dropdown-menu"><a href="#"  tabindex="0" @click.prevent> <span class="filter-img"> <Arrows/> </span> Sort by &nbsp; <ArrowDown/></a>
         <div tabindex="0" @click.prevent></div>
-        <ul>
+        <ul class="dropdown-menu__sub">
             <li><a href="#" @click.prevent="sampleMenu(this)">Item one</a></li>
             <li><a href="#" @click.prevent="sampleMenu(this)">Item Two</a></li>
         </ul>
     </li>
-    <li class="sample-menu-style dropdown-menu"><a href="#" tabindex="0" @click.prevent> <span class="filter-img"> <Menu/> </span> </a>
+    <li class="sample-menu-style dropdown-menu"><a href="#" tabindex="0" @click.prevent> <span class="filter-img"> <Menu/> </span> Options </a>
         <div tabindex="0" @click.prevent></div>
-        <ul>
+        <ul class="dropdown-menu__sub">
             <li><a href="#" @click.prevent="sampleMenu(0)">Item one</a></li>
             <li><a href="#" @click.prevent="sampleMenu(1)">Item Two</a></li>
         </ul>

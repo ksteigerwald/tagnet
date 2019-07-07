@@ -80,6 +80,3 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
     }
 }
 </script>
-<style scoped lang="scss">
-  
-</style>

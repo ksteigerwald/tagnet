@@ -50,9 +50,12 @@
                         <div class="input">
                             <label for="bio">Bio</label>
                             <input type="text" id="bio" disabled value="Software Engineer">
-                        </div><a class="link" href="#"><span>Change Avatar</span></a>
+                        </div>
+                        <a class="link" @click.prevent href="#"><span>Change Avatar</span></a>
                     </div>
-                    <div class="profile__action"><a @click.prevent href="#"><span>Update profile</span></a></div>
+                    <div class="profile__action">
+                        <a @click.prevent href="#"><span>Update profile</span></a>
+                    </div>
                 </div>
                 <div class="profile__block">
                     <div class="profile__title">
@@ -62,9 +65,13 @@
                         <div class="input">
                             <label for="email">Email</label>
                             <input type="text" id="email" disabled value="johndoe@gmail.com">
-                        </div><a class="link" href="#"><span>Change Password</span></a><a class="link" href="#"><span>Change Language</span></a>
+                        </div>
+                        <a class="link" @click.prevent href="#"><span>Change Password</span></a>
+                        <a class="link" @click.prevent href="#"><span>Change Language</span></a>
                     </div>
-                    <div class="profile__action"><a @click.prevent href="#"><span>Update changes</span></a></div>
+                    <div class="profile__action">
+                        <a @click.prevent href="#"><span>Update changes</span></a>
+                    </div>
                 </div>
             </div>
             <div class="profile__footer">
@@ -88,7 +95,7 @@
     export default class Profile extends Vue {
         photo: string = localStorage.getItem('TAGNET-picture');
 
-        logout() {
+        static logout() {
             window.localStorage.removeItem('TAGNET-picture');
             window.localStorage.removeItem('TAGNET-user');
             window.location.replace("/");
