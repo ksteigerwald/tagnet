@@ -1,0 +1,71 @@
+.register-page {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 4.6875em);
+
+  &__container {
+    max-width: em(1170);
+    padding: 0 em(15);
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__background {
+    position: absolute;
+    left: em(-200);
+    top: em(-450);
+    width: em(964);
+    height: em(1092);
+    background-image: url($imagePath + "/register/register-background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+
+  &__left {
+    padding-top: em(90);
+    width: 50%;
+  }
+
+  &__title {
+
+    p {
+      @include FontExtra;
+      font-size: em(48);
+      color: #fff;
+
+    }
+
+  }
+
+  &__right {
+    width: 40%;
+
+    .input {
+      margin-bottom: 2em;
+    }
+  }
+
+  &__form {
+    padding-top: em(50);
+
+
+    .button {
+      margin-top: em(40)
+    }
+  }
+
+  &__sing {
+    margin-top: em(25);
+
+    a {
+      @include FontSemi;
+      font-size: em(14);
+      color: $orange;
+    }
+  }
+
+}

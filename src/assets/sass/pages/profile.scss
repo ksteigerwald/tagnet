@@ -1,0 +1,268 @@
+.profile {
+  background: #f9f9f9;
+  min-height: calc(100vh - 4.6875em);
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    max-width: em(1170);
+    padding: 0 em(15);
+    width: 100%;
+    margin: 0 auto;
+    padding-top: em(40);
+  }
+
+  &__left {
+    width: em(460);
+  }
+
+  &__right {
+    width: em(650);
+    background: #fff;
+    border-radius: em(15);
+    padding: em(65);
+  }
+
+  &__user {
+    background-image: url($imagePath + "profile/profile-background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-width: em(460);
+    width: 100%;
+    height: em(192);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__user-photo {
+    width: em(86);
+    height: em(86);
+    padding: em(2);
+    border-radius: 100%;
+    border: 2px solid #fff;
+    overflow: hidden;
+
+    span {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      display: flex;
+      border-radius: 100%;
+      background-position: center center;
+      transform: scale(1.08);
+    }
+    //object-fit: cover;
+
+    img {
+      //width: 100%;
+    }
+  }
+
+  &__user-info {
+    color: #FFFFFF;
+    padding-left: em(25);
+
+    p {
+      display: flex;
+      @include FontExtra;
+      font-size: em(18);
+    }
+
+    span {
+      display: flex;
+      @include Font;
+      font-size: em(18);
+      padding-top: em(10, 18);
+    }
+
+  }
+
+  &__menu {
+    margin-top: em(20);
+    background: #fff;
+    border-radius: em(15);
+    padding: em(45) 0;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    min-height: 26.625em;
+  }
+
+  &__tab {
+
+  }
+
+  &__tab-item {
+    padding-left: em(80);
+    padding-top: em(15);
+    padding-bottom: em(15);
+    width: 100%;
+    border-left: em(10) solid #fff;
+
+    &--active {
+      border-left: em(10) solid $orange;
+      background: #fff0ee;
+
+      a {
+
+        p {
+          color: $orange;
+        }
+
+      }
+    }
+
+    &:hover {
+      a {
+
+        p {
+          color: $orange;
+          transition: .15s color ease-in-out;
+        }
+
+      }
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+
+      p {
+        @include FontSemi;
+        font-size: em(18);
+        padding-left: em(10, 18);
+      }
+
+      span {
+        width: em(25);
+        height: em(25);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+  }
+
+  &__logout {
+    padding-left: em(80);
+    display: flex;
+    align-items: center;
+    border-left: em(10) solid #fff;
+
+    span {
+      width: em(24);
+      height: em(21);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%d;
+      }
+    }
+
+    p {
+      @include FontSemi;
+      font-size: em(18);
+      padding-left: em(10, 18);
+      color: $orange;
+    }
+
+  }
+
+  &__block {
+    padding-bottom: em(20);
+    padding-top: em(20);
+
+    &:first-child {
+      border-bottom: 1px solid #f4f4f4;
+    }
+
+    .input {
+
+      label {
+        @include Font;
+        font-size: em(14);
+        color: #1a1a1a;
+        padding-bottom: em(10, 14);
+      }
+
+      input {
+        font-size: em(14);
+        max-width: em(290, 14);
+        height: em(35, 14);
+        width: 100%;
+        border: 1px solid #c4c4c4;
+        padding: 0 em(14, 14);
+        border-radius: em(5, 14);
+        background: #fcfcfc;
+      }
+
+    }
+
+    .link {
+      display: flex;
+      margin: em(5) 0;
+
+      span {
+        font-size: em(14);
+        transition: .15s color ease-in-out;
+      }
+
+      &:hover {
+        span {
+          color: $orange;
+        }
+      }
+
+    }
+  }
+
+  &__title {
+    padding-bottom: 1.625em;
+
+    p {
+      @include FontSemi;
+      font-size: em(18);
+    }
+  }
+
+  &__action {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+
+    a {
+
+      span {
+        @include FontSemi;
+        color: $orange;
+        font-size: em(14);
+      }
+
+    }
+  }
+
+  &__footer {
+    padding-top: em(70);
+    padding-bottom: em(20);
+  }
+
+  &__footer-menu {
+    display: flex;
+  }
+
+  &__footer-item {
+    padding-left: em(10);
+
+    span {
+      @include Font;
+      color: #142453;
+      font-size: em(13);
+    }
+  }
+
+}

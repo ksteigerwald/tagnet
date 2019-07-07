@@ -5,6 +5,7 @@ import Login from './views/Login.vue';
 import Landing from './views/Landing.vue';
 import Register from './views/Register.vue';
 import Memorandum from './views/Memorandum.vue';
+import Profile from './views/Profile.vue';
 
 Vue.use(Router);
 
@@ -15,37 +16,42 @@ export default new Router({
     {
       path: '/',
       name: 'landing',
-      component: Landing,
+      component: <any> Landing,
     },
     {
       path: '/home',
       name: 'home',
-      component: Home,
+      component: <any> Home,
     },
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: <any> Login,
     },
     {
       path: '/register',
       name: 'register',
-      component: Register,
+      component: <any> Register,
     },
     {
       path: '/Logout',
       name: 'logout',
-      component: Login,
+      component: <any> Login,
     },
     {
       path: '/memorandums/:memoId',
       name: 'memorandums',
-      component: Memorandum,
+      component: <any> Memorandum,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: <any> Profile,
     },
     {
       path: '/callback',
       name: 'callback',
-      //component: Login,
+      //component: <any> Login,
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {

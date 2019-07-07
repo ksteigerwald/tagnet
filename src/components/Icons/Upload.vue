@@ -19,17 +19,5 @@ export default class Upload extends Vue {
 </script>
 
 <style scoped lang="scss">
-  #btn-upload {
-    position: absolute;
-    right: 15px;
-    top:15px;
-    cursor: pointer;
-    .icon-fill {
-      fill: #ccc;
-    }
-  }
-  #btn-upload svg path:hover,
-  #btn-upload svg path:active { 
-      fill: #ff6956;
-  }
+
 </style>

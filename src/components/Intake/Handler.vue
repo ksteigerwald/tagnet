@@ -92,26 +92,5 @@ export default class Handler extends Vue {
 </script>
 
 <style scoped lang="scss">
-    form {
-        display: block;
-    }
-    .main-search-box {
-        border-radius:5px;
-        background:#fff;
-        min-height: 65px;
-        //z-index: 5;
-        //position: absolute;
-        //border: 1px solid #cfcfcf;
-    }
-   .set-height {
-        //height:55px;
-        //min-height:55px;
-   }
-   .position-absolute {
-       position: absolute;
-       z-index:999;
-       width:100%;
-       min-height: 65px;
-       padding-bottom: 3rem;
-   }
+
 </style>

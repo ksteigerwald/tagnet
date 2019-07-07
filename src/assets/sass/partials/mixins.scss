@@ -1,0 +1,9 @@
+$base-font-size: 16;
+@function em($pixels, $context: $base-font-size) {
+  @return #{$pixels/$context}em;
+}
+
+@mixin shadowPng($size1,$size2, $size3, $color_shadow) {
+  -webkit-filter: drop-shadow($size1 $size2 $size3 $color_shadow);
+  filter: drop-shadow($size1 $size2 $size3 $color_shadow);
+}

@@ -4,10 +4,12 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import * as config from './helpers/config'
+import "./assets/sass/app.scss";
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { globalEventBus } from '@/helpers/EventBus'
 import { ENOMEM } from 'constants';
 import VueAnalytics from 'vue-analytics'
+import Helpers from '@/helpers/Helpers'
 
 Vue.config.productionTip = false;
 
@@ -80,6 +82,11 @@ Vue.use(VueAnalytics, {
 })
 
 new Vue({
+    data() {
+        return {
+            Helpers
+        }
+    },
     router,
     store,
     render: (h) => h(App),
