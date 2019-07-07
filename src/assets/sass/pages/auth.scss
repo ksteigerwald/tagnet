@@ -1,9 +1,10 @@
 .img-holder img {
-  border-radius: 50%;
-  border: 1px solid #FF6956;
+  border-radius: 100%;
+  border: 2px solid #FF6956;
   width: em(36);
   height: em(36);
   object-fit: cover;
+  overflow: hidden;
 }
 
 .nav {
@@ -17,7 +18,7 @@
 }
 
 .hero-sec {
-  padding: em(40) 0 0 0;
+  padding-top: em(80);
 
   &__container {
     max-width: em(1140);
@@ -930,7 +931,7 @@
   top: 50%;
   width: em(9);
   height: em(7);
-  //background-image: url(assets/images/check.svg);
+  background-image: url($imagePath + 'check.svg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -1088,7 +1089,7 @@
 .dropdown-menu > ul:after {
   content: "";
   position: absolute;
-  //background-image: url(assets/images/white-arrow.svg);
+  background-image: url($imagePath + 'white-arrow.svg');
   width: em(20);
   height: em(20);
   background-position: center;
@@ -1181,7 +1182,6 @@
 }
 
 .m-box {
-  margin-top: em(72);
 }
 
 .overlay {

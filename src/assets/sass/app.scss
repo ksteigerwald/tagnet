@@ -9,11 +9,13 @@ $fontPath: '/static/fonts/';
 @import "partials/fonts";
 @import "partials/base";
 
+@import "parts/header";
+
 @import "pages/auth";
 @import "pages/home";
 @import "pages/login";
 @import "pages/register";
-
+@import "pages/profile";
 
 @media (max-width: 1199px) {
   .main-catgaory {

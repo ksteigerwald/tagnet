@@ -106,7 +106,7 @@ export default class Flyout extends Vue {
     	}
         li:hover,
         li.is-active {
-            background:url('~@/assets/carrot.svg');
+            background:url('~@/assets/svg/carrot.svg');
             background-repeat: no-repeat;
             background-position: 35px 4px;
         }

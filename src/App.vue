@@ -35,6 +35,6 @@ export default class App extends Vue {
 }
 </script>
 <!--<style lang="scss">-->
-    <!--@import '@/assets/responsive.scss';-->
-    <!--@import '@/assets/style.scss';-->
+    <!--@import '@/assets/_responsive.scss';-->
+    <!--@import '@/assets/_style.scss';-->
 <!--</style>-->

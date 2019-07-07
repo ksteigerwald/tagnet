@@ -35,7 +35,7 @@
             fSize () {
                 let vW = this.vW;
                 let vH = this.vH;
-                return this.isMobile() ? 16 : 16*Math.min(Math.max(minWidth,vW)/defaultWidth,Math.max(minHeight,vH)/defaultHeight);
+                return this.isMobile() ? 12 : 16*Math.min(Math.max(minWidth,vW)/defaultWidth,Math.max(minHeight,vH)/defaultHeight);
             }
         },
         methods: {

@@ -2,7 +2,9 @@
 <div class="col-two">
     <h3>Recent Activity</h3>
     <ActivityLogItem v-for="log in facts" :key="log.id" :log="log" />
-    <div class="all-activity"> <a href="#">See All Activity</a> </div>
+    <div class="all-activity">
+        <a @click.prevent href="#">See All Activity</a>
+    </div>
 </div>
 </template>
 

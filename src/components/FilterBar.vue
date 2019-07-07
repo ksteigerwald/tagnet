@@ -1,26 +1,26 @@
 <template>
  <ul class="catgory-head">
     <li class="sample-menu-style dropdown-menu"> 
-        <a href="#" tabindex="0" onclick="return true"> 
+        <a href="#" tabindex="0" @click.prevent>
             <span class="filter-img"> <FilterToggle/> </span> Filter &nbsp;<ArrowDown/></a>
-        <div tabindex="0" onclick="return true"></div>
+        <div tabindex="0" @click.prevent></div>
         <ul>
-            <li v-for="tag in tags" :key="tag.code"><a @click="filterBy(tag)">{{tag.label}}</a></li>
-            <li><a @click="filterBy({id: -1})">All</a></li>
+            <li v-for="tag in tags" :key="tag.code"><a @click.prevent="filterBy(tag)">{{tag.label}}</a></li>
+            <li><a @click.prevent="filterBy({id: -1})">All</a></li>
         </ul>
     </li>
-    <li class="sample-menu-style dropdown-menu"><a href="#"  tabindex="0" onclick="return true"> <span class="filter-img"> <Arrows/> </span> Sort by &nbsp; <ArrowDown/></a>
-        <div tabindex="0" onclick="return true"></div>
+    <li class="sample-menu-style dropdown-menu"><a href="#"  tabindex="0" @click.prevent> <span class="filter-img"> <Arrows/> </span> Sort by &nbsp; <ArrowDown/></a>
+        <div tabindex="0" @click.prevent></div>
         <ul>
-            <li><a href="#" onclick="sampleMenu(this)">Item one</a></li>
-            <li><a href="#" onclick="sampleMenu(this)">Item Two</a></li>
+            <li><a href="#" @click.prevent="sampleMenu(this)">Item one</a></li>
+            <li><a href="#" @click.prevent="sampleMenu(this)">Item Two</a></li>
         </ul>
     </li>
-    <li class="sample-menu-style dropdown-menu"><a href="#" tabindex="0" onclick="return true"> <span class="filter-img"> <Menu/> </span> </a>
-        <div tabindex="0" onclick="return true"></div>
+    <li class="sample-menu-style dropdown-menu"><a href="#" tabindex="0" @click.prevent> <span class="filter-img"> <Menu/> </span> </a>
+        <div tabindex="0" @click.prevent></div>
         <ul>
-            <li><a href="#" onclick="sampleMenu(this)">Item one</a></li>
-            <li><a href="#" onclick="sampleMenu(this)">Item Two</a></li>
+            <li><a href="#" @click.prevent="sampleMenu(0)">Item one</a></li>
+            <li><a href="#" @click.prevent="sampleMenu(1)">Item Two</a></li>
         </ul>
     </li>
 </ul> 
@@ -45,12 +45,16 @@ import { Tag, TagState } from '@/types'
  }
 })
 export default class FilterBar extends Vue {
-    @Prop() tags: Tag[]
+    @Prop() tags: Tag[];
 
     filterBy(tag: Tag) {
         //emit
-        console.log(tag, '1st FILTER WALL')
+        console.log(tag, '1st FILTER WALL');
         globalEventBus.$emit('filterWall', tag)
+    }
+
+    sampleMenu(item) {
+        console.log(item);
     }
 }
 </script>

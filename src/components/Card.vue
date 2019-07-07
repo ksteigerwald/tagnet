@@ -8,8 +8,12 @@
                                         </a>
                                         <div tabindex="0" onclick="return true"></div>
                                         <ul>
-                                            <li><a href="#" onclick="sampleMenu(this)"><img src="@/assets/images/padlock-unlock.svg" alt="">Make Public</a></li>
-                                            <li><a href="#" @click="remove(memo)"><img src="@/assets/images/delete.svg" alt="">Delete</a></li>
+                                            <li><a href="#" onclick="sampleMenu(this)">
+                                                <img src="static/images/padlock-unlock.svg" alt="">
+                                                Make Public
+                                            </a>
+                                            </li>
+                                            <li><a href="#" @click="remove(memo)"><img src="static/images/delete.svg" alt="">Delete</a></li>
                                         </ul>
                                     </div>
                                 </div>
