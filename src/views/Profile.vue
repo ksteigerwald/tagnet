@@ -4,7 +4,7 @@
             <div class="profile__left">
                 <div class="profile__user">
                     <div v-if="photo" class="profile__user-photo">
-                        <img :src="photo" alt="">
+                        <span :style="{ backgroundImage: 'url(' + photo + ')' }"></span>
                     </div>
                     <div class="profile__user-info">
                         <p>John Doe</p><span>Software Engineer</span>

@@ -196,7 +196,8 @@
   border: 1px solid rgba(196, 196, 196, 0.54);
   padding: em(23) em(16) em(16) em(20);
   border-top: em(8) solid #96A5FF;
-  width: 24.83%;
+  width: calc(33.333% - #{em(30)});
+  margin: em(15);
   margin-bottom: em(30);
 }
 
@@ -279,6 +280,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin: 0 em(-15);
 }
 
 .main-area {
@@ -289,10 +291,6 @@
 .main-area .col-one {
   width: 75%;
   margin-right: em(30);
-}
-
-.catagory-itme:last-child {
-  margin-right: 0;
 }
 
 .catagory-itme-two {
