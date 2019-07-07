@@ -53,7 +53,7 @@ export default class FilterBar extends Vue {
         globalEventBus.$emit('filterWall', tag)
     }
 
-    sampleMenu(item) {
+    sampleMenu(item: any) {
         console.log(item);
     }
 }
