@@ -60,6 +60,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { User, UserState } from '@/types'
+
 @Component({
 	components: {
 	}
@@ -94,10 +95,13 @@ export default class Login extends Vue {
 		}
 	}
 
-    beforeMount () {
+    beforeMount() {
         let loginStatus = !!window.localStorage.getItem('TAGNET-user');
         if(loginStatus) {
             this.$router.push('/home');
+        }
+        else {
+          window.location.href = this.authLink()
         }
 
     }
