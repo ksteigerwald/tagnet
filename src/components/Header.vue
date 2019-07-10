@@ -2,7 +2,11 @@
     <header class="header">
         <div class="header__container">
 
-            <router-link class="logo" to="/">
+            <router-link v-if="loginToken" :to="{ name: 'home'}" class="logo">
+                <LogoIcon></LogoIcon>
+            </router-link>
+
+            <router-link v-if="!loginToken" to="/" class="logo">
                 <LogoIcon></LogoIcon>
             </router-link>
 
