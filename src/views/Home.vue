@@ -1,6 +1,7 @@
 <template>
     <section class="hero-sec m-box">
-        <div class="container">
+        <div class="hero-sec__container">
+
              <IntakeHandler 
                     @interface="onInterfaceChange"
                     :propList="syncData" />
@@ -15,9 +16,8 @@
                 <ActivityLog />   
             </div>
         </div>
-
+     </div>
         <FileUpload />
-
     </section>
    
 </template>
@@ -29,7 +29,7 @@ import { Tag, TagState, Memo, MemoState, Line, LineState, Fact, FactState } from
 import { mixins } from 'vue-class-component';
 
 import Wall from '@/components/Wall.vue'
-import FileUpload from '@/components/FileUpload'
+import FileUpload from '@/components/FileUpload.vue'
 import Loading from '@/components/Loading.vue'
 import ActivityLog from '@/components/ActivityLog.vue'
 import IntakeHandler from '@/components/Intake/Handler.vue'

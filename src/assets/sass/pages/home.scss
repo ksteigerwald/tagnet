@@ -1,0 +1,519 @@
+.content {
+  overflow-x: hidden;
+}
+
+.top {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 4.6875em);
+
+  &__background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  &__background-left {
+    background-image: url($imagePath + "left-top.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: em(807);
+    height: em(1025);
+    position: absolute;
+    left: -18em;
+    top: -9.7em;
+  }
+
+  &__background-right {
+    background-image: url($imagePath + "right-top.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: em(800);
+    height: em(1064);
+    position: absolute;
+    right: -30em;
+    top: -10.5em;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    max-width: em(800);
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: em(35) 0;
+  }
+
+  &__title {
+    text-align: center;
+    padding-top: em(50);
+
+    h1 {
+      @include FontExtra;
+      font-size: 3em;
+      line-height: 1em;
+    }
+
+  }
+
+  &__input {
+    margin-top: em(70);
+    padding: 0 em(15);
+  }
+
+  &__links {
+    margin-top: em(55);
+  }
+
+  &__companies {
+    margin-top: em(110);
+  }
+
+}
+
+.create-input {
+  display: flex;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, .1);
+  background: #fff;
+  border-radius: em(15);
+  height: em(60);
+  max-width: em(560);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 em(30);
+  padding-right: em(10);
+
+  &__left {
+    max-width: em(440);
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__right {
+    max-width: em(140);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__input {
+    width: 100%;
+    padding-left: em(10);
+
+    input {
+      @include Font;
+      outline: none;
+      width: 100%;
+      border: 0;
+      font-size: em(16);
+
+      &:disabled {
+        background: none;
+        @include FontSemi;
+      }
+
+      &::placeholder {
+        opacity: .5;
+      }
+    }
+
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    padding-left: em(15);
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: em(2);
+      height: 100%;
+      background: #dfdfdf;
+    }
+
+    &:hover p {
+      color: $orangeBlack;
+    }
+
+    p {
+      @include FontSemi;
+      color: $orange;
+      font-size: em(18);
+      padding-right: em(15, 18);
+      transition: .15s ease-in-out color;
+    }
+
+    span {
+      width: em(24);
+      height: em(24);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  }
+
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+
+  &__item {
+    margin: 0 em(20);
+
+    a {
+      display: flex;
+      align-items: center;
+    }
+
+  }
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    &--get {
+      background-image: url($imagePath + "get-icon.png");
+    }
+
+    &--play {
+      background-image: url($imagePath + "play-icon.png");
+    }
+  }
+
+  &__text {
+    @include FontSemi;
+    color: $orange;
+    font-size: em(18);
+    padding-left: em(5, 18);
+    transition: .15s ease-in-out color;
+
+    &:hover {
+      color: $orangeBlack;
+    }
+  }
+
+}
+
+.companies {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+
+  &__title {
+
+    p {
+      @include Font;
+      font-size: em(14);
+      line-height: em(16, 14);
+    }
+  }
+
+  &__list {
+    margin-top: em(45);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__item {
+    margin: 0 em(35);
+    opacity: .8;
+
+    img {
+      width: 100%;
+    }
+  }
+
+}
+
+.info {
+  position: relative;
+  z-index: 2;
+  padding-top: em(120);
+
+  &__container {
+    max-width: em(1170);
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__title {
+    padding-left: 13em;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: em(130);
+      height: em(104);
+      background-image: url($imagePath + "dots.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      left: 0.8em;
+      top: 1.1em;
+    }
+
+    p {
+      @include FontLight;
+      font-size: em(56);
+      line-height: 1.4em;
+    }
+  }
+
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7em;
+  }
+
+  &__item {
+    width: 33.333%;
+    //display: flex;
+    //flex-flow: column wrap;
+    //align-items: center;
+    //text-align: center;
+  }
+
+  &__item-icon {
+    width: em(100);
+    height: em(100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    background: #ffe1dd;
+    margin: 0 auto;
+
+    span {
+      @include FontExtra;
+      font-size: em(32);
+      color: $orange;
+    }
+  }
+
+  &__item-text {
+    text-align: center;
+    margin-top: em(15);
+    //display: flex;
+    //flex-flow: column wrap;
+    //align-items: center;
+
+    //svg {
+    //  width: em(35);
+    //  height: em(35);
+    //}
+    //
+    span {
+      @include FontSemi;
+      font-size: em(18);
+      margin-top: em(25, 18);
+    }
+
+    p {
+      @include Font;
+      font-size: em(16);
+      margin-top: 1.325em;
+      padding: 0 em(15, 16);
+      line-height: em(20, 16);
+    }
+  }
+
+}
+
+.blocks {
+  margin-top: 8.125em;
+}
+
+.block {
+  padding: em(80) 0;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    max-width: em(1100);
+    width: 100%;
+    margin: 0 auto;
+    padding: em(20);
+  }
+
+  &__content {
+    display: flex;
+    flex-flow: column wrap;
+    max-width: 28.25em;
+    width: 100%;
+
+    &--right {
+      padding-left: 3.25em;
+    }
+  }
+
+  &__image {
+    max-width: em(600);
+    width: 100%;
+
+    img {
+      width: 100%;
+      @include shadowPng(5px, 5px, 5px, #ccc);
+    }
+
+  }
+
+  &__title {
+    margin-top: em(80);
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: em(30);
+      height: em(31);
+      background-size: contain;
+      background-image: url($imagePath + "single-logo.svg");
+      top: em(5);
+      left: em(-45);
+      z-index: -1;
+    }
+
+    p {
+      @include FontMedium;
+      font-size: em(36);
+      line-height: em(40, 36);
+    }
+  }
+
+  &__text {
+    margin-top: em(40);
+    max-width: 24.525em;
+    width: 100%;
+
+    p {
+      @include Font;
+      font-size: 1em;
+      letter-spacing: 0.01em;
+      line-height: 1.65em;
+    }
+  }
+
+}
+
+.testimonials {
+
+  &__container {
+    max-width: em(800);
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__persons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  &__image {
+    max-width: em(88);
+    width: 100%;
+    margin: 0 em(25);
+
+    img {
+      width: 100%;
+    }
+
+    &--center {
+      max-width: em(128);
+    }
+  }
+
+  &__content {
+    margin-top: em(25);
+    text-align: center;
+  }
+
+  &__title {
+
+    p {
+      @include FontSemi;
+      font-size: em(18);
+    }
+  }
+
+  &__text {
+    margin-top: em(25);
+    padding: 0 em(15);
+
+    p {
+      @include Font;
+      font-size: em(16);
+      line-height: em(25, 16);
+    }
+  }
+
+}
+
+.sing {
+
+  &__container {
+    max-width: em(1150);
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  &__center {
+    max-width: em(1127);
+    width: 100%;
+    height: em(424);
+    margin: 0 auto;
+    background-image: url($imagePath + "red-background.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__ball-left {
+    width: em(516);
+    height: em(516);
+    background-image: url($imagePath + "red-ball-2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    left: -3em;
+    top: -11em;
+    z-index: -1;
+  }
+
+  &__ball-right {
+    width: em(516);
+    height: em(516);
+    background-image: url($imagePath + "red-ball.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: -3em;
+    top: 6em;
+    z-index: -1;
+  }
+
+}

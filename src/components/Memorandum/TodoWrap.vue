@@ -3,7 +3,7 @@
       <div class="todo-list">
         <div class="todo-list-main todo-list-main-first">
           <ul class="goals-activity todo-timeline" id="timeline1">
-            <li><span class="icon-activity"><img src="@/assets/images/list-owl.svg" alt=""></span></li>
+            <li><span class="icon-activity"><img src="static/images/list-owl.svg" alt=""></span></li>
           </ul>
         <Todo :todos="todos" />
       </div>

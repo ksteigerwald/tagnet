@@ -92,6 +92,7 @@ export interface LineState {
 export interface UserState {
     status: any
     user: any
+    profile: any
 }
 
 export interface MacroState {

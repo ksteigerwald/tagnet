@@ -1,31 +1,29 @@
 <template>
-<div id="app" class="wrapper">
-    <div class="overlay"></div>
-    <Header v-if="showHeader" />
-     <transition name="fade" mode="out-in">
-        <router-view></router-view>
-     </transition>
-</div>
+    <Resize id="app" class="wrapper">
+        <div class="overlay"></div>
+        <!--<Header v-if="showHeader" />-->
+        <Header/>
+         <transition name="fade" mode="out-in">
+            <router-view></router-view>
+         </transition>
+    </Resize>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import Header from '@/components/Header.vue'
+import Header from '@/components/Header.vue';
+import Resize from '@/components/common/Resize.vue';
 
 @Component({
     components: {
         Header,
+        Resize
     }
 })
 export default class App extends Vue { 
 
-  protected: string[] = ['home', 'memorandums']
-  showHeader: boolean = false 
-
-  mounted() {
-    console.log('+++++')
-    console.log(this)
-  }
+  protected: string[] = ['home', 'memorandums'];
+  showHeader: boolean = false;
 
   @Watch('$route', { immediate: true, deep: false })
   onRouteEnter() {
@@ -36,7 +34,7 @@ export default class App extends Vue {
   }
 }
 </script>
-<style lang="scss">
-    @import '@/assets/responsive.scss';
-    @import '@/assets/style.scss';
-</style>
+<!--<style lang="scss">-->
+    <!--@import '@/assets/_responsive.scss';-->
+    <!--@import '@/assets/_style.scss';-->
+<!--</style>-->

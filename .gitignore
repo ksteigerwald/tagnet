@@ -9,6 +9,8 @@ xterm-*
 /tests/*/*.map
 *.db
 
+/dist
+
 /src/*.js
 /src/*.map
 lambdas/.serverless/

@@ -7,6 +7,7 @@
          @blur="blur()"
          placeholder="'/' To create a new bucekt, '@' to add to that bucket"
          @keyup.enter="submitHandler" />
+
 </template>
 
 <script lang="ts">
@@ -229,6 +230,10 @@ export default class IntakeStream extends Vue {
 
 #tg-stream {}
 #tg-stream.is-placeholder {}
+
+input {
+  outline-width: 0;
+}
 
 //[contenteditable="true"]
 input.single-line {
