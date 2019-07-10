@@ -67,7 +67,7 @@ export const state: UserState = localUser
         router.push('/')
       })
       .catch((error) => {
-        console.log(error)
+        //console.log(error)
         commit('loginFailure')
         commit('logout')
         //dispatch('alert/error', error, { root: true });
@@ -80,7 +80,7 @@ export const state: UserState = localUser
 
     async authOProfileBuild({ commit, dispatch, rootState}, jwt: any) { 
 
-      console.log('auth', jwt.given_name)
+      //console.log('auth', jwt.given_name)
       let name:string = jwt.given_name || jwt.nickname || null
 
       const response: any = await apolloClient.mutate({
@@ -94,7 +94,6 @@ export const state: UserState = localUser
     },
 
     async authOProfileCheck({ commit, dispatch, rootState}, jwt: any) {
-      console.log('JWT', jwt)
 
         const response: any = await apolloClient.query({
             query: usersQury

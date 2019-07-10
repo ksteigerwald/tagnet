@@ -49,13 +49,10 @@ export default class FilterBar extends Vue {
 
     filterBy(tag: Tag) {
         //emit
-        console.log(tag, '1st FILTER WALL');
         globalEventBus.$emit('filterWall', tag)
     }
 
-    sampleMenu(item: any) {
-        console.log(item);
-    }
+    sampleMenu(item: any) {}
 }
 </script>
 

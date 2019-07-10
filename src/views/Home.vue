@@ -39,7 +39,6 @@ import { globalEventBus } from '@/helpers/EventBus'
         IntakeHandler,
         Wall,
         ActivityLog,
-        FileUpload,
         Loading,
     }
 })

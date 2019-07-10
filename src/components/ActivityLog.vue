@@ -24,9 +24,6 @@ export default class ActivityLog extends Vue {
     
     @Getter('facts/facts') !facts: Fact[]
 
-    mounted() {
-        console.log('FACT', this.facts)
-    }
 }
 </script>
 

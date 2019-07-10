@@ -112,7 +112,6 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
 
       if (files.length === 1) {
         this.loading = true;
-        console.log("File selected:" + files[0].type)
         this.uploadHandler(files[0], this.memo.code)
           .then(res => {
             this.files = [];
@@ -126,13 +125,6 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
           })
       }
 
-      // this.uploadHandler(files, dom)
-      //   .then(res => {
-      //     console.log(res)
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //   });
     }
 }
 </script>

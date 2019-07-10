@@ -52,13 +52,15 @@ export default class DropzoneMixIn extends Vue {
     const dom: any = (<any>e)
 
     for (var i = 0; i < items.length; i++) {
-        console.log(items[i].type, '<<<', e.clipboardData.getData('text/plain'))
-        console.log(e.target.type)
+
+        //console.log(items[i].type, '<<<', e.clipboardData.getData('text/plain'))
+        //console.log(e.target.type)
+
         if (this.IMAGE_MIME_REGEX.test(items[i].type)) {
             //loadImage(items[i].getAsFile());
             let file = items[i].getAsFile()
         
-            console.log('file pasted:', items[i], file)
+            // console.log('file pasted:', items[i], file)
             this.uploadHandler(file, dom)
             return;
         }
@@ -86,17 +88,17 @@ export default class DropzoneMixIn extends Vue {
     false
   }
 
-  getKeyPath(fileName:string): string {
+  getKeyPath(fileName:string, code: string): string {
     let user:string = localStorage.getItem(config.localKey('user'));
     let key:string = short.generate()
-    return `foobar/${key}/${fileName}`
+    return `${code}/${key}/${fileName}`
   }
 
   //handle using RXJS
   //default code
   async uploadHandler(file: File, code: string) {
     if(file.type.indexOf("image") !== 0) return
-    let url = await this.getURL(this.getKeyPath(file.name))
+    let url = await this.getURL(this.getKeyPath(file.name, code))
     let img: string = url.split('?').shift()
 
     let upload = await this.postToS3(file, url)
@@ -109,13 +111,10 @@ export default class DropzoneMixIn extends Vue {
         value: { filename: img, code: code }
       }
 
-      console.log('upload sream', stream)
-
       globalEventBus.$emit('emitInterface', stream) 
 
       return 200
     }
-     console.log({url, upload })
   }
 
   
