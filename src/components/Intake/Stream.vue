@@ -67,7 +67,6 @@ export default class IntakeStream extends Vue {
     }
 
     @Getter('streams/streams') events: Stream[]
-
     
     getContext(str: string):Stream {
         var context = Context.open
@@ -129,7 +128,6 @@ export default class IntakeStream extends Vue {
     }
 
     emitter(val: Stream) {
-        console.log(val)
         this.$emit('interface', val) 
         return val
     }
