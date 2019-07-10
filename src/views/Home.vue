@@ -60,7 +60,7 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
         await this.loadFacts()
 
         globalEventBus.$on('uploadModalOpen', () => {
-            this.showModal = true
+            //this.showModal = true
         })
 
         this.loadWall() 
