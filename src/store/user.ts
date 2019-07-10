@@ -81,16 +81,18 @@ export const state: UserState = localUser
     async authOProfileBuild({ commit, dispatch, rootState}, jwt: any) { 
 
       console.log('auth', jwt.given_name)
+      let name:string = jwt.given_name || jwt.nickname || null
 
       const response: any = await apolloClient.mutate({
         mutation: userNew,
-        variables: { fname: jwt.given_name }
+        variables: { fname: name }
       })
 
       state.profile = response.data.insert_users.returning.pop()
       dispatch('memos/onboard', null, { root: true })
 
     },
+
     async authOProfileCheck({ commit, dispatch, rootState}, jwt: any) {
       console.log('JWT', jwt)
 
