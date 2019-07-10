@@ -47,6 +47,8 @@ import CRUDMixIn from '@/helpers/crudMixin'
 import { globalEventBus } from '@/helpers/EventBus'
 import DropzoneMixIn from '@/helpers/dropzone'
 
+import { Memo } from '@/types'
+
 @Component({
   components: {
     Modal
@@ -64,17 +66,25 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
       })
     }
 
+    @Prop() memo: Memo
+
+    $refs: {
+      fileZone: any,
+      file: any
+    }
 
     mounted() {
         let self: any = this;
-        this.$refs.fileZone.addEventListener("drop", function (e) {
+        this.$refs.fileZone.addEventListener("drop", function (e: any) {
             e.preventDefault();
             //   document.querySelector("#dropzone").style.visibility = "hidden";
             //   document.querySelector("#dropzone").style.opacity = 0;
             //   document.querySelector("#textnode").style.fontSize = "42px";
           
             var files = e.dataTransfer.files;
+
             console.log("Drop files:", files);
+
             self.onFileInput(null, files);
         });
     }
@@ -83,14 +93,14 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
       this.$refs.file.click();
     }
     
-    onFileInput(e, files) {
+    onFileInput(e: any, files: any) {
         if(e)
             this.files.push(...(e.target.files));
         else
             this.files.push(...files);
     }   
 
-    removeFile(i) {
+    removeFile(i: any) {
         this.files.splice(i, 1);
     }
 
@@ -103,7 +113,7 @@ export default class Home extends mixins(CRUDMixIn, DropzoneMixIn) {
       if (files.length === 1) {
         this.loading = true;
         console.log("File selected:" + files[0].type)
-        this.uploadHandler(files[0], dom)
+        this.uploadHandler(files[0], this.memo.code)
           .then(res => {
             this.files = [];
             this.loading = false;

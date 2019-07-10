@@ -17,13 +17,13 @@ import { Event, Context, Stream } from '@/types';
 @Component
 export default class DropzoneMixIn extends Vue {
   
-  signedURLEndpoing:string = 'https://tagnet-api.herokuapp.com/signed'
+  signedURLEndpoint:string = 'https://tagnet-api.herokuapp.com/signed'
   drops:any[]
   mouseOver: any
   lastTarget: any = null
   uploader: S3Upload = null
 
-  IMAGE_MIME_REGEX:RegExp = /^image\/(p?jpeg|gif|png)$/i;
+  IMAGE_MIME_REGEX: RegExp = /^image\/(p?jpeg|gif|png)$/i;
 
   mounted() {
 
@@ -93,26 +93,26 @@ export default class DropzoneMixIn extends Vue {
   }
 
   //handle using RXJS
-  async uploadHandler(file: File, dom: any) {
+  //default code
+  async uploadHandler(file: File, code: string) {
     if(file.type.indexOf("image") !== 0) return
-
     let url = await this.getURL(this.getKeyPath(file.name))
     let img: string = url.split('?').shift()
 
     let upload = await this.postToS3(file, url)
-    let $el = dom.target.offsetParent
 
     if(upload.status === 200) {
 
       let stream: Stream = {
         context: Context.memo,
         event: Event.drop,
-        value: { filename: img, code: $el.id || null }
+        value: { filename: img, code: code }
       }
 
       console.log('upload sream', stream)
 
       globalEventBus.$emit('emitInterface', stream) 
+
       return 200
     }
      console.log({url, upload })
@@ -121,7 +121,7 @@ export default class DropzoneMixIn extends Vue {
   
   async getURL(file: string = '') {
     
-    const resp = await axios.post(this.signedURLEndpoing, {
+    const resp = await axios.post(this.signedURLEndpoint, {
       method: 'POST',
       fileName: file,
       responseType: 'json'

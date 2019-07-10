@@ -2,9 +2,9 @@
     <section class="hero-sec m-box">
         <div class="hero-sec__container">
 
-             <IntakeHandler 
-                    @interface="onInterfaceChange"
-                    :propList="syncData" />
+           <IntakeHandler 
+                @interface="onInterfaceChange"
+                :propList="syncData" />
          
             <div class="main-area">
                 <div class="col-one">
@@ -16,10 +16,7 @@
                 <ActivityLog />   
             </div>
         </div>
-     </div>
-        <FileUpload />
     </section>
-   
 </template>
 
 <script lang="ts">

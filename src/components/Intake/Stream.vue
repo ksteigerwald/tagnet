@@ -67,7 +67,6 @@ export default class IntakeStream extends Vue {
     }
 
     @Getter('streams/streams') events: Stream[]
-
     
     getContext(str: string):Stream {
         var context = Context.open
