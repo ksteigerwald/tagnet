@@ -1,6 +1,6 @@
 <template>
  <section class="hero-sec m-box">
-    <div class="container">
+    <div class="hero-sec__container">
              <IntakeHandler 
                     @interface="onInterfaceChange"
                     :propList="syncData" />
