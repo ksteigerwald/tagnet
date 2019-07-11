@@ -7,7 +7,7 @@
     
             <template v-for="date in dates"> 
                 <li><span class="date"> {{date}} </span></li> 
-                <TextAndImage :data="getGroupData(date)" />
+                <TextAndImages :data="getGroupData(date)" />
             </template>
         </ul>
     </div>
@@ -20,7 +20,7 @@ import { Tag, TagState, Memo, MemoState, Line, LineState } from '@/types'
 import { TagType } from '@/store/tags'
 import Card from '@/components/Card.vue'
 import TodoWrap from '@/components/Memorandum/TodoWrap.vue'
-import TextAndImage from '@/components/Memorandum/TextAndImage.vue'
+import TextAndImages from '@/components/Memorandum/TextAndImages.vue'
 import MemoDetailHead from '@/components/Memorandum/DetailHead.vue'
 import { groupBy, switchAll } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ import { groupBy, switchAll } from 'rxjs/operators';
   components: {
       TodoWrap,
       MemoDetailHead,
-      TextAndImage,
+      TextAndImages,
   }
 })
 export default class MemoDetail extends Vue {
@@ -62,6 +62,10 @@ export default class MemoDetail extends Vue {
                 case 'lines/addLine':
                     this.outputGroup()
                     break
+                case 'lines/deleteLine':
+                    console.log('deleteLine called')
+                    this.outputGroup()
+                    break    
                 default:
                     break
             }

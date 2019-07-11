@@ -113,6 +113,7 @@ export interface Memo {
     uuid: string
     id: number
     label: string
+    tempValue: string
     tag_id: number
     created: string
     updated: string
@@ -135,7 +136,9 @@ export interface Line {
     user_id: string
     code:string
     format_id?:number
+    edit: boolean
     meta?:any
+    newlabel: string
 }
 
 export interface Fact {

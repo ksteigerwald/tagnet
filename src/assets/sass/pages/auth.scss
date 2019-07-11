@@ -1232,7 +1232,7 @@ body.active .overlay {
 }
 
 .desgin-main {
-  position: relative;
+  position: relative;  
 }
 
 .desgin-main:after {
@@ -1246,8 +1246,19 @@ body.active .overlay {
   top: em(50);
 }
 
+.desgin-main-first{
+  height: 39%;  
+  width: 50%;
+}
+
 .desgin-main-first:after {
+  height: 39%;  
+}
+
+
+.desgin-main-second:after {
   height: 39%;
+  background-color: transparent;
 }
 
 .activity-conatnt {
