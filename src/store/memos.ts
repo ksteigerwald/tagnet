@@ -127,7 +127,8 @@ export const actions: ActionTree<MemoState, RootState> = {
             query: memosSearch,
             variables: { input: vars }	
         })
-        console.log('searchMemos', response.data.memos)
+
+        // console.log('searchMemos', response.data.memos)
         state.memos = response.data.memos
 
         await dispatch('facts/createFact', { search: term }, { root: true })

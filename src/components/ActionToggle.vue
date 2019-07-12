@@ -60,7 +60,6 @@ export default class ActionToggle extends Vue {
         if(this.index >= this.actions.length -1) 
             this.index = 0
 
-        console.log(this.index, this.actions[this.index])  
         //this.pointer = this.actions[this.index].context
         this.$emit('interface', this.actions[this.index])
     }

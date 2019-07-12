@@ -139,7 +139,8 @@ export const actions: ActionTree<LineState, RootState> = {
             query: linesByMemoId,
             variables: { input: memoId }	
         })
-        console.log(response.data.lines)
+
+        // console.log(response.data.lines)
         state.lines = response.data.lines
     },
 

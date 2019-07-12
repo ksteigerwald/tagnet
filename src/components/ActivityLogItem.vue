@@ -53,7 +53,6 @@ export default class ActivityLog extends Vue {
   cssRoot: string = 'activity-one'
   beforeMount() {
     let key = (this.log.FactMemo) ? this.log.FactMemo.TagMemo.label : 'search'
-    console.log(key)
     switch(key) {
       case 'goal':
         this.icon = 1

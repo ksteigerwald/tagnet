@@ -213,6 +213,7 @@ self</h1>
           <li class="footer__menu-item"><router-link to="/register" href="#">Register</router-link></li>
           <li class="footer__menu-item"><a @click.prevent href="#">Help</a></li>
           <li class="footer__menu-item"><a @click.prevent href="#">Contact Us</a></li>
+          <li class="footer__menu-item"><a href="https://app.termly.io/document/privacy-policy/c21b6dcb-dd95-48e1-8882-24308b934200">Privacy Policy</a></li>
         </ul>
         <ul class="footer__social">
           <li class="footer__social-item"><a @click.prevent href="#"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
