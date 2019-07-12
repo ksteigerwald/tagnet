@@ -15,7 +15,7 @@
   content: "";
   position: absolute;
   width: em(2);
-  height: calc(100% - 25%);
+  height: 50%;
   background-color: #DBB7FF;
   left: em(2em);
   z-index: 1;
@@ -1267,7 +1267,11 @@ body.active .overlay {
   background-color: transparent;
 }
 
-.sample-menu-style.dropdown-menu {
+.todo {
+  content:""
+}
+
+.todo.sample-menu-style.dropdown-menu {
   position: absolute;
   left: em(0.5);
 }
