@@ -1,7 +1,7 @@
 <template >
  <li>
      <div class="todo-list">
-         <div v-for="content in data" class="todo-list-main todo-list-main-two mb-0">
+         <div v-for="content in data" class="todo-list-main todo-list-main-two mb-0 detail-head">
              <ul class="goals-activity todo-timeline" id="todo-timeline2">
                  <li><span class="icon-activity">
                    <TextIcon v-if="getIcon(content) === 1" alt="" />

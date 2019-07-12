@@ -1241,7 +1241,7 @@ body.active .overlay {
   width: em(2);
   height: 84%;
   background-color: #DBB7FF;
-  left: em(-43);
+  left: em(-188);
   z-index: 1;
   top: em(50);
 }
@@ -1249,6 +1249,7 @@ body.active .overlay {
 .desgin-main-first{
   height: 39%;  
   width: 50%;
+  word-break: break-word;
 }
 
 .desgin-main-first:after {
@@ -1260,6 +1261,12 @@ body.active .overlay {
   height: 39%;
   background-color: transparent;
 }
+
+.sample-menu-style.dropdown-menu {
+  position: absolute;
+  left: em(0.5);
+}
+
 
 .activity-conatnt {
   position: relative;

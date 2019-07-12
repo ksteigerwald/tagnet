@@ -113,7 +113,6 @@ export interface Memo {
     uuid: string
     id: number
     label: string
-    tempValue: string
     tag_id: number
     created: string
     updated: string
