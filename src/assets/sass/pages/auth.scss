@@ -7,6 +7,22 @@
   overflow: hidden;
 }
 
+.goals-alignment {
+  position: relative;
+}
+
+.goals-alignment:after {
+  content: "";
+  position: absolute;
+  width: em(2);
+  height: calc(100% - 25%);
+  background-color: #DBB7FF;
+  left: em(2em);
+  z-index: 1;
+  top: em(50);
+
+}
+
 .nav {
   padding: 0;
 }
@@ -1233,17 +1249,6 @@ body.active .overlay {
 
 .desgin-main {
   position: relative;  
-}
-
-.desgin-main:after {
-  content: "";
-  position: absolute;
-  width: em(2);
-  height: 84%;
-  background-color: #DBB7FF;
-  left: em(-188);
-  z-index: 1;
-  top: em(50);
 }
 
 .desgin-main-first{
