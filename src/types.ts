@@ -135,7 +135,9 @@ export interface Line {
     user_id: string
     code:string
     format_id?:number
+    edit: boolean
     meta?:any
+    newlabel: string
 }
 
 export interface Fact {

@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line, Fact } from '../types'
 import { apolloClient } from '@/constants/graphql'
-import { linesQry, searchQry, linesInsert, linesByMemoId, updateLineCode, updateLineMeta } from '@/constants/lines.ql'
+import { linesQry, searchQry, linesUpdate, linesDelete, linesInsert, linesByMemoId, updateLineCode, updateLineMeta } from '@/constants/lines.ql'
 import { Subject, fromEvent, of, pipe } from 'rxjs';
 import { pluck, map, debounceTime, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import Hashids from 'hashids'
@@ -31,6 +31,11 @@ export const mutations: MutationTree<LineState> = {
         filtered.push(newLine)
         state.lines = filtered
     },
+
+    deleteLine(state: LineState, deletedLine: Line): void {
+        const index = state.lines.findIndex(lines => lines.id === deletedLine.id)
+        state.lines.splice(index, 1);
+    },
 }
 
 export const actions: ActionTree<LineState, RootState> = {
@@ -55,6 +60,42 @@ export const actions: ActionTree<LineState, RootState> = {
         await dispatch('facts/createFact', { memo_id: line.memo_id, line_id: line.id }, { root: true })
         await dispatch('memos/updateMemoUpdated', line.memo_id, { root: true })
         
+    },
+
+    async deleteLine({ commit, dispatch, rootState }, payload:Line) {
+        console.log('deleteLine');
+        if(payload.label === '') return
+
+        const response: any = await apolloClient.mutate({
+            mutation: linesDelete,
+            variables: {
+                id: payload.id
+            }
+        })
+
+        let line: Line = response.data.delete_lines.returning.pop()
+        commit('deleteLine', line)        
+    },
+
+    async editMode({ commit, dispatch, rootState }, payload:Line) {
+        console.log('editMode');
+        commit('updateLine', payload) 
+    },
+
+    async editLine({ commit, dispatch, rootState }, payload:Line) {
+        console.log('editLine');
+        if(payload.label === '') return
+        const response: any = await apolloClient.mutate({
+            mutation: linesUpdate,
+            variables: {
+                id: payload.id,
+                label : payload.newlabel
+            }
+        })
+
+        let line: Line = response.data.update_lines.returning.pop()
+        
+        commit('updateLine', line)         
     },
 
     async updateLineCode({ commit, dispatch, rootState }, line:Line) {

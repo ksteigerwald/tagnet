@@ -16,6 +16,38 @@ mutation insertLine($objects: [lines_insert_input!]!) {
   }
 }`
 
+export const linesDelete = gql`
+mutation deleteLine($id: Int) {
+  delete_lines(where: {id: {_eq: $id}}) {
+    returning {
+      id
+      memo_id
+      label
+      uuid
+      user_id
+      created
+      format_id
+      meta
+    }
+  }
+}`
+
+export const linesUpdate = gql`
+mutation updateLine($id: Int, $label: String!) {
+  update_lines(where: {id: {_eq: $id}}, _set: { label: $label } ) {
+    returning {
+      id
+      memo_id
+      label
+      uuid
+      user_id
+      created
+      format_id
+      meta
+    }
+  }
+}`
+
 export const linesQry = gql`
 query {
     lines {

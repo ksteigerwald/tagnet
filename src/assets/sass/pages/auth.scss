@@ -7,6 +7,22 @@
   overflow: hidden;
 }
 
+.goals-alignment {
+  position: relative;
+}
+
+.goals-alignment:after {
+  content: "";
+  position: absolute;
+  width: em(2);
+  height: 50%;
+  background-color: #DBB7FF;
+  left: em(2em);
+  z-index: 1;
+  top: em(50);
+
+}
+
 .nav {
   padding: 0;
 }
@@ -1232,23 +1248,34 @@ body.active .overlay {
 }
 
 .desgin-main {
-  position: relative;
+  position: relative;  
 }
 
-.desgin-main:after {
-  content: "";
-  position: absolute;
-  width: em(2);
-  height: 84%;
-  background-color: #DBB7FF;
-  left: em(-43);
-  z-index: 1;
-  top: em(50);
+.desgin-main-first{
+  height: 39%;  
+  width: 50%;
+  word-break: break-word;
 }
 
 .desgin-main-first:after {
-  height: 39%;
+  height: 39%;  
 }
+
+
+.desgin-main-second:after {
+  height: 39%;
+  background-color: transparent;
+}
+
+.todo {
+  content:""
+}
+
+.todo.sample-menu-style.dropdown-menu {
+  position: absolute;
+  left: em(0.5);
+}
+
 
 .activity-conatnt {
   position: relative;
