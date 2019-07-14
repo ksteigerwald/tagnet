@@ -98,7 +98,7 @@ export default class Flyout extends Vue {
 	        cursor: pointer;
 	        color: #1A1A1A;
 	        font-size: 14px;
-            padding-left: 68px;
+            padding-left: 2rem;
             display:block;
 		    transition: all linear 0.1s;	
             text-transform: capitalize;
@@ -109,9 +109,14 @@ export default class Flyout extends Vue {
             background:url('~@/assets/svg/carrot.svg');
             background-repeat: no-repeat;
             background-position: 35px 4px;
+            a {
+                border-left: 2px solid #FF6956;
+            }
         }
         li > a {
             color:#FF6956;
+            border-left: 2px solid #fff;
+            padding-left: 1rem;
         }
     }
     
