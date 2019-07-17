@@ -40,7 +40,7 @@ export default class TextAndImages extends Vue {
    let {format_id, label} = line
 
     if(format_id === 2) {
-      return `<img src="${label}"/>`
+      return `<img class="wall-img" src="${label}"/>`
     }
 
     return line.label
@@ -68,5 +68,15 @@ export default class TextAndImages extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+  .desgin-main {
+    p {
+      img {
+        width:100%;
+        max-width:500px;
+        display: block;
+      }
+    }
+  }
+</style>
 
