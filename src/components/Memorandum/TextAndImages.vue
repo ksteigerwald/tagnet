@@ -1,7 +1,7 @@
 <template >
  <li>
      <div class="todo-list">
-         <div v-for="content in data" class="todo-list-main todo-list-main-two mb-0 detail-head">
+         <div v-for="(content, index) in data" class="todo-list-main todo-list-main-two mb-0 detail-head">
              <ul class="goals-alignment goals-activity todo-timeline" id="todo-timeline2">
                  <li><span class="icon-activity">
                    <TextIcon v-if="getIcon(content) === 1" alt="" />
@@ -15,7 +15,7 @@
                  <p v-html="format(content)"></p>
                 </div>
                 <div v-if="content.edit">
-                  <input type="text" v-model="content.newlabel" style="float: left;"/>
+                  <input type="text" tabindex="2" v-bind:id="'input' + index" v-model="content.newlabel" style="float: left;" v-if="content.edit" v-focus/>
                   <span style="float: left; width: '30px'">
                     <a href="#" @click="edit(content)" style="margin: 0;padding: 3px 5px;">
                       <img src="/static/images/cancel.svg" alt="Cancel"/></a>
@@ -46,14 +46,15 @@
             </div>
         </div>
     </div>
- </li>
+ </li> 
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import {State, Getter, Action, namespace} from 'vuex-class';
-import { Line, LineState } from '@/types'
-import anchorme from "anchorme"
+import VueScrollTo from 'vue-scrollto';
+import { Line, LineState } from '@/types';
+import anchorme from "anchorme";
 import { format } from 'path';
 import TextIcon from '@/components/Icons/Text.vue'
 import Photo from '@/components/Icons/Photo.vue'
@@ -65,26 +66,42 @@ import MenuList from '@/components/Icons/MenuList.vue'
     TextIcon,
     Photo,
     WebLink,
-    MenuList,
+    MenuList
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {               
+        Vue.nextTick(() => {            
+          el.focus();  
+          debugger; 
+          VueScrollTo.scrollTo("#"+el.id);      
+        });                        
+      }
+    }
   }
 })
+
 export default class TextAndImages extends Vue {
   @Prop() data: {
     lines: Line[] 
   }
- 
+
+  mounted() {
+    Vue.use(VueScrollTo);
+  }
+  
   @Action('lines/deleteLine') deleteLine: any
   @Action('lines/editLine') editLine: any
   @Action('lines/editMode') editMode: any
   path: string = '@/assets/images/w'
-  format(line: Line):string {    
+  format(line: Line):string {      
     let {newlabel, format_id, label} = line
     if (format_id === 2) {
       return `<img src="${label}"/>`  
     }   
     return line.label
   }
-
+  
   update(line: Line) {
     console.log('update called')
     if(line.edit == null || line.edit == false) {
