@@ -114,7 +114,7 @@ export const actions: ActionTree<LineState, RootState> = {
     },
 
     async updateLineMeta({ commit, dispatch, rootState }, line:Line) {
-
+        
         const response: any = await apolloClient.mutate({
             mutation: updateLineMeta,
             variables: {
