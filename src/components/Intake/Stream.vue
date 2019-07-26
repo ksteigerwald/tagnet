@@ -7,7 +7,6 @@
          @blur="blur()"
          placeholder="'/' To create a new bucekt, '@' to add to that bucket"
          @keyup.enter="submitHandler" />
-
 </template>
 
 <script lang="ts">
