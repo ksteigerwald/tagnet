@@ -16,7 +16,7 @@ var isAuthenticated = (expiresAt: any):boolean => Math.round(new Date().getTime(
 const authLink = setContext((_, {headers} ) => {
     let token: any = localStorage.getItem(config.localKey('user')) || ''
     let decode = jwt_decode(token)
-    //console.log(isAuthenticated(decode.exp), decode.exp, Math.round(new Date().getTime() / 1000) )
+    console.log(isAuthenticated(decode.exp), decode.exp, Math.round(new Date().getTime() / 1000) )
     if(isAuthenticated(decode.exp) === false) 
         window.location.href = '/logout'
 
