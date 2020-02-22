@@ -6,6 +6,8 @@
             <p>Digital </br> de-cluttering, within your reach!</p>
           </div>
           <div class="login-page__form">
+             <amplify-sign-in :signInConfig="signInConfig" :usernameAttributes="usernameAttributes"></amplify-sign-in>
+          <!--
             <div class="input">
               <label for="email">Email</label>
               <input type="email" id="email">
@@ -14,6 +16,7 @@
               <label for="password">Password</label>
               <input type="password" id="password">
             </div><a class="button button--login" href="#"><span>Login</span></a>
+          -->
           </div>
           <div class="login-page__social">
             <div class="login-page__social-title">
@@ -60,27 +63,42 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { User, UserState } from '@/types'
+import { AmplifyEventBus } from "aws-amplify-vue"
 
 @Component({
-	components: {
-	}
+	components: { }
 })
 export default class Login extends Vue {
 
 	username: string = '';
 	password: string = '';
 	submitted: boolean = false;
-
+	usernameAttributes: string = "email"
+  signInConfig: any = {
+    header: 'Sign In',
+  }
   @Getter('user/status') logginInStatus: any;
 	
 	get loggingIn() {
 		return this.logginInStatus
 	}
-    
+
+  mounted() {
+    AmplifyEventBus.$on("authState", (info:any) => { 
+        if(info === "confirmSignUp") {
+         this.$router.push('/confirm')
+       }
+        if(info === "signUp") {
+         this.$router.push('/register')
+       }
+       console.log("AMP Event:", info)
+     })
+  }
+
   authLink() {
-    let redirect:string = (process.env.NODE_ENV === 'production') ? 'www.tagnet.io' : 'localhost:8080';
-    let proc:string = (process.env.NODE_ENV === 'production') ? 'https' : 'http';
-    return `https://tagnet.auth0.com/login?client=2rUl0BvJ91rrfBI7t0tXcFC6yxx0HF3K&protocol=oauth2&response_type=token id_token&redirect_uri=${proc}://${redirect}/callback&scope=openid profile`
+    // let redirect:string = (process.env.NODE_ENV === 'production') ? 'www.tagnet.io' : 'localhost:8080';
+    //let proc:string = (process.env.NODE_ENV === 'production') ? 'https' : 'http';
+    //return `https://tagnet.auth0.com/login?client=2rUl0BvJ91rrfBI7t0tXcFC6yxx0HF3K&protocol=oauth2&response_type=token id_token&redirect_uri=${proc}://${redirect}/callback&scope=openid profile`
 	}
 
 	handleSubmit (e: any) {
@@ -101,7 +119,7 @@ export default class Login extends Vue {
             this.$router.push('/home');
         }
         else {
-          window.location.href = this.authLink()
+          //window.location.href = this.authLink()
         }
 
     }

@@ -3,6 +3,7 @@ import VueRx from 'vue-rx'
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import awsconfig from './helpers/aws-export'
 import * as config from './helpers/config'
 import "./assets/sass/app.scss";
 import { State, Getter, Action, namespace } from 'vuex-class';
@@ -10,8 +11,13 @@ import { globalEventBus } from '@/helpers/EventBus'
 import { ENOMEM } from 'constants';
 import VueAnalytics from 'vue-analytics'
 import Helpers from '@/helpers/Helpers'
+import Amplify, * as AmplifyModules from 'aws-amplify'
+import { AmplifyPlugin } from 'aws-amplify-vue'
 
 Vue.config.productionTip = false;
+
+Amplify.configure(awsconfig)
+Vue.use(AmplifyPlugin, AmplifyModules)
 
 Vue.use(VueRx)
 //Vue.use(Buefy, { defaultIconPack: 'fas' })
@@ -49,7 +55,7 @@ function parseJwt (token: string) {
 
 router.beforeEach((to:any, from:any, next:any) => {
 
-    const publicPages: string[] = ['/login', '/about', '/']
+    const publicPages: string[] = ['/login', '/about', '/','/register', '/confirm']
     const authRequired = !publicPages.includes(to.path);
 
     if(to.path === "/callback") {

@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Landing from './views/Landing.vue';
 import Register from './views/Register.vue';
+import Confirm from './views/Confirm.vue';
 import Memorandum from './views/Memorandum.vue';
 import Profile from './views/Profile.vue';
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: <any> Register,
+    },
+    {
+      path: '/confirm',
+      name: 'confirm',
+      component: <any> Confirm,
     },
     {
       path: '/Logout',
