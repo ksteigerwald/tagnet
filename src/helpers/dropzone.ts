@@ -31,19 +31,6 @@ export default class DropzoneMixIn extends Vue {
 
   IMAGE_MIME_REGEX: RegExp = /^image\/(p?jpeg|gif|png)$/i;
 
-  mounted() {
-
-    // globalEventBus.$on('WindowDrop', (data: Stream) => {
-    //   this.dropped(data)
-    // })
-
-    // globalEventBus.$on('WindowPaste', (data: Stream) => {
-    //   console.log('WINDOWPASTE', data)
-    //   this.pasted(data)
-    // })
-
-  }
-
   beforeDestroy() {
     globalEventBus.$off()
 }
