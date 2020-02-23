@@ -5,20 +5,29 @@ import { createHttpLink  } from "apollo-link-http";
 import * as config from '../helpers/config';
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from 'apollo-link-context'
+
 let jwt_decode = require('jwt-decode')
 
 let GRAPH_QL_API = process.env.GRAPH_QL_API || 'https://hasura.tagnet.io/v1/graphql'
+
 
 interface DefaultOptions {}
 
 var isAuthenticated = (expiresAt: any):boolean => Math.round(new Date().getTime() / 1000) < expiresAt
 
+const httpLink = createHttpLink({
+    uri: GRAPH_QL_API,
+})
+
 const authLink = setContext((_, {headers} ) => {
-    let token: any = localStorage.getItem(config.localKey('user')) || ''
-    let decode = jwt_decode(token)
-    //console.log(isAuthenticated(decode.exp), decode.exp, Math.round(new Date().getTime() / 1000) )
-    //if(isAuthenticated(decode.exp) === false) 
-      //  window.location.href = '/logout'
+
+  let token:any = config.localKey()
+
+  if(!token) return httpLink
+
+  let decode = jwt_decode(token)
+  console.log(decode)
+  console.log(token)
 
     return {
         headers: {
@@ -28,9 +37,6 @@ const authLink = setContext((_, {headers} ) => {
     }
 })
 
-const httpLink = createHttpLink({
-    uri: GRAPH_QL_API,
-})
 
 const defaultOptions: DefaultOptions = {
     watchQuery: {

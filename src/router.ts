@@ -23,6 +23,7 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: <any> Home,
+      meta: { requiresAuth: true}
     },
     {
       path: '/login',
@@ -48,17 +49,13 @@ export default new Router({
       path: '/memorandums/:memoId',
       name: 'memorandums',
       component: <any> Memorandum,
+      meta: { requiresAuth: true}
     },
     {
       path: '/profile',
       name: 'profile',
       component: <any> Profile,
-    },
-    {
-      path: '/callback',
-      name: 'callback',
-      //component: <any> Login,
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      meta: { requiresAuth: true}
     },
     {
       path: '/about',

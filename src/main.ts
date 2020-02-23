@@ -41,44 +41,36 @@ window.addEventListener("dragover", dragOver);
 window.addEventListener("drop", drop);
 //window.addEventListener("paste", paste, false);
 
+let user; 
 
+export function getUser() {
+    return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data) => {
+      if (data && data.signInUserSession) {
+       // AmplifyStore.commit('setUser', data);
+        return data;
+      } 
+    }).catch((e: any) => {
+      //AmplifyStore.commit('setUser', null);
+      return null
+    });
+}
 
-function parseJwt (token: string) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-};
-
-router.beforeEach((to:any, from:any, next:any) => {
-
-    const publicPages: string[] = ['/login', '/about', '/','/register', '/confirm']
-    const authRequired = !publicPages.includes(to.path);
-
-    if(to.path === "/callback") {
-        let token = to.hash.split('&').pop().split('=').pop()
-        let data = parseJwt(token)
-        store.dispatch('user/authOProfileCheck', data) 
-        localStorage.setItem(config.localKey('user'), token)
-        localStorage.setItem(config.localKey('picture'), data.picture)
-
-        router.push('/home')
+router.beforeResolve(async (to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      user = await getUser();
+      console.log('USER:', user)
+      if (!user) {
+        return next({
+          path: '/auth',
+          query: {
+            redirect: to.fullPath,
+          }
+        });
+      }
+      return next()
     }
-
-    const loggedIn = localStorage.getItem(config.localKey('user'));
-
-    if (authRequired && !loggedIn) { return next('/login'); }
-    
-    if(to.path === '/logout') {
-        store.dispatch('user/logout') 
-        window.location.reload()
-    }
-
-    next();
-})
+    return next()
+  })
 
 Vue.use(VueAnalytics, {
     id: 'UA-143100940-1',
