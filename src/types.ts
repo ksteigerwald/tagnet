@@ -91,7 +91,7 @@ export interface LineState {
 
 export interface UserState {
     status: any
-    user: any
+    user: User
     profile: any
 }
 
@@ -150,9 +150,8 @@ export interface Fact {
 
 export interface User {
 	token: string
-    firstName: string
-    lastName: string
-    id: number
+    // id: number
     username: string
+    email: string
 }
 

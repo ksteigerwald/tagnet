@@ -44,24 +44,24 @@ window.addEventListener("drop", drop);
 let user; 
 
 export function getUser() {
-    return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data) => {
+    return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data: any) => {
       if (data && data.signInUserSession) {
-       // AmplifyStore.commit('setUser', data);
+        store.commit('user/setUser', data)
         return data;
       } 
     }).catch((e: any) => {
-      //AmplifyStore.commit('setUser', null);
-      return null
+        console.log(e)
+        store.commit('user/setUser', null)
+        return null
     });
 }
 
 router.beforeResolve(async (to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       user = await getUser();
-      console.log('USER:', user)
       if (!user) {
         return next({
-          path: '/auth',
+          path: '/login',
           query: {
             redirect: to.fullPath,
           }

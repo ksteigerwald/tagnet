@@ -9,24 +9,26 @@ import router from '../router'
 
 type UserGetter = GetterTree<UserState, RootState> 
 
-let jsonKey: any = localStorage.getItem(config.localKey('user')) || ''
-const localUser: User = (jsonKey) ? jsonKey : null;
-
-export const state: UserState = localUser
-  ? { status: { loggedIn: true }, user: localUser, profile: null }
-  : { status: {}, user: null, profile: null };
+export const state: UserState =  {
+  status: { loggedIn: false }, 
+  user: null, 
+  profile: null 
+}
 
   export const getters: GetterTree<UserState, RootState> = {
     status: (stage, getters, rootState) => state.status.loggingIn
  }
 
   export const mutations: MutationTree<UserState> = {
-    setUser(state: UserState, user: User) {
-      localStorage.setItem(config.localKey('user'), JSON.stringify(user));
-    },
+    setUser(state: UserState, payload: any) {
+      if(!payload) return
 
-    logout(state: UserState, user: User) {
-      localStorage.removeItem(config.localKey('user'));
+      state.status.loggedIn = true
+      state.user = {
+        token: payload.signInUserSession.idToken.jwtToken,
+        username: payload.username,
+        email: payload.attributes.email
+      }
     },
 
     loginFailure(state: UserState, user: User) { 
