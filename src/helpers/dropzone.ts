@@ -13,10 +13,16 @@ import { pluck, map, mapTo, debounceTime, tap, bufferTime,
 import { printIntrospectionSchema } from 'graphql';
 import { Event, Context, Stream } from '@/types';
 
+import { State, Getter, Action, namespace } from 'vuex-class';
+import { User, UserState } from '@/types'
+
 // You can declare a mixin as the same style as components.
+
 @Component
 export default class DropzoneMixIn extends Vue {
   
+  @Getter('user/user') user: any
+
   signedURLEndpoint:string = 'https://tagnet-api.herokuapp.com/signed'
   drops:any[]
   mouseOver: any
@@ -89,7 +95,6 @@ export default class DropzoneMixIn extends Vue {
   }
 
   getKeyPath(fileName:string, code: string): string {
-    let user:string = localStorage.getItem(config.localKey('user'));
     let key:string = short.generate()
     return `${code}/${key}/${fileName}`
   }

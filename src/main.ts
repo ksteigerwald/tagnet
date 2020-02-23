@@ -49,7 +49,7 @@ export function getUser() {
         store.commit('user/setUser', data)
         return data;
       } 
-    }).catch((e: any) => {
+    }).catch((e: any): void => {
         console.log(e)
         store.commit('user/setUser', null)
         return null
