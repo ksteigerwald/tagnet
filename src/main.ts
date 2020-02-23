@@ -25,7 +25,7 @@ Vue.use(VueRx)
 function emitter(eventKey: string) {
     return function(e: any) {
         e.preventDefault();
-        globalEventBus.$emit(eventKey, e);
+        //globalEventBus.$emit(eventKey, e);
     }
 }
 

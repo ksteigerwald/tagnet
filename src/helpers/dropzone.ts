@@ -16,6 +16,18 @@ import { Event, Context, Stream } from '@/types';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { User, UserState } from '@/types'
 
+import awsconfig from './aws-export'
+import { Storage } from 'aws-amplify';
+
+const AWS_BUCKET = (process.env.NODE_ENV === 'development') ? 'tagnet-io-user-uploads-dev' : 'tagnet-io-user-uploads-prod'
+Storage.configure({
+  AWSS3: {
+      bucket: AWS_BUCKET,
+      region: 'us-east-1'
+  }
+});
+
+
 // You can declare a mixin as the same style as components.
 
 @Component
@@ -23,7 +35,6 @@ export default class DropzoneMixIn extends Vue {
   
   @Getter('user/user') user: any
 
-  signedURLEndpoint:string = 'https://tagnet-api.herokuapp.com/signed'
   drops:any[]
   mouseOver: any
   lastTarget: any = null
@@ -45,9 +56,6 @@ export default class DropzoneMixIn extends Vue {
     const dom: any = (<any>e)
 
     for (var i = 0; i < items.length; i++) {
-
-        //console.log(items[i].type, '<<<', e.clipboardData.getData('text/plain'))
-        //console.log(e.target.type)
 
         if (this.IMAGE_MIME_REGEX.test(items[i].type)) {
             //loadImage(items[i].getAsFile());
@@ -81,53 +89,26 @@ export default class DropzoneMixIn extends Vue {
     false
   }
 
-  getKeyPath(fileName:string, code: string): string {
-    let key:string = short.generate()
-    return `${code}/${key}/${fileName}`
+  getKeyPath(fileName:string): string {
+    return `${this.user.username}/${fileName}`
   }
 
   //handle using RXJS
   //default code
   async uploadHandler(file: File, code: string) {
     if(file.type.indexOf("image") !== 0) return
-    let url = await this.getURL(this.getKeyPath(file.name, code))
-    let img: string = url.split('?').shift()
+    console.log('uploadHandler')
+    let path = this.getKeyPath(file.name)
+    Storage.put(path, file)
+      .then (result => {
+        let stream: Stream = {
+          context: Context.memo,
+          event: Event.drop,
+          value: { filename: file.name, code: code }
+        }
+        globalEventBus.$emit('emitInterface', stream) 
+      })
+      .catch(err => console.log(err));
 
-    let upload = await this.postToS3(file, url)
-
-    if(upload.status === 200) {
-
-      let stream: Stream = {
-        context: Context.memo,
-        event: Event.drop,
-        value: { filename: img, code: code }
-      }
-
-      globalEventBus.$emit('emitInterface', stream) 
-
-      return 200
-    }
-  }
-
-  
-  async getURL(file: string = '') {
-    
-    const resp = await axios.post(this.signedURLEndpoint, {
-      method: 'POST',
-      fileName: file,
-      responseType: 'json'
-    })
-
-    return resp.data
-  }
-
-  async postToS3(file: File, url: string) {
-    const resp = await axios.put(url, file, {
-      headers: {
-        'Content-Type': file.type,
-      }
-    })
-
-    return resp
   }
 }
