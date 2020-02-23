@@ -46,12 +46,12 @@ let user;
 export function getUser() {
     return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data: any) => {
       if (data && data.signInUserSession) {
-        store.commit('user/setUser', data)
+        store.dispatch('user/logUser', data)
         return data;
       } 
     }).catch((e: any): void => {
         console.log(e)
-        store.commit('user/setUser', null)
+        store.dispatch('user/logUser', null)
         return null
     });
 }

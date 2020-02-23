@@ -152,5 +152,14 @@ export interface User {
     // id: number
     username: string
     email: string
+    is_onboarded?: boolean
 }
 
+export interface Cognito {
+    region: string
+    identityPoolId: string
+    userPoolId: string
+    webClientId: string
+    redirect: string    
+    domain: string
+}

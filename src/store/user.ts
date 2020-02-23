@@ -2,7 +2,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, UserState, User } from '../types'
 import * as config from '../helpers/config';
 import { apolloClient } from '../constants/graphql'
-import { usersQury, userNew} from '@/constants/users.ql'
+import { usersQury, userNew, setOnboarded} from '@/constants/users.ql'
 
 import router from '../router'
 
@@ -50,33 +50,35 @@ export const state: UserState =  {
   }
 
   export const actions: ActionTree<UserState, RootState> = {
-    async authOProfileBuild({ commit, dispatch, rootState}, jwt: any) { 
 
-      //console.log('auth', jwt.given_name)
-      let name:string = jwt.given_name || jwt.nickname || null
+    async authOProfileCheck({ commit, dispatch, rootState}) {
 
-      const response: any = await apolloClient.mutate({
-        mutation: userNew,
-        variables: { fname: name }
+
+      apolloClient.query({ query: usersQury })
+          .then((r:any) => {
+            console.log(r)
+            if(!r.data.users[0].is_onboard) {
+              dispatch('memos/onboard', null, { root: true })
+            }
       })
-
-      state.profile = response.data.insert_users.returning.pop()
-      dispatch('memos/onboard', null, { root: true })
-
-    },
-
-    async authOProfileCheck({ commit, dispatch, rootState}, jwt: any) {
-
-        const response: any = await apolloClient.query({
-            query: usersQury
-        })
-
-        if(response.data.users.length > 0) {
-          state.profile = response.data.users.pop()
+        if(true) {
+          //state.profile = response.data.users.pop()
         }
         else {
-          dispatch('authOProfileBuild', jwt)
         }
+    },
+
+    async logUserOnboarded({ commit, dispatch, rootState}) {
+      console.log('logUserOnboarded')
+      await apolloClient.mutate({ mutation: setOnboarded })
+          .then((r:any) => {
+            state.user.is_onboarded = true
+          })
+    },
+
+    async logUser({ commit, dispatch, rootState}, payload: any ) {
+      commit('setUser', payload)
+      dispatch('authOProfileCheck')
     }
     
   }
