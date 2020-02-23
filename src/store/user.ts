@@ -10,13 +10,15 @@ import router from '../router'
 type UserGetter = GetterTree<UserState, RootState> 
 
 export const state: UserState =  {
-  status: { loggedIn: false }, 
+  status: { loggedIn: false, loggingIn: false }, 
   user: null, 
   profile: null 
 }
 
   export const getters: GetterTree<UserState, RootState> = {
-    status: (stage, getters, rootState) => state.status.loggingIn
+    status: (stage, getters, rootState) => state.status.loggingIn,
+    loggedIn: (stage, getters, rootState) => state.status.loggingIn,
+    user: (stage, getters, rootState) => state.user
  }
 
   export const mutations: MutationTree<UserState> = {
@@ -48,38 +50,6 @@ export const state: UserState =  {
   }
 
   export const actions: ActionTree<UserState, RootState> = {
-    async login( { commit, dispatch, rootState  }, payload: any) { 
-      let username: string = payload.username
-      let password: string = payload.password
-
-      const requestOptions:any = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      };
-
-      let url:string = `${config.apiUrl}/users/authenticate`
-      //var resp: any = await fetch(url, requestOptions)
-      fetch(url, requestOptions)
-      .then(handleResponse)
-      .then((data) => {
-        let user: User =  data
-        commit('loginSuccess', user)
-        commit('setUser', user)
-        router.push('/')
-      })
-      .catch((error) => {
-        //console.log(error)
-        commit('loginFailure')
-        commit('logout')
-        //dispatch('alert/error', error, { root: true });
-      })
-    },
-
-    logout({ commit }) {
-      commit('logout');
-    },
-
     async authOProfileBuild({ commit, dispatch, rootState}, jwt: any) { 
 
       //console.log('auth', jwt.given_name)

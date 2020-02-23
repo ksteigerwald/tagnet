@@ -122,7 +122,6 @@ export interface Memo {
     type?: string
     MemoLines?: Line[]
     TagMemo?: Tag
-
 }
 
 export interface Line {

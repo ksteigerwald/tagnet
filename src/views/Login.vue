@@ -123,13 +123,14 @@ export default class Login extends Vue {
           case "forgotPassword":
             this.toggle = 2
             break;
-          case "signUp":
+          case "signUp": 
             this.toggle = 3
             break;
           case "confirmSignUp":
             this.toggle = 4
             break;
           case "signedIn":
+            this.$router.push('/home')
             break
           default:
             console.log('hits default')

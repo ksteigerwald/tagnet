@@ -20,14 +20,10 @@ const httpLink = createHttpLink({
 })
 
 const authLink = setContext((_, {headers} ) => {
-
   let token:any = config.localKey()
-
   if(!token) return httpLink
 
-  let decode = jwt_decode(token)
-  console.log(decode)
-  console.log(token)
+  //let decode = jwt_decode(token)
 
     return {
         headers: {
@@ -36,7 +32,6 @@ const authLink = setContext((_, {headers} ) => {
         } 
     }
 })
-
 
 const defaultOptions: DefaultOptions = {
     watchQuery: {
