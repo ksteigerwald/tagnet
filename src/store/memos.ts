@@ -134,10 +134,11 @@ export const actions: ActionTree<MemoState, RootState> = {
         await dispatch('facts/createFact', { search: term }, { root: true })
     },
 
-    onboard({ commit, dispatch, rootState}) {
-        dispatch('createMemo',{label: 'My Bookmarks', tag_id: 7, autogen: true})
-        dispatch('createMemo',{label: 'My Notes', tag_id: 7, autogen: true})
+    async onboard({ commit, dispatch, rootState}) {
+        dispatch('createMemo',{label: 'My Bookmarks', tag_id: 2, autogen: true})
+        dispatch('createMemo',{label: 'My Notes', tag_id: 6, autogen: true})
         dispatch('createMemo',{label: 'My Idea Book', tag_id: 6, autogen: true})
+        await dispatch('user/logUserOnboarded', {}, { root: true })
     },
 
     //Find a memo with given code

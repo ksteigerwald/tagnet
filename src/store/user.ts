@@ -2,31 +2,35 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, UserState, User } from '../types'
 import * as config from '../helpers/config';
 import { apolloClient } from '../constants/graphql'
-import { usersQury, userNew} from '@/constants/users.ql'
+import { usersQury, userNew, setOnboarded} from '@/constants/users.ql'
 
 import router from '../router'
 
 
 type UserGetter = GetterTree<UserState, RootState> 
 
-let jsonKey: any = localStorage.getItem(config.localKey('user')) || ''
-const localUser: User = (jsonKey) ? jsonKey : null;
-
-export const state: UserState = localUser
-  ? { status: { loggedIn: true }, user: localUser, profile: null }
-  : { status: {}, user: null, profile: null };
+export const state: UserState =  {
+  status: { loggedIn: false, loggingIn: false }, 
+  user: null, 
+  profile: null 
+}
 
   export const getters: GetterTree<UserState, RootState> = {
-    status: (stage, getters, rootState) => state.status.loggingIn
+    status: (stage, getters, rootState) => state.status.loggingIn,
+    loggedIn: (stage, getters, rootState) => state.status.loggingIn,
+    user: (stage, getters, rootState) => state.user
  }
 
   export const mutations: MutationTree<UserState> = {
-    setUser(state: UserState, user: User) {
-      localStorage.setItem(config.localKey('user'), JSON.stringify(user));
-    },
+    setUser(state: UserState, payload: any) {
+      if(!payload) return
 
-    logout(state: UserState, user: User) {
-      localStorage.removeItem(config.localKey('user'));
+      state.status.loggedIn = true
+      state.user = {
+        token: payload.signInUserSession.idToken.jwtToken,
+        username: payload.username,
+        email: payload.attributes.email
+      }
     },
 
     loginFailure(state: UserState, user: User) { 
@@ -46,65 +50,35 @@ export const state: UserState = localUser
   }
 
   export const actions: ActionTree<UserState, RootState> = {
-    async login( { commit, dispatch, rootState  }, payload: any) { 
-      let username: string = payload.username
-      let password: string = payload.password
 
-      const requestOptions:any = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      };
+    async authOProfileCheck({ commit, dispatch, rootState}) {
 
-      let url:string = `${config.apiUrl}/users/authenticate`
-      //var resp: any = await fetch(url, requestOptions)
-      fetch(url, requestOptions)
-      .then(handleResponse)
-      .then((data) => {
-        let user: User =  data
-        commit('loginSuccess', user)
-        commit('setUser', user)
-        router.push('/')
+
+      apolloClient.query({ query: usersQury })
+          .then((r:any) => {
+            console.log(r)
+            if(!r.data.users[0].is_onboard) {
+              dispatch('memos/onboard', null, { root: true })
+            }
       })
-      .catch((error) => {
-        //console.log(error)
-        commit('loginFailure')
-        commit('logout')
-        //dispatch('alert/error', error, { root: true });
-      })
-    },
-
-    logout({ commit }) {
-      commit('logout');
-    },
-
-    async authOProfileBuild({ commit, dispatch, rootState}, jwt: any) { 
-
-      //console.log('auth', jwt.given_name)
-      let name:string = jwt.given_name || jwt.nickname || null
-
-      const response: any = await apolloClient.mutate({
-        mutation: userNew,
-        variables: { fname: name }
-      })
-
-      state.profile = response.data.insert_users.returning.pop()
-      dispatch('memos/onboard', null, { root: true })
-
-    },
-
-    async authOProfileCheck({ commit, dispatch, rootState}, jwt: any) {
-
-        const response: any = await apolloClient.query({
-            query: usersQury
-        })
-
-        if(response.data.users.length > 0) {
-          state.profile = response.data.users.pop()
+        if(true) {
+          //state.profile = response.data.users.pop()
         }
         else {
-          dispatch('authOProfileBuild', jwt)
         }
+    },
+
+    async logUserOnboarded({ commit, dispatch, rootState}) {
+      console.log('logUserOnboarded')
+      await apolloClient.mutate({ mutation: setOnboarded })
+          .then((r:any) => {
+            state.user.is_onboarded = true
+          })
+    },
+
+    async logUser({ commit, dispatch, rootState}, payload: any ) {
+      commit('setUser', payload)
+      dispatch('authOProfileCheck')
     }
     
   }

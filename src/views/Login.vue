@@ -6,6 +6,11 @@
             <p>Digital </br> de-cluttering, within your reach!</p>
           </div>
           <div class="login-page__form">
+             <amplify-sign-in v-if="toggle === 1" :signInConfig="signInConfig" :usernameAttributes="usernameAttributes"></amplify-sign-in>
+             <amplify-forgot-password v-if="toggle === 2" :usernameAttributes="usernameAttributes"></amplify-forgot-password>
+             <amplify-sign-up v-if="toggle === 3" v-bind:signUpConfig="signUpConfig"></amplify-sign-up>   
+             <p v-if="toggle === 4"> <h3>Please check your email and conirm your registration.</h3></p>
+          <!--
             <div class="input">
               <label for="email">Email</label>
               <input type="email" id="email">
@@ -14,6 +19,7 @@
               <label for="password">Password</label>
               <input type="password" id="password">
             </div><a class="button button--login" href="#"><span>Login</span></a>
+          -->
           </div>
           <div class="login-page__social">
             <div class="login-page__social-title">
@@ -33,8 +39,9 @@
 	</g>
 </g>
 </svg>
-</a></li>
-              <li class="login-page__social-item login-page__social-item--google"><a :href="authLink()"><svg
+</a>
+</li>
+              <li class="login-page__social-item login-page__social-item--google"><a ><svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         width="24px" height="24px" viewBox="0 0 24 24">
@@ -60,50 +67,79 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Getter, Action, namespace } from 'vuex-class';
 import { User, UserState } from '@/types'
+import { AmplifyEventBus } from "aws-amplify-vue"
 
 @Component({
-	components: {
-	}
+	components: { }
 })
 export default class Login extends Vue {
+
+  toggle: number = 1
 
 	username: string = '';
 	password: string = '';
 	submitted: boolean = false;
+	usernameAttributes: string = "email"
+  signInConfig: any = {
+    header: 'Sign In',
+  }
+ signUpConfig: any = {
+        hideAllDefaults: true,
+  signUpFields: [
+    {
+      label: 'Email',
+      key: 'username',
+      required: true,
+      placeholder: 'Email',
+      type: 'email',
+      displayOrder: 1,
+    },
+    {
+      label: 'Password',
+      key: 'password',
+      required: true,
+      placeholder: 'Password',
+      type: 'password',
+      displayOrder: 2,
+    },
+  ],
+	}
+  confirmSignUpConfig: {}
+  confirmSignInConfig: {}
+  forgotPasswordConfig: {}
 
   @Getter('user/status') logginInStatus: any;
 	
 	get loggingIn() {
 		return this.logginInStatus
 	}
-    
-  authLink() {
-    let redirect:string = (process.env.NODE_ENV === 'production') ? 'www.tagnet.io' : 'localhost:8080';
-    let proc:string = (process.env.NODE_ENV === 'production') ? 'https' : 'http';
-    return `https://tagnet.auth0.com/login?client=2rUl0BvJ91rrfBI7t0tXcFC6yxx0HF3K&protocol=oauth2&response_type=token id_token&redirect_uri=${proc}://${redirect}/callback&scope=openid profile`
-	}
 
-	handleSubmit (e: any) {
-		e.preventDefault();
-
-		this.submitted = true;
-		const { username, password } = this;
-		const { dispatch } = this.$store;
-
-		if (username && password) {
-			dispatch('user/login', { username, password });
-		}
-	}
-
-    beforeMount() {
-        let loginStatus = !!window.localStorage.getItem('TAGNET-user');
-        if(loginStatus) {
-            this.$router.push('/home');
+  mounted() {
+    AmplifyEventBus.$on("authState", (info:string) => { 
+        switch(info) {
+          case "signIn":
+            this.toggle = 1;
+            break;
+          case "forgotPassword":
+            this.toggle = 2
+            break;
+          case "signUp": 
+            this.toggle = 3
+            break;
+          case "confirmSignUp":
+            this.toggle = 4
+            break;
+          case "signedIn":
+            this.$router.push('/home')
+            break
+          default:
+            console.log('hits default')
+            this.toggle = 1
+            break;
         }
-        else {
-          window.location.href = this.authLink()
-        }
+       console.log("AMP Event:", info)
+     })
+  }
 
-    }
 };
 </script>

@@ -91,7 +91,7 @@ export interface LineState {
 
 export interface UserState {
     status: any
-    user: any
+    user: User
     profile: any
 }
 
@@ -122,7 +122,6 @@ export interface Memo {
     type?: string
     MemoLines?: Line[]
     TagMemo?: Tag
-
 }
 
 export interface Line {
@@ -150,9 +149,17 @@ export interface Fact {
 
 export interface User {
 	token: string
-    firstName: string
-    lastName: string
-    id: number
+    // id: number
     username: string
+    email: string
+    is_onboarded?: boolean
 }
 
+export interface Cognito {
+    region: string
+    identityPoolId: string
+    userPoolId: string
+    webClientId: string
+    redirect: string    
+    domain: string
+}

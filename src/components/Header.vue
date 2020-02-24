@@ -2,15 +2,15 @@
     <header class="header">
         <div class="header__container">
 
-            <router-link v-if="loginToken" :to="{ name: 'home'}" class="logo">
+            <router-link v-if="loggedIn" :to="{ name: 'home'}" class="logo">
                 <LogoIcon></LogoIcon>
             </router-link>
 
-            <router-link v-if="!loginToken" to="/" class="logo">
+            <router-link v-if="!loggedIn" to="/" class="logo">
                 <LogoIcon></LogoIcon>
             </router-link>
 
-            <router-link v-if="!loginToken" :to="{ name: 'login'}" class="login">
+            <router-link v-if="!loggedIn" :to="{ name: 'login'}" class="login">
                 <div class="login__icon">
                     <LoginIcon></LoginIcon>
                 </div>
@@ -20,7 +20,7 @@
             </router-link>
 
             <router-link v-else to="profile" class="img-holder">
-                <img :src="profile" alt="">
+                <img :src="getAvatar()" alt="">
             </router-link>
 
         </div>
@@ -29,9 +29,10 @@
 
 <script lang="ts">
     import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-    import { TagType } from '@/store/tags';
     import LogoIcon from '@/assets/svg/header/logo.svg';
     import LoginIcon from '@/assets/svg/header/login.svg';
+
+    import { TagType } from '@/store/tags';
 
     @Component({
         components: {
@@ -40,13 +41,34 @@
         }
     })
     export default class Header extends Vue {
-        profile: string = localStorage.getItem('TAGNET-picture');
+
+        @Prop() user: any
+
+        loggedIn: boolean = false
         cssStr: string = '';
-        loggedIn: boolean = true;
-        loginToken: boolean = !!window.localStorage.getItem('TAGNET-user');
+
+        @Watch('user') 
+        onUserUpdate() {
+            this.setProfile()    
+        }
+
+        getAvatar(): string {
+            return `https://api.adorable.io/avatars/50/${this.user.username}@adorable.io.png`
+        }
 
         beforeMount() {
-            this.cssStr = `background-image:url(${this.profile});`;
+            console.log(this.user, this.loggedIn)
+        }
+
+        setProfile() {
+            this.cssStr = `background-image:url(${this.getAvatar()});`;
+            this.loggedIn = true
+        }
+
+        mounted() {
+            if(this.user) {
+                this.setProfile()
+            }
         }
     }
 </script>

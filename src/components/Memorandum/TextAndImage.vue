@@ -10,7 +10,10 @@
                    </span></li>
              </ul>
              <div class="desgin-main-first desgin-main">
-                 <p v-html="format(content)"></p>
+                 <p v-if="content.format_id === 1" v-html="content.label"></p>
+                 <p v-if="content.format_id === 2">
+                   <amplify-s3-image :imagePath="s3Path(content)" />
+                 </p>
              </div>
         </div>
     </div>
@@ -19,31 +22,37 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { Line, LineState } from '@/types'
+import { State, Getter, Action, namespace } from 'vuex-class';
+import { Line, LineState, User, UserState } from '@/types'
 import anchorme from "anchorme"
 import { format } from 'path';
 import TextIcon from '@/components/Icons/Text.vue'
 import Photo from '@/components/Icons/Photo.vue'
 import WebLink from '@/components/Icons/WebLink.vue'
+import { S3Image, S3Album } from 'aws-amplify-vue/src/components/storage'
 
 @Component({
   components: {
     TextIcon,
     Photo,
     WebLink,
+    AmplifyS3Image: S3Image,
+    AmplifyS3Album: S3Album
   }
 })
 export default class TextAndImages extends Vue {
+
   @Prop() data: Line[]  
+  @Getter('user/user') user: User
+
+  
   path: string = '@/assets/images/w'
   format(line: Line):string {
-   let {format_id, label} = line
-
-    if(format_id === 2) {
-      return `<img class="wall-img" src="${label}"/>`
-    }
-
     return line.label
+  }
+
+  s3Path(line: Line): string {
+    return `${this.user.username}/${line.label}`
   }
 
   getIcon(line: Line): number {

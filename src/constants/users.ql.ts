@@ -26,3 +26,9 @@ mutation new_user($fname: String) {
   }
 }
 `
+export const setOnboarded = gql`
+mutation setOnboarded {
+  update_users(where: {}, _set: {is_onboard: true}) {
+    affected_rows
+  }
+}`

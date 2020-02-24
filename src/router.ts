@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Landing from './views/Landing.vue';
 import Register from './views/Register.vue';
+import Confirm from './views/Confirm.vue';
 import Memorandum from './views/Memorandum.vue';
 import Profile from './views/Profile.vue';
 
@@ -22,6 +23,7 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: <any> Home,
+      meta: { requiresAuth: true}
     },
     {
       path: '/login',
@@ -34,6 +36,11 @@ export default new Router({
       component: <any> Register,
     },
     {
+      path: '/confirm',
+      name: 'confirm',
+      component: <any> Confirm,
+    },
+    {
       path: '/Logout',
       name: 'logout',
       component: <any> Login,
@@ -42,25 +49,17 @@ export default new Router({
       path: '/memorandums/:memoId',
       name: 'memorandums',
       component: <any> Memorandum,
+      meta: { requiresAuth: true}
     },
     {
       path: '/profile',
       name: 'profile',
       component: <any> Profile,
-    },
-    {
-      path: '/callback',
-      name: 'callback',
-      //component: <any> Login,
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      meta: { requiresAuth: true}
     },
     {
       path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      name: 'about'
     },
   ],
 });
