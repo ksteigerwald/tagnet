@@ -52,7 +52,14 @@ export const deleteMemo = gql`
     delete_lines(where: {memo_id: {_eq: $id}}) {
       affected_rows
     }
-  }`
+}`
+
+export const setMemoPrivacy = gql`
+  mutation setPrivacy($code: String, $is_public: Boolean) {
+    update_memos(where: {code: {_eq: $code}}, _set: {is_public: $is_public}) {
+      affected_rows }
+}`
+
 export const memosQryMemoLines = gql`
 query {
     memos(order_by: {created: desc}) {

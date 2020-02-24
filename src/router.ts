@@ -52,6 +52,11 @@ export default new Router({
       meta: { requiresAuth: true}
     },
     {
+      path: '/memorandums/:memoId/public',
+      name: 'memorandums',
+      component: <any> Memorandum
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: <any> Profile,

@@ -119,9 +119,10 @@ export interface Memo {
     user_id: string
     code: string
     autogen?: boolean
-    type?: string
     MemoLines?: Line[]
     TagMemo?: Tag
+    type?: string
+    is_public?:boolean
 }
 
 export interface Line {

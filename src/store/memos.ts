@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
-import { deleteMemo, memosQry, memosQryMemoLines, memosSearch, filterMemos, 
+import { deleteMemo, memosQry, memosQryMemoLines, memosSearch, filterMemos, setMemoPrivacy,
          memosInsert, updateMemoUpdated, memosGet, updateMemoCode } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 import Hashids from 'hashids'
@@ -141,6 +141,15 @@ export const actions: ActionTree<MemoState, RootState> = {
         await dispatch('user/logUserOnboarded', {}, { root: true })
     },
 
+    async setMemoPrivacy({ commit, dispatch, rootState}, memo: Memo) {
+
+        console.log('>', memo)
+        const response: any = await apolloClient.mutate({
+            mutation: setMemoPrivacy,
+            variables: { code: memo.code, is_public: memo.is_public }	
+        })
+
+    }
     //Find a memo with given code
     //When no code is found, find image any bucket
     //when no [image ANY] bucket, create image [ANY] bucket memo 
