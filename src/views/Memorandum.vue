@@ -5,7 +5,7 @@
                     @interface="onInterfaceChange"
                     :propList="syncData" />
            
-            <MemoDetail v-if="memos.length > 0" />
+            <MemoDetail :memo="memo" />
             <Loading v-if="loading" />
             <div v-if="error" class="error"> <h1>Error...</h1> </div>
      </div>

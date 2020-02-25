@@ -8,7 +8,7 @@
     
             <template v-for="date in dates"> 
                 <li><span class="date"> {{date}} </span></li> 
-                <TextAndImage :userId="memo.user_id" :data="getGroupData(date)" />
+                <TextAndImage v-if="memo" :userId="memo.user_id" :data="getGroupData(date)" />
             </template>
         </ul>
     </div>
