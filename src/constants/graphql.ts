@@ -8,6 +8,7 @@ import { setContext } from 'apollo-link-context'
 
 let jwt_decode = require('jwt-decode')
 let GRAPH_QL_API:string = 'https://hasura.tagnet.io/v1/graphql'
+
 if(process.env.NODE_ENV === 'development') { 
   GRAPH_QL_API = 'https://hasura.dev.tagnet.io/v1/graphql'
   console.log(GRAPH_QL_API)

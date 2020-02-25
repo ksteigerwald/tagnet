@@ -54,14 +54,14 @@ export default new Router({
     },
     {
       path: '/memorandums/:code/public',
-      name: 'memorandums',
+      name: 'memorandumsPublic',
       component: <any> MemorandumPublic
     },
     {
       path: '/profile',
       name: 'profile',
       component: <any> Profile,
-      meta: { requiresAuth: true}
+      meta: { requiresAuth: true }
     },
     {
       path: '/about',

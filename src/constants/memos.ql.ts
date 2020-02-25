@@ -142,6 +142,21 @@ query get_memo($input: Int) {
 }
 `
 
+export const getPublicMemo = gql`
+query get_memo($input: String) {
+  memos(where: {is_public: {_eq: true}, code: {}, _and: {code: {_eq: $input}}}) {
+    id
+    code
+    label
+    user_id
+    tag_id
+    created
+    updated
+    uuid
+    autogen
+  }
+}
+`
 export const updateMemoCode = gql`
 mutation update_token($id: Int, $code: String) {
   update_memos(

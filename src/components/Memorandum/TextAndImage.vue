@@ -42,6 +42,7 @@ import { S3Image, S3Album } from 'aws-amplify-vue/src/components/storage'
 })
 export default class TextAndImages extends Vue {
 
+  @Prop() userId: string
   @Prop() data: Line[]  
   @Getter('user/user') user: User
 
@@ -52,7 +53,7 @@ export default class TextAndImages extends Vue {
   }
 
   s3Path(line: Line): string {
-    return `${this.user.username}/${line.label}`
+    return `${this.userId}/${line.label}`
   }
 
   getIcon(line: Line): number {

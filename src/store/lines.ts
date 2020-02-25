@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, LineState, Line, Fact } from '../types'
 import { apolloClient } from '@/constants/graphql'
-import { linesQry, searchQry, linesInsert, linesByMemoId, updateLineCode, updateLineMeta } from '@/constants/lines.ql'
+import { linesPublicQry, linesQry, searchQry, linesInsert, linesByMemoId, updateLineCode, updateLineMeta } from '@/constants/lines.ql'
 import { Subject, fromEvent, of, pipe } from 'rxjs';
 import { pluck, map, debounceTime, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import Hashids from 'hashids'
@@ -97,6 +97,16 @@ export const actions: ActionTree<LineState, RootState> = {
         const response: any = await apolloClient.query({
             query: linesByMemoId,
             variables: { input: memoId }	
+        })
+
+        // console.log(response.data.lines)
+        state.lines = response.data.lines
+    },
+
+    async linesByMemoPublic( { commit, dispatch, rootState }, memoId: number ) {
+        const response: any = await apolloClient.query({
+            query: linesPublicQry,
+            variables: { memoId: memoId }	
         })
 
         // console.log(response.data.lines)

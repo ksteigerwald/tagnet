@@ -2,7 +2,7 @@ import { GetterTree, MutationTree, ActionTree, Module } from 'vuex'
 import { RootState, MemoState, Memo } from '../types'
 import { TagType } from './tags'
 import { deleteMemo, memosQry, memosQryMemoLines, memosSearch, filterMemos, setMemoPrivacy,
-         memosInsert, updateMemoUpdated, memosGet, updateMemoCode } from '@/constants/memos.ql'
+         memosInsert, updateMemoUpdated, memosGet, updateMemoCode, getPublicMemo } from '@/constants/memos.ql'
 import { apolloClient } from '@/constants/graphql'
 import Hashids from 'hashids'
 let hashid = new Hashids('MEMO')
@@ -134,6 +134,10 @@ export const actions: ActionTree<MemoState, RootState> = {
         await dispatch('facts/createFact', { search: term }, { root: true })
     },
 
+    //Find a memo with given code
+    //When no code is found, find image any bucket
+    //when no [image ANY] bucket, create image [ANY] bucket memo 
+    //Create line item with image any path
     async onboard({ commit, dispatch, rootState}) {
         dispatch('createMemo',{label: 'My Bookmarks', tag_id: 2, autogen: true})
         dispatch('createMemo',{label: 'My Notes', tag_id: 6, autogen: true})
@@ -142,18 +146,22 @@ export const actions: ActionTree<MemoState, RootState> = {
     },
 
     async setMemoPrivacy({ commit, dispatch, rootState}, memo: Memo) {
-
-        console.log('>', memo)
         const response: any = await apolloClient.mutate({
             mutation: setMemoPrivacy,
             variables: { code: memo.code, is_public: memo.is_public }	
         })
+    },
 
-    }
-    //Find a memo with given code
-    //When no code is found, find image any bucket
-    //when no [image ANY] bucket, create image [ANY] bucket memo 
-    //Create line item with image any path
+    async fetchPublicMemo({ commit, dispatch, rootState}, code: string ) {
+        const response: any = await apolloClient.query({
+            query: getPublicMemo,
+            variables: { input: code }	
+        })
+
+        state.memos = response.data.memos
+
+    },
+
 
 }
 function _d(date: string): number {
