@@ -1,7 +1,8 @@
 <template>
-<div class="detail-head">  <router-link class="back-btn" :to="{ name: 'home'}"> <BackArrow/> &nbsp;Back</router-link>
-    <h3>{{memo.label}}</h3>
-    <a href="#" @click="remove()" class="delete-btn"><span><TrashCan/></span>&nbsp;Delete</a> </div>
+<div class="detail-head">  
+  <router-link class="back-btn" :to="{ name: 'home'}"> <BackArrow /> &nbsp;Back</router-link>
+    <h3 v-if="memo">{{memo.label}}</h3>
+    <a href="#" v-if="!isPublic" @click="remove()" class="delete-btn"><span><TrashCan/></span>&nbsp;Delete</a> </div>
 </template>
 
 <script lang="ts">
@@ -20,14 +21,19 @@ import TrashCan from '@/components/Icons/Delete.vue'
 })
 export default class MemoDetailHead extends Vue {
   @Prop() memo: Memo
+  @Prop() isPublic: boolean
   @Action('memos/deleteMemo') deleteMemo: any
 
-   remove() {
-        let check: boolean = confirm(`Are you sure you want to delete:${this.memo.label}`)
-        if(check) {
-            this.deleteMemo(this.memo)
-            this.$router.push('/home')
-        }
+  mounted() {
+    console.log('>>>>', this.memo, this.isPublic) 
+  }
+
+  remove() {
+    let check: boolean = confirm(`Are you sure you want to delete:${this.memo.label}`)
+    if(check) {
+      this.deleteMemo(this.memo)
+      this.$router.push('/home')
+    }
   }
 
 }

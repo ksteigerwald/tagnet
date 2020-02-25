@@ -52,7 +52,14 @@ export const deleteMemo = gql`
     delete_lines(where: {memo_id: {_eq: $id}}) {
       affected_rows
     }
-  }`
+}`
+
+export const setMemoPrivacy = gql`
+  mutation setPrivacy($code: String, $is_public: Boolean) {
+    update_memos(where: {code: {_eq: $code}}, _set: {is_public: $is_public}) {
+      affected_rows }
+}`
+
 export const memosQryMemoLines = gql`
 query {
     memos(order_by: {created: desc}) {
@@ -135,6 +142,21 @@ query get_memo($input: Int) {
 }
 `
 
+export const getPublicMemo = gql`
+query get_memo($input: String) {
+  memos(where: {is_public: {_eq: true}, code: {}, _and: {code: {_eq: $input}}}) {
+    id
+    code
+    label
+    user_id
+    tag_id
+    created
+    updated
+    uuid
+    autogen
+  }
+}
+`
 export const updateMemoCode = gql`
 mutation update_token($id: Int, $code: String) {
   update_memos(

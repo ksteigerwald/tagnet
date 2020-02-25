@@ -1,55 +1,7 @@
 import gql from 'graphql-tag'
 
-export const linesInsert = gql`
-mutation insertLine($objects: [lines_insert_input!]!) {
-  insert_lines(objects: $objects) {
-    returning {
-      id
-      memo_id
-      label
-      uuid
-      user_id
-      created
-      format_id
-      meta
-    }
-  }
-}`
-
-export const linesQry = gql`
-query {
-    lines {
-      id,
-      code,
-      uuid,
-      memo_id,
-      label,
-      created
-      format_id
-      meta
-    }
-}
-`
-
-export const searchQry = gql`
-query search_lines($input: String) {
-	lines(
-		where: {label: {_like: $input }}
-	) {
-      id,
-      code,
-      uuid,
-      memo_id,
-      label
-      format_id
-      meta
-	}
-}
-`
-
-export const linesByMemoId = gql`
-query linesByMemoId($input: Int) {
-  lines(where: {memo_id: {_eq: $input}}, order_by: {created: desc}) {
+const lineFragment = gql`
+  fragment lineFeilds on lines {
     id
     code
     label
@@ -59,6 +11,51 @@ query linesByMemoId($input: Int) {
     created
     format_id
     meta
+}`
+
+export const linesInsert = gql`
+mutation insertLine($objects: [lines_insert_input!]!) {
+  insert_lines(objects: $objects) {
+    returning {
+      ...lineFeilds
+    }
+  }
+}
+${lineFragment}
+`
+
+export const linesQry = gql`
+query {
+    lines {
+      ...lineFeilds
+    }
+}
+${lineFragment}
+`
+export const linesPublicQry = gql`
+query linePublicQry($memoId: Int) {
+  lines(where: {memo_id: {_eq: $memoId }}) {
+    ...lineFeilds
+  }
+}
+${lineFragment}
+`
+
+export const searchQry = gql`
+query search_lines($input: String) {
+	lines(
+		where: {label: {_like: $input }}
+	) {
+    ...lineFeilds
+	}
+}
+${lineFragment}
+`
+
+export const linesByMemoId = gql`
+query linesByMemoId($input: Int) {
+  lines(where: {memo_id: {_eq: $input}}, order_by: {created: desc}) {
+    ...lineFeilds
     LineMemo {
       TagMemo {
         id
@@ -67,6 +64,7 @@ query linesByMemoId($input: Int) {
     }
   }
 }
+${lineFragment}
 `
 
 export const updateLineCode = gql`

@@ -8,7 +8,7 @@
                 </a>
                 <div tabindex="0" onclick="return true"></div>
                 <ul class="dropdown-menu__sub">
-                    <li><a href="#" onclick="sampleMenu(this)">
+                    <li><a href="#" @click="makePublic(memo)">
                         <img src="static/images/padlock-unlock.svg" alt="">
                         Make Public
                     </a>
@@ -56,12 +56,18 @@
 
         @Prop() memo: Memo[]
         @Action('memos/deleteMemo') deleteMemo: any
+        @Action('memos/setMemoPrivacy') setMemoPrivacy: any
 
         remove(memo: Memo) {
             let check: boolean = confirm(`Are you sure you want to delete:${memo.label}`)
             if (check) {
                 this.deleteMemo(memo)
             }
+        }
+
+        makePublic(memo: Memo) {
+            memo.is_public = (memo.is_public) ? false : true
+            this.setMemoPrivacy(memo)
         }
 
         icon(val: string) {

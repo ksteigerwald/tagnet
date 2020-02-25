@@ -1,13 +1,14 @@
 <template>
   <div class="deatil-main">
-      <MemoDetailHead :memo="memo" />
+      <MemoDetailHead :isPublic="isPublic" :memo="memo" />
         <ul class="loop-list">
-            <li v-if="todos.length > 0"><span class="date">ToDo's</span></li>
-            <TodoWrap v-if="todos.length > 0" :todos="todos" />
+            <li v-if="todos.length > 0">
+                <span class="date">ToDo's</span></li>
+                <TodoWrap v-if="todos.length > 0" :todos="todos" />
     
             <template v-for="date in dates"> 
                 <li><span class="date"> {{date}} </span></li> 
-                <TextAndImage :data="getGroupData(date)" />
+                <TextAndImage v-if="memo" :userId="memo.user_id" :data="getGroupData(date)" />
             </template>
         </ul>
     </div>
@@ -34,27 +35,21 @@ import { groupBy, switchAll } from 'rxjs/operators';
 export default class MemoDetail extends Vue {
 
     componentKey:number = 0
-    memoId:number = 0 
     dates:string[] = []
     groupByObj: any = {}    
-    memo: any 
     todos:Line[] = []
 
+    @Prop() memo: Memo
+    @Prop() isPublic: boolean
+
     @Getter('tags/tags') !tags: Tag[]
-    @Getter('memos/memos') memos!: Memo[]
     @Getter('lines/lines') lines: Line[]
     @Getter('lines/linesGroupBy') linesGroupBy: any
     @Getter('lines/formatSelect') formatSelect: (keys: any) => any[]
-    @Getter('memos/findMemo') findMemo: any
 
     rerenderCards() {
         this.componentKey += 1
     } 
-
-    beforeMount () {
-        this.memoId = Number(this.$route.params.memoId)
-        this.memo = this.findMemo(this.memoId)[0]
-    }
 
     mounted() {
         this.$store.subscribe((mutation, state) => {
