@@ -6,6 +6,7 @@ import Landing from './views/Landing.vue';
 import Register from './views/Register.vue';
 import Confirm from './views/Confirm.vue';
 import Memorandum from './views/Memorandum.vue';
+import MemorandumPublic from './views/MemorandumPublic.vue';
 import Profile from './views/Profile.vue';
 
 Vue.use(Router);
@@ -52,9 +53,9 @@ export default new Router({
       meta: { requiresAuth: true}
     },
     {
-      path: '/memorandums/:memoId/public',
+      path: '/memorandums/:code/public',
       name: 'memorandums',
-      component: <any> Memorandum
+      component: <any> MemorandumPublic
     },
     {
       path: '/profile',
