@@ -39,6 +39,8 @@
     "rxjs": "^6.5.1",
     "serverless-plugin-typescript": "^1.1.7",
     "short-uuid": "^3.1.0",
+    "tiptap": "^1.26.6",
+    "tiptap-extensions": "^1.28.6",
     "ts-node": "^8.0.2",
     "ts-vue-plugin": "^0.2.0",
     "unfetch": "^4.0.1",
