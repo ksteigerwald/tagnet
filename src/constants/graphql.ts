@@ -28,7 +28,7 @@ const authLink = setContext((_, {headers} ) => {
   let token:any = config.localKey()
   if(!token) return httpLink
 
-  console.log('AUTH_TOKEN', token)
+  //console.log('AUTH_TOKEN', token)
   //let decode = jwt_decode(token)
 
     return {

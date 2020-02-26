@@ -7,6 +7,7 @@ import Register from './views/Register.vue';
 import Confirm from './views/Confirm.vue';
 import Memorandum from './views/Memorandum.vue';
 import MemorandumPublic from './views/MemorandumPublic.vue';
+import Console from './views/Console.vue';
 import Profile from './views/Profile.vue';
 
 Vue.use(Router);
@@ -56,6 +57,12 @@ export default new Router({
       path: '/memorandums/:code/public',
       name: 'memorandumsPublic',
       component: <any> MemorandumPublic
+    },
+    {
+      path: '/console',
+      name: 'console',
+      component: <any> Console,
+      meta: { requiresAuth: true }
     },
     {
       path: '/profile',

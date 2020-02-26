@@ -10,3 +10,5 @@ declare module '*.svg' {
 
 declare module "aws-amplify-vue";
 declare module 'aws-amplify-vue/src/components/storage';
+declare module "tiptap";
+declare module "tiptap-extensions";
