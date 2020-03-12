@@ -1,25 +1,23 @@
 <template>
   <div class="icon" :class="[`icon--${name}`, `icon--${size}`, { 'has-align-fix': fixAlign }]">
-    <svg class="icon__svg">
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#icon--' + name"></use>
-    </svg>
+     <img :src="require(`../assets/images/icons/${name}.svg`).default"  />
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    name: {},
-    size: {
-      default: 'normal',
-    },
-    modifier: {
-      default: null,
-    },
-    fixAlign: {
-      default: true,
-    },
-  },
+<script lang="ts">
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+
+@Component
+export default class Icon extends Vue  {
+  @Prop() name:string
+  size:string = 'nomrmal'
+  modifier: any = null
+  fixAlign: any = null
+
+  
+  beforeMount() {
+    console.log(this)
+  }
 }
 </script>
 
