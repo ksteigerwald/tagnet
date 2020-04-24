@@ -44,7 +44,9 @@ self</h1>
           </div>
           <div class="top__links">
             <ul class="links">
-              <li class="links__item"><a @click.prevent href="#"><span class="links__icon links__icon--get"></span><span class="links__text">Get started</span></a></li>
+              <li class="links__item">
+                 <router-link v-if="!loggedIn" :to="{ name: 'login'}" class="login">
+                  <span class="links__icon links__icon--get"></span><span class="links__text">Get started</span></router-link></li>
               <li class="links__item"><a @click.prevent href="#"><span class="links__icon links__icon--play"></span><span class="links__text">How it works</span></a></li>
             </ul>
           </div>
